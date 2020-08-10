@@ -1,0 +1,43 @@
+%:Clase del documento
+\documentclass[fontsize=10pt, Myfinal=true, twoside, numbers=noenddot]{scrbook}
+%:Empieza el documento
+\input{cabecera}
+\begin{document}
+%:Para incluir toda la referencia bibliográfica aunque no se cite, descomente la siguiente línea
+\nocite{*}
+
+%:Empieza el contenido del libro
+\mainmatter
+
+%:Página por defecto
+\pagestyle{esitscCD}
+
+%:Los diferentes capítulos, en carpetas separadas
+%\include{cubierta/cubierta}
+%
+%\include{introduccion/introduccion}%Guia uso
+\include{\capitulo}%Guia uso
+%
+%\include{estructura/estructura}
+%%
+%\include{CapituloLibroETSI/CapituloLibroETSI} 
+%%
+%\include{CapituloProblemasLibroETSI/CapituloProblemasETSI} 
+
+%\include{CapituloEstilo/estilolibroetsi}
+% 
+%%:Empezamos con los apéndices, que irían en uno o más ficheros. Es necesario incluir estos ficheros entre el entorno \begin{appendices}....\end{appendices} debido a que se ha deseado utilizar un formato diferente para el título de los apéndices, incluyendo la palabra apéndice, para la numeración de los apéndices, alfabético, y para las cabeceras de las páginas.
+%
+%\begin{appendices}
+%
+%% Fichero en el que se incluyen los apéndices
+%\include{apendices/apendices} %Ver este fichero para incluir ahí los apéndices.
+%
+%\end{appendices}
+%:Fin de la inclusión de apéndices
+
+%:Empieza todo lo que no constituye el cuerpo en si del libro. Todo lo que va detrás
+\backmatter
+
+
+\end{document}

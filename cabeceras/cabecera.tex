@@ -1,0 +1,128 @@
+%Minion=true, English=true, Myfinal=true
+
+%:Paquete de estilos propuesto
+\usepackage{cabeceras/libroETSI}
+
+%:Paquete específico para cargar tikz (y sus librerías) y pgfplots
+\usepackage{cabeceras/dtsc-creafig}
+
+%:Paquete para notaciones específicas
+\usepackage{cabeceras/notacion}
+
+%:Paquete para incorporar aspectos concretos de la edición
+\usepackage{cabeceras/edicionPFC}
+
+
+%:Estas líneas de código son INNECESARIAS excepto para mostrar determinadas características en este manual. Pueden eliminarse o comentarse sin ningún problema.
+%Se usan para compilar el capítulo estilolibroetsi.tex
+\usepackage[final]{showexpl}
+\lstset{explpreset={frame=none,rframe={}, numbers=none,numbersep=3pt, columns=flexible,language={[LaTeX]TeX},basicstyle=\ttfamily,keywordstyle=\color{blue}}}%numberstyle=\tiny,
+
+%:Para modificar fácilmente la fuente del texto.
+\makeatletter
+\ifdtsc@Minion % Queremos utilizar la fuente Minion y lo hemos declarado al principio
+	\ifluatex
+		\setmainfont[Renderer=Basic, Ligatures=TeX,	% Fuente del texto 
+		Scale=1.01,
+		]{Minion Pro}
+   		% En este caso conviene modificar ligeramente el tamaño de las fuentes matemáticas
+		\DeclareMathSizes{10}{10.5}{7.35}{5.25}
+		\DeclareMathSizes{10.95}{11.55}{8.08}{5.77}
+		\DeclareMathSizes{12}{12.6}{8.82}{6.3}
+%		\setmainfont[Renderer=Basic, Ligatures=TeX,	% Fuente del texto 
+%		]{Adobe Garamond Pro}
+%		\setmainfont[Renderer=Basic, Ligatures=TeX,	% Fuente del texto 
+%		]{Palatino LT Std}
+	\fi
+\else
+	\ifluatex
+		% Para utilizar la fuente Times New Roman, o alguna otra que se tenga instalada
+		\setmainfont[Renderer=Basic, Ligatures=TeX,	% Fuente del texto 
+		Scale=1.0,
+		]{Times New Roman}
+	\else
+		\usepackage{tgtermes} 	%clone of Times
+		%\usepackage[default]{droidserif}
+		%\usepackage{anttor} 	
+	\fi
+\fi
+\makeatother
+
+%Por si quieren usar bibliografía con BIBER
+%BIBER%%:Para la bibliografía en BIBER, descomentar las líneas siguientes
+\usepackage[
+    backend=biber,
+    sorting=none, 
+    %style=authoryear-icomp,
+    %sortlocale=de_DE,
+    %natbib=true,
+    %url=false, 
+    %doi=true,
+    %eprint=false
+]{biblatex}
+\defbibheading{etsi}[]{%
+        \chapter*{Bibliografía}%
+        \chaptermark{Bibliografía} 
+        \markboth{#1}{#1}}
+\addbibresource{bibliografia.bib}
+
+% Ejemplo de Glosario
+\newacronym[type=main]{ETSI}{ETSI}{Escuela Técnica Superior de Ingeniería}
+\newacronym[type=main]{US}{US}{Universidad de Sevilla}
+\newacronym[type=main]{DMC}{DMC}{Canal Discreto sin Memoria}
+
+
+\makeindex
+\makeglossaries %Si no se quiere el glosario, comentar esta línea.
+
+% Formato A4
+\geometry
+{paperheight=297mm,%
+paperwidth=210mm,%
+top=25mm,%
+headsep=8.5mm,%
+includefoot, 
+textheight=240mm, 
+textwidth=150mm, 
+bindingoffset=0mm, 
+twoside}
+
+\usepackage[a4,center]{crop}%para poner las cruces de esquina de página, poner la opción cross
+
+%:Esquema de numeración por defecto
+\setenumerate[1]{label=\normalfont\bfseries{\arabic*.}, leftmargin=*, labelindent=\parindent}
+\setenumerate[2]{label=\normalfont\bfseries{\alph*}), leftmargin=*}
+\setenumerate[3]{label=\normalfont\bfseries{\roman*.}, leftmargin=*}
+\setlist{itemsep=.1em}
+\setlength{\parindent}{1.0 em}
+
+\setcounter{tocdepth}{4}						% El nivel hasta el que se muestra el índice 
+
+\usepackage{morewrites}
+\usepackage[outputdir=build]{minted}
+\setminted{fontsize=\footnotesize,linenos,breaklines}
+\usepackage[minted]{tcolorbox}
+\tcbuselibrary{breakable,skins}
+
+\newtcolorbox[auto counter,number within=section]{codigo}[2][]{enhanced,breakable, left=1cm,colback=black!5!white,colframe=blue!0!black,fonttitle=\bfseries, title=Código ~\thetcbcounter: #2,#1}
+\usepackage{adjustbox}
+\usepackage{tikz-3dplot}
+%\usepackage{subcaption}
+\setcounter{secnumdepth}{40}
+
+\usepackage{gensymb}
+
+\usepackage{pdflscape}
+\usepackage{multirow}
+\usepackage{placeins}
+
+\makeatletter
+\providecommand\add@text{}
+\newcommand\tagaddtext[1]{%
+     \gdef\add@text{#1\gdef\add@text{}}}% 
+     \renewcommand\tagform@[1]{%
+          \maketag@@@{\llap{\add@text\quad}(\ignorespaces#1\unskip\@@italiccorr)}%
+     }
+\makeatother
+
+%:Empieza el documento

@@ -1,0 +1,140 @@
+%:Clase del documento
+\documentclass[fontsize=10pt, Myfinal=true, twoside, numbers=noenddot]{scrbook}
+\input{cabeceras/cabecera}
+\begin{document}
+%:Para incluir toda la referencia bibliográfica aunque no se cite, descomente la siguiente línea
+%\nocite{*}
+
+
+%PORTADA
+%ver edicionPFC.sty para modificaciones
+%\mbox{pendiente}
+%:Para crear la portada y la portada interior (pagina titular)
+\titulo{Posicionamiento de un UAV usando \mbox{marcadores} visuales} %\mbox evita que se divida una palabra al cambiar de línea
+\autor{Isidro Jesús Arias Sánchez}
+\director{Manuel Vargas Villanueva}
+\titulodirector{Profesor Titular}
+
+\departamento{Dpto. de Ingeniería de Sistemas y Automática}
+\centro{Escuela Técnica Superior de Ingeniería}
+\universidad{Universidad de Sevilla}
+\titulacion{Ingeniería Electrónica, Robótica y Automática}
+\fecha{2020}
+\nombretrabajo{Trabajo de Fin de Master} %Trabajo Fin de Grado, Proyecto fin de Máster,....
+
+\hypersetup
+	{
+ 	linkcolor=black, %Tocar para poner color en enlaces
+	pdfauthor={\elautor},
+	pdftitle={\nombretrabajo,\eltitulo}, 
+	pdfkeywords={Latex, edición, formato de texto}	
+	 }
+
+%\portadaPFC{figuras/LogoUS.pdf}{figuras/LogoTSC.pdf} %logo de la Universidad y logo del departamento, si lo hubiera. Para cambiar el pie de página con los logos, debe editarse el fichero ediciónPFC.sty
+\portadaPFC{figuras/LogoUS.pdf} %logo de la Universidad y logo del departamento, si lo hubiera. Para cambiar el pie de página con los logos, debe editarse el fichero ediciónPFC.sty
+
+%Fin Portada
+
+%:Todo lo que constituye la primera parte del libro que no es el cuerpo del libro en realidad
+\frontmatter
+\pagenumbering{Roman} %Pone la numeración en mayúscula (En español parece que es obligatorio)
+
+%\include{dedicatoria/dedicatoria}%¿Comentar para proyectos/tesis?
+\include{agradecimientos/agradecimientos}
+
+%PFC/PFM/TESIS
+\include{resumen/resumen} 
+
+% Índice abreviado 
+% El índice abreviado se incluye también en algunos libros, con menor detalle que el completo. Descomentar las siguientes líneas.
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{listasf}{Índice Abreviado}
+\pagestyle{especial}
+\shorttoc{Índice Abreviado}{1}
+
+%Índice normal, el completo
+\cleardoublepage
+\phantomsection
+\pagestyle{especial}
+\tableofcontents
+
+
+\include{notacion/notacion} %No incluir si no se quiere, comentándolo
+
+%:Empieza el contenido del libro
+\mainmatter
+
+%:Página por defecto
+\pagestyle{esitscCD}
+
+\hypersetup
+	{
+ 	linkcolor=blue, %Tocar para poner color en enlaces
+	 }
+
+%:Los diferentes capítulos, en carpetas separadas
+%
+\include{introduccion/introduccion}
+%\include{ControlDePX4/ControlDePX4}
+%\include{ModeladoTiltrotor/ModeladoTiltrotor}
+%\include{DisennoControl/DisennoControl}
+%\include{SimulacionGazebo/SimulacionGazebo}
+%\include{FabricacionTiltrotor/FabricacionTiltrotor}
+%\include{Conclusiones/Conclusiones}
+
+\begin{appendices}
+\include{apendices/apendices} 
+\end{appendices}
+
+%:Empieza todo lo que no constituye el cuerpo en si del libro. Todo lo que va detrás
+\backmatter
+
+%:Indice de figuras, coméntese las siguientes líneas si no se desea
+\cleardoublepage
+\phantomsection
+
+%:Para añadir una línea en blanco en el TOC y separar esta lista
+\addtocontents{toc}{\protect\mbox{}\protect\hspace*{0pt}\par}
+\addcontentsline{toc}{listasb}{\listfigurename}
+\pagestyle{especial}
+\listoffigures
+
+%:Indice de tablas, coméntese las siguientes líneas si no se desea
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{listasb}{\listtablename}
+\pagestyle{especial}
+\listoftables
+
+%:Indice de Programas
+%\cleardoublepage
+%\phantomsection
+%\addcontentsline{toc}{listasb}{\lstlistlistingname}
+%\pagestyle{especial}
+%\lstlistoflistings
+
+%:Bibliografía con biblatex y biber
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{listasb}{\bibname}
+\pagestyle{especial}
+%BIBER
+\printbibliography[heading=etsi]
+
+%:Índice alfabético de palabras
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{listasb}{\indexname}
+\chaptermark{\indexname}
+\printindex
+
+
+%:Acrónimos
+%\cleardoublepage
+%\phantomsection
+%\addcontentsline{toc}{listasb}{\glossaryname}
+%\chaptermark{\glossaryname}
+%\printglossaries
+
+\end{document}
