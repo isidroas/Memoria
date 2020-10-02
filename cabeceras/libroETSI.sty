@@ -129,20 +129,10 @@
 	\lbnormal=\f@baselineskip
 \makeatother
 
-%:BLOQUE 2 Idioma, Fuentes y codificación
-%:Paquete relacionado con el idioma
-\makeatletter
-\ifdtsc@English
-	%:Inglés como idioma principal
-	\usepackage[spanish, main=english]{babel}
-	\selectlanguage{english}
-\else
-	%:Castellano como idioma principal
-	\usepackage[english, spanish, es-ucroman, es-noshorthands, es-nosectiondot, es-noindentfirst, es-nolists, activeacute]{babel} 
-	\spanishdecimal{.}
-	\selectlanguage{spanish} 
-\fi
-\makeatother
+%:Castellano como idioma principal
+\usepackage[english, spanish, es-ucroman, es-noshorthands, es-nosectiondot, es-noindentfirst, es-nolists]{babel} 
+\spanishdecimal{.}
+\selectlanguage{spanish} 
 
 %:Un conjunto de macros relacionados con el lenguaje 
 \makeatletter

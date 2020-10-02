@@ -1,0 +1,104 @@
+\documentclass{standalone}
+
+\usepackage{tikz}
+\usepackage{calc}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usetikzlibrary {animations}
+\usetikzlibrary {calc}
+\def\bufferEKF{6}
+\def\height{2}
+\def\width{2}
+\begin{document}
+\begin{tikzpicture}
+
+% Buffer EKF
+\foreach \x in {0, ...,\bufferEKF }{
+	\draw (\x*\width,0) -- + (\width,0) -- +(\width,\height) -- +(0,\height) -- +(0,0);
+	\path (\x*\width+\width*0.5,0.5*\height) coordinate (center\x);
+	% Draw numbers
+	\path (center\x) + (0.5*\width,0.5*\height) node[anchor=north east] {\scriptsize \x};
+}
+\path (\bufferEKF*\width+\width,0.5*\height) 	coordinate (east);
+\path (\bufferEKF*\width+\width,\height) 	coordinate (north-east);
+\path (\bufferEKF*\width+\width,0) 		coordinate (south-east);
+\path (0,0.5*\height) 				coordinate (west);
+\path (0,\height) 				coordinate (north-west);
+\path (0,0) 					coordinate (south-west);
+
+%% Show coordinates
+%\path (east) node{east};
+%\path (north-east) node{north-east};
+%\path (south-east) node{south-east};
+%\path (west) node{west};
+%\path (north-west) node{north-west};
+%\path (south-west) node{south-west};
+
+
+% Flecha que indica las medidas más antiguas
+\path (north-west) + (0,1) coordinate (aux);
+\draw[-latex] (aux)  -- (north-east |- aux) node[anchor=south]{Más antiguas};
+
+% Bloque de la IMU
+\path (west) ++ (-1.5,0) node[draw=black, minimum size=1.5cm](IMU){IMU};
+\draw[-latex] (IMU) -- (west); 
+
+% Bloque EKF
+\path (center\bufferEKF|-south-east) coordinate (aux);
+\path (aux) ++ (0,-2) node[draw=black,minimum size=1.5cm](EKF){EKF};
+\draw[-latex] (aux) -- (EKF); 
+
+% Cronómetro
+\path (south-west) ++ (-1,-1) node{\includegraphics{clock}}  ++(0.2,0) node[anchor=west]{40ms};
+\newcounter{aux}
+\newcounter{auxa}
+\setcounter{aux}{\bufferEKF-1}
+
+% Medidas del buffer
+\foreach \x in {0, ...,\theaux }{
+	\setcounter{auxa}{5*(\bufferEKF-\x+2)}
+	\path (center\x) node{$\begin{matrix}\bm{a}{\scriptstyle[\theauxa ms]}\\ \omega{\scriptstyle[\theauxa ms]}\end{matrix}$};
+}
+
+% Medida más antigua
+\path (center\bufferEKF) node{$\begin{matrix}
+	\bm{a}{\scriptstyle[10ms]}\\ 
+	\omega{\scriptstyle[10ms]}\\
+	P_{vision}{\scriptstyle[40ms]}
+\end{matrix}$};
+
+% Estados
+\draw[-latex] (EKF) -- ++(0,-3) node[anchor=west,pos=0.5]{$\left. \begin{matrix}
+		\bm{P}\\
+		\bm{V}\\
+		\theta\\
+	\end{matrix} \right\}$ \shortstack{Estados estimados en el \\horizonte de tiempo retrasado}};
+
+% TODO: añadir leyenda
+
+% Output Buffer
+\path (0,-9) coordinate (outputFilter);
+\foreach \x in {0, ...,\bufferEKF }{
+	\path (outputFilter) ++ (\x*\width,0)  coordinate (aux);
+	\draw (aux) -- + (\width,0) -- +(\width,\height) -- +(0,\height) -- +(0,0);
+	\path (outputFilter) ++ (\x*\width+\width*0.5,0.5*\height) coordinate (center\x);
+	% Draw numbers
+	\path (center\x) + (0.5*\width,0.5*\height) node[anchor=north east] {\scriptsize \x};
+}
+\path (\bufferEKF*\width+\width,0.5*\height) 	coordinate (east);
+\path (\bufferEKF*\width+\width,\height) 	coordinate (north-east);
+\path (\bufferEKF*\width+\width,0) 		coordinate (south-east);
+\path (0,0.5*\height) 				coordinate (west);
+\path (0,\height) 				coordinate (north-west);
+\path (0,0) 					coordinate (south-west);
+
+% Medidas del buffer de salida
+\foreach \x in {0, ...,\bufferEKF }{
+	\setcounter{auxa}{5*(\bufferEKF-\x+2)}
+	\path (center\x) node{$\begin{matrix}\bm{P}{\scriptstyle[\theauxa ms]}\\ \bm{V}{\scriptstyle[\theauxa ms]}\end{matrix}$};
+}
+
+
+\end{tikzpicture}
+\end{document}
