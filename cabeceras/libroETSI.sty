@@ -658,17 +658,15 @@
 %%:Elementos de segmentación de un texto
 %%:Estilo de capítulos con numeración
 
-%\titleformat{\chapter}[hang]{}{}{8pt}{\thechapter}
+\titleformat{\chapter}[hang]{}{}{8pt}{\thechapter}
 
-\titleformat{\chapter}{\vspace{75pt}\achapnum} {\makebox[25 pt]{\raggedright\thechapter}}{8pt}{\hspace*{-8pt} \thechapter \hspace*{9pt} \raggedright\achaptext #1}[\vspace{0.3pc} {\color{gray!75}\titlerule[3.5pt]} \vspace{50pt}]
+\titleformat{\chapter}{\vspace{75pt}\achapnum}{}{8pt}{\hspace*{-8pt} \thechapter \hspace*{9pt} \raggedright\achaptext #1}[\vspace{0.3pc} {\color{gray!75}\titlerule[3.5pt]} \vspace{50pt}]
 
 \titlespacing{\chapter}{0 pt}{0 pt}{0 pt}[0 pt]
 
-\titleformat{name=\chapter,numberless}{\vspace{75pt}\achapnum} {\makebox[25 pt]{\raggedright\thechapter}}{8pt}{\hspace*{-8pt} \raggedright\achaptext #1}[\vspace{0.3pc} {\color{gray!75}\titlerule[3.5pt]} \vspace{50pt}]
-\titlespacing{name=\chapter,numberless}{0 pt}{0 pt}{0 pt}[0 pt]
-%%:Estilo de capítulos sin numeración
-%\titleformat{name=\chapter}{\vspace{75pt}}{}{0pc}{\filleft\achaptext #1}[\vspace{0.3pc} {\color{gray!75}\titlerule[3.5pt]} \vspace{50pt}]
-%\titlespacing{name=\chapter}{0 pt}{0 pt}{0 pt}[0 pt]
+% Formato de los capítulos dentro de frontmatter no llevan enumeración
+\titleformat{name=\chapter,numberless}{\vspace{75pt}} {}{8pt}{\hspace*{-8pt} \raggedright\achaptext #1}[\vspace{0.3pc} {\color{gray!75}\titlerule[3.5pt]} \vspace{50pt}]
+
 
 %:Estilo de sección     
 \titleformat{\section}{\aheadsecc}{\thesection}{10 pt}{\thesection \hspace*{3pt} #1} 

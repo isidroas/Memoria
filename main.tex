@@ -35,14 +35,12 @@
 
 %Fin Portada
 
-%:Todo lo que constituye la primera parte del libro que no es el cuerpo del libro en realidad
 \frontmatter
 \pagenumbering{Roman} %Pone la numeración en mayúscula (En español parece que es obligatorio)
 
-%\include{dedicatoria/dedicatoria}%¿Comentar para proyectos/tesis?
+%\include{dedicatoria/dedicatoria}
 \include{agradecimientos/agradecimientos}
 
-%PFC/PFM/TESIS
 \include{resumen/resumen} 
 
 % Índice abreviado 
@@ -62,19 +60,13 @@
 
 \include{notacion/notacion} %No incluir si no se quiere, comentándolo
 
-%:Empieza el contenido del libro
+%%:Empieza el contenido del libro
 \mainmatter
 
 %:Página por defecto
 \pagestyle{esitscCD}
+\hypersetup { linkcolor=blue, } 
 
-\hypersetup
-	{
- 	linkcolor=blue, %Tocar para poner color en enlaces
-	 }
-
-%:Los diferentes capítulos, en carpetas separadas
-%
 %\include{introduccion/introduccion}
 \include{estimador_px4/estimador_px4}
 
@@ -82,7 +74,7 @@
 \include{apendices/apendices} 
 \end{appendices}
 
-%:Empieza todo lo que no constituye el cuerpo en si del libro. Todo lo que va detrás
+%%:Empieza todo lo que no constituye el cuerpo en si del libro. Todo lo que va detrás
 \backmatter
 
 %:Indice de figuras, coméntese las siguientes líneas si no se desea

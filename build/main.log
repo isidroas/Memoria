@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2020.9.24)  30 SEP 2020 22:51
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2020.9.24)  3 OCT 2020 12:36
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1108,7 +1108,7 @@ Package: longtable 2020/01/07 v4.13 Multi-page Table package (DPC)
 \c@LT@chunks=\count396
 \LT@p@ftn=\toks48
 )
-Class scrbook Info: longtable captions redefined on input line 1036.
+Class scrbook Info: longtable captions redefined on input line 1033.
 
 (/usr/share/texlive/texmf-dist/tex/latex/tools/multicol.sty
 Package: multicol 2019/12/09 v1.8y multicolumn formatting (FMi)
@@ -1474,27 +1474,27 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 
 Package hyperref Warning: Option `bookmarks' has already been used,
-(hyperref)                setting the option has no effect on input line 1162.
+(hyperref)                setting the option has no effect on input line 1159.
 
-Package hyperref Info: Option `bookmarksnumbered' set `false' on input line 116
-2.
-Package hyperref Info: Option `bookmarksopen' set `false' on input line 1162.
-Package hyperref Info: Option `unicode' set `true' on input line 1162.
+Package hyperref Info: Option `bookmarksnumbered' set `false' on input line 115
+9.
+Package hyperref Info: Option `bookmarksopen' set `false' on input line 1159.
+Package hyperref Info: Option `unicode' set `true' on input line 1159.
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/puenc.def
 File: puenc.def 2020/01/14 v7.00d Hyperref: PDF Unicode definition (HO)
 Now handling font encoding PU ...
 ... no UTF-8 mapping file for font encoding PU
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 1162.
+Package hyperref Info: Option `colorlinks' set `true' on input line 1159.
 
 
 Package hyperref Warning: Option `hyperfootnotes' has already been used,
-(hyperref)                setting the option has no effect on input line 1162.
+(hyperref)                setting the option has no effect on input line 1159.
 
-Package hyperref Info: Option `plainpages' set `false' on input line 1162.
-Package hyperref Info: Option `breaklinks' set `true' on input line 1162.
-Package hyperref Info: Option `pdfdisplaydoctitle' set `true' on input line 116
-2.
+Package hyperref Info: Option `plainpages' set `false' on input line 1159.
+Package hyperref Info: Option `breaklinks' set `true' on input line 1159.
+Package hyperref Info: Option `pdfdisplaydoctitle' set `true' on input line 115
+9.
 (/usr/share/texlive/texmf-dist/tex/latex/zref/zref-lastpage.sty
 Package: zref-lastpage 2019/11/29 v2.28 Module lastpage for zref (HO)
 
@@ -2458,11 +2458,11 @@ Writing index file main.idx
 \glo@main@file=\write8
 \openout8 = `main.glo'.
 
-Package glossaries Info: Writing glossary file main.glo on input line 76.
+Package glossaries Info: Writing glossary file main.glo on input line 74.
 \glo@acronym@file=\write9
 \openout9 = `main.acn'.
 
-Package glossaries Info: Writing glossary file main.acn on input line 76.
+Package glossaries Info: Writing glossary file main.acn on input line 74.
 (/usr/share/texlive/texmf-dist/tex/latex/crop/crop.sty
 Package: crop 2003/05/20 v1.9 crop marks (mf)
 \stockwidth=\dimen423
@@ -3140,10 +3140,10 @@ Package lettrine.sty Info: Targeted height = 16.54999pt
 (lettrine.sty)             Lettrine height = 19.85995pt (T) loversize=0.2;
 (lettrine.sty)             reported on input line 24.
 )
-LaTeX Info: Redefining \. on input line 46.
-LaTeX Info: Redefining \% on input line 46.
-LaTeX Info: Redefining \. on input line 46.
-LaTeX Info: Redefining \% on input line 46.
+LaTeX Info: Redefining \. on input line 44.
+LaTeX Info: Redefining \% on input line 44.
+LaTeX Info: Redefining \. on input line 44.
+LaTeX Info: Redefining \% on input line 44.
 \openout10 = `main.mw'.
 
  [5] (build//main.mw)
@@ -3165,10 +3165,10 @@ LaTeX Info: Redefining \% on input line 3.
 LaTeX Font Info:    Font shape `T1/phv/m/it' in size <8.99994> not available
 (Font)              Font shape `T1/phv/m/sl' tried instead on input line 5.
 )
-LaTeX Info: Redefining \. on input line 57.
-LaTeX Info: Redefining \% on input line 57.
-LaTeX Info: Redefining \. on input line 57.
-LaTeX Info: Redefining \% on input line 57.
+LaTeX Info: Redefining \. on input line 55.
+LaTeX Info: Redefining \% on input line 55.
+LaTeX Info: Redefining \. on input line 55.
+LaTeX Info: Redefining \% on input line 55.
 \openout10 = `main.mw'.
 
 
@@ -3184,7 +3184,7 @@ LaTeX Info: Redefining \% on input line 57.
 ] (build//main.mw)
 \openout10 = `main.mw'.
 
-Package tocbasic Info: character protrusion at toc deactivated on input line 60
+Package tocbasic Info: character protrusion at toc deactivated on input line 58
 .
  (build//main.toc
 LaTeX Info: Redefining \. on input line 1.
@@ -3195,10 +3195,10 @@ LaTeX Info: Redefining \% on input line 3.
 \tf@toc=\write23
 \openout10 = `main.toc'.
 
-LaTeX Info: Redefining \. on input line 63.
-LaTeX Info: Redefining \% on input line 63.
-LaTeX Info: Redefining \. on input line 63.
-LaTeX Info: Redefining \% on input line 63.
+LaTeX Info: Redefining \. on input line 61.
+LaTeX Info: Redefining \% on input line 61.
+LaTeX Info: Redefining \. on input line 61.
+LaTeX Info: Redefining \% on input line 61.
 \openout10 = `main.mw'.
 
  [9
@@ -3265,15 +3265,15 @@ l.49 \end{align}
 \openout10 = `main.mw'.
 
 )
-LaTeX Info: Redefining \. on input line 79.
-LaTeX Info: Redefining \% on input line 79.
-LaTeX Info: Redefining \. on input line 79.
-LaTeX Info: Redefining \% on input line 79.
+LaTeX Info: Redefining \. on input line 71.
+LaTeX Info: Redefining \% on input line 71.
+LaTeX Info: Redefining \. on input line 71.
+LaTeX Info: Redefining \% on input line 71.
 pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has 
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.79 \include{estimador_px4/estimador_px4}
+l.71 \include{estimador_px4/estimador_px4}
                                           
 \openout10 = `main.mw'.
 
@@ -3284,7 +3284,7 @@ l.79 \include{estimador_px4/estimador_px4}
 
 
 No file apendices/apendices.tex.
-Package tocbasic Info: character protrusion at lof deactivated on input line 96
+Package tocbasic Info: character protrusion at lof deactivated on input line 88
 .
 (build//main.lof
 LaTeX Info: Redefining \. on input line 1.
@@ -3295,15 +3295,15 @@ LaTeX Info: Redefining \% on input line 3.
 \tf@lof=\write24
 \openout10 = `main.lof'.
 
-LaTeX Info: Redefining \. on input line 99.
-LaTeX Info: Redefining \% on input line 99.
-LaTeX Info: Redefining \. on input line 99.
-LaTeX Info: Redefining \% on input line 99.
+LaTeX Info: Redefining \. on input line 91.
+LaTeX Info: Redefining \% on input line 91.
+LaTeX Info: Redefining \. on input line 91.
+LaTeX Info: Redefining \% on input line 91.
 pdfTeX warning (ext4): destination with the same identifier (name{page.3}) has 
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.99 \cleardoublepage
+l.91 \cleardoublepage
                      
 \openout10 = `main.mw'.
 
@@ -3322,7 +3322,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.4}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.99 \cleardoublepage
+l.91 \cleardoublepage
                      
 \openout10 = `main.mw'.
 
@@ -3331,8 +3331,8 @@ l.99 \cleardoublepage
 ] (build//main.mw)
 \openout10 = `main.mw'.
 
-Package tocbasic Info: character protrusion at lot deactivated on input line 10
-3.
+Package tocbasic Info: character protrusion at lot deactivated on input line 95
+.
  (build//main.lot
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
@@ -3342,15 +3342,15 @@ LaTeX Info: Redefining \% on input line 3.
 \tf@lot=\write25
 \openout10 = `main.lot'.
 
-LaTeX Info: Redefining \. on input line 113.
-LaTeX Info: Redefining \% on input line 113.
-LaTeX Info: Redefining \. on input line 113.
-LaTeX Info: Redefining \% on input line 113.
+LaTeX Info: Redefining \. on input line 105.
+LaTeX Info: Redefining \% on input line 105.
+LaTeX Info: Redefining \. on input line 105.
+LaTeX Info: Redefining \% on input line 105.
 pdfTeX warning (ext4): destination with the same identifier (name{page.5}) has 
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.113 \cleardoublepage
+l.105 \cleardoublepage
                       
 \openout10 = `main.mw'.
 
@@ -3363,7 +3363,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.6}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.113 \cleardoublepage
+l.105 \cleardoublepage
                       
 \openout10 = `main.mw'.
 
@@ -3374,17 +3374,17 @@ l.113 \cleardoublepage
 
 
 
-LaTeX Warning: Empty bibliography on input line 118.
+LaTeX Warning: Empty bibliography on input line 110.
 
 runsystem(texindy main.idx)...executed.
 
 No file main.ind.
 
-Package caption Warning: Unused \captionsetup[subfigure] on input line 1027.
+Package caption Warning: Unused \captionsetup[subfigure] on input line 1024.
 See the caption package documentation for explanation.
 
 
-Package caption Warning: Unused \captionsetup[lstlisting] on input line 1270.
+Package caption Warning: Unused \captionsetup[lstlisting] on input line 1267.
 See the caption package documentation for explanation.
 
 
@@ -3399,8 +3399,8 @@ This document will not have a glossary.
 \tf@thm=\write26
 \openout10 = `main.thm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 135.
-Package atveryend Info: Executing hook `AfterLastShipout' on input line 135.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 127.
+Package atveryend Info: Executing hook `AfterLastShipout' on input line 127.
 (build//main.aux
 LaTeX Info: Redefining \. on input line 24.
 LaTeX Info: Redefining \% on input line 24.
@@ -3529,8 +3529,8 @@ LaTeX Info: Redefining \% on input line 36.
 \openout10 = `main.mw'.
 
 )
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 135.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 135.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 127.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 127.
 Package logreq Info: Writing requests to 'main.run.xml'.
 \openout1 = `main.run.xml'.
 
@@ -3545,10 +3545,10 @@ Package logreq Info: Writing requests to 'main.run.xml'.
  )
 (\end occurred when \iftrue on line 445 was incomplete) 
 Here is how much of TeX's memory you used:
- 75138 strings out of 481239
- 1688345 string characters out of 5920377
- 2860394 words of memory out of 5000000
- 88736 multiletter control sequences out of 15000+600000
+ 75137 strings out of 481239
+ 1688331 string characters out of 5920377
+ 2860340 words of memory out of 5000000
+ 88735 multiletter control sequences out of 15000+600000
  617597 words of font info for 121 fonts, out of 8000000 for 9000
  1162 hyphenation exceptions out of 8191
  90i,15n,148p,10125b,2123s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -3572,7 +3572,7 @@ texlive/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/share/texlive/texmf-di
 st/fonts/type1/urw/symbol/usyr.pfb></usr/share/texlive/texmf-dist/fonts/type1/u
 rw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8
 a.pfb>
-Output written on build//main.pdf (22 pages, 782325 bytes).
+Output written on build//main.pdf (22 pages, 782126 bytes).
 PDF statistics:
  326 PDF objects out of 1000 (max. 8388607)
  253 compressed objects within 3 object streams
