@@ -7,98 +7,124 @@
 \usepackage{amsmath}
 \usetikzlibrary {animations}
 \usetikzlibrary {calc}
+\usetikzlibrary {shapes.geometric}
 \def\bufferEKF{6}
 \def\height{2}
 \def\width{2}
 \begin{document}
+
+\tikzset{buffer/.pic={
+	\foreach \x in {0, ...,\bufferEKF }{
+		\draw (\x*\width,0) -- + (\width,0) -- +(\width,\height) -- +(0,\height) -- +(0,0);
+		\path (\x*\width+\width*0.5,0.5*\height) coordinate (-center\x) +(0, 0.5*\height) coordinate(-north\x)
+										+(0,-0.5*\height) coordinate(-south\x);
+		% Draw numbers
+		\path (-center\x) + (0.5*\width,0.5*\height) node[anchor=north east] {\scriptsize \x};
+	}
+	\path (\bufferEKF*\width+\width,0.5*\height) 	coordinate (-east);
+	\path (\bufferEKF*\width+\width,\height) 	coordinate (-north-east);
+	\path (\bufferEKF*\width+\width,0) 		coordinate (-south-east);
+	\path (0,0.5*\height) 				coordinate (-west);
+	\path (0,\height) 				coordinate (-north-west);
+	\path (0,0) 					coordinate (-south-west);
+	%% Show coordinates
+	%\path (east) node{east};
+	%\path (north-east) node{north-east};
+	%\path (south-east) node{south-east};
+	%\path (west) node{west};
+	%\path (north-west) node{north-west};
+	%\path (south-west) node{south-west};
+}}
+
 \begin{tikzpicture}
+% TODO: añadir degradado para indicar medidas y estados más antiguos
+% TODO: Añadir leyenda
+% TODO: Que la medida del no caiga justo en la última celda
 
 % Buffer EKF
-\foreach \x in {0, ...,\bufferEKF }{
-	\draw (\x*\width,0) -- + (\width,0) -- +(\width,\height) -- +(0,\height) -- +(0,0);
-	\path (\x*\width+\width*0.5,0.5*\height) coordinate (center\x);
-	% Draw numbers
-	\path (center\x) + (0.5*\width,0.5*\height) node[anchor=north east] {\scriptsize \x};
-}
-\path (\bufferEKF*\width+\width,0.5*\height) 	coordinate (east);
-\path (\bufferEKF*\width+\width,\height) 	coordinate (north-east);
-\path (\bufferEKF*\width+\width,0) 		coordinate (south-east);
-\path (0,0.5*\height) 				coordinate (west);
-\path (0,\height) 				coordinate (north-west);
-\path (0,0) 					coordinate (south-west);
-
-%% Show coordinates
-%\path (east) node{east};
-%\path (north-east) node{north-east};
-%\path (south-east) node{south-east};
-%\path (west) node{west};
-%\path (north-west) node{north-west};
-%\path (south-west) node{south-west};
-
+\path (0,0) pic(ekfBuf){buffer};
 
 % Flecha que indica las medidas más antiguas
-\path (north-west) + (0,1) coordinate (aux);
-\draw[-latex] (aux)  -- (north-east |- aux) node[anchor=south]{Más antiguas};
+\path (ekfBuf-north-west) + (0,1) coordinate (aux);
+\draw[-latex] (aux)  -- (ekfBuf-north-east |- aux) node[anchor=south]{Más antiguas};
 
 % Bloque de la IMU
-\path (west) ++ (-1.5,0) node[draw=black, minimum size=1.5cm](IMU){IMU};
-\draw[-latex] (IMU) -- (west); 
+\path (ekfBuf-west) ++ (-3,0) node[draw=black, minimum size=1.5cm](IMU){IMU};
+\draw[-latex] (IMU) -- (ekfBuf-west) node[pos=0.5,anchor=south]{$\bm{a}$,$\omega$};
 
 % Bloque EKF
-\path (center\bufferEKF|-south-east) coordinate (aux);
-\path (aux) ++ (0,-2) node[draw=black,minimum size=1.5cm](EKF){EKF};
-\draw[-latex] (aux) -- (EKF); 
-
-% Cronómetro
-\path (south-west) ++ (-1,-1) node{\includegraphics{clock}}  ++(0.2,0) node[anchor=west]{40ms};
-\newcounter{aux}
-\newcounter{auxa}
-\setcounter{aux}{\bufferEKF-1}
-
-% Medidas del buffer
-\foreach \x in {0, ...,\theaux }{
-	\setcounter{auxa}{5*(\bufferEKF-\x+2)}
-	\path (center\x) node{$\begin{matrix}\bm{a}{\scriptstyle[\theauxa ms]}\\ \omega{\scriptstyle[\theauxa ms]}\end{matrix}$};
-}
-
-% Medida más antigua
-\path (center\bufferEKF) node{$\begin{matrix}
-	\bm{a}{\scriptstyle[10ms]}\\ 
-	\omega{\scriptstyle[10ms]}\\
-	P_{vision}{\scriptstyle[40ms]}
-\end{matrix}$};
+\draw[-latex] (ekfBuf-south6) -- ++ (0,-1) node[draw=black,minimum size=1.5cm,anchor=north](EKF){EKF};
 
 % Estados
-\draw[-latex] (EKF) -- ++(0,-3) node[anchor=west,pos=0.5]{$\left. \begin{matrix}
+\draw[-latex] (EKF) -- ++(0,-3) coordinate(endArrow) node[anchor=west,pos=0.5]{$\left. \begin{matrix}
 		\bm{P}\\
 		\bm{V}\\
 		\theta\\
 	\end{matrix} \right\}$ \shortstack{Estados estimados en el \\horizonte de tiempo retrasado}};
 
-% TODO: añadir leyenda
+% Cronómetro
+\path (IMU) ++(-0.5,-2) node{\includegraphics{clock}}  ++(0.2,0) node[anchor=west]{40ms};
+\newcounter{counterA}
+\newcounter{ekfAux}
+\setcounter{ekfAux}{\bufferEKF-2}
+
+% Medidas del buffer
+\foreach \x in {0, ...,\theekfAux, \bufferEKF }{
+	\setcounter{counterA}{5*(\bufferEKF-\x+2)}
+	\path (ekfBuf-center\x) node{$\begin{matrix}\bm{a}{\scriptstyle[\thecounterA ms]}\\
+				 \omega{\scriptstyle[\thecounterA ms]}\end{matrix}$};
+}
+
+\setcounter{ekfAux}{\bufferEKF-1}
+% Medida más antigua
+\path (ekfBuf-center\theekfAux) node{$\begin{matrix}
+	\bm{a}{\scriptstyle[10ms]}\\ 
+	\omega{\scriptstyle[10ms]}\\
+	P_{GPS}{\scriptstyle[40ms]}
+\end{matrix}$};
+
 
 % Output Buffer
-\path (0,-9) coordinate (outputFilter);
-\foreach \x in {0, ...,\bufferEKF }{
-	\path (outputFilter) ++ (\x*\width,0)  coordinate (aux);
-	\draw (aux) -- + (\width,0) -- +(\width,\height) -- +(0,\height) -- +(0,0);
-	\path (outputFilter) ++ (\x*\width+\width*0.5,0.5*\height) coordinate (center\x);
-	% Draw numbers
-	\path (center\x) + (0.5*\width,0.5*\height) node[anchor=north east] {\scriptsize \x};
-}
-\path (\bufferEKF*\width+\width,0.5*\height) 	coordinate (east);
-\path (\bufferEKF*\width+\width,\height) 	coordinate (north-east);
-\path (\bufferEKF*\width+\width,0) 		coordinate (south-east);
-\path (0,0.5*\height) 				coordinate (west);
-\path (0,\height) 				coordinate (north-west);
-\path (0,0) 					coordinate (south-west);
+\path (0,-9) pic(outBuf){buffer};
 
 % Medidas del buffer de salida
+\newcounter{counterB}
 \foreach \x in {0, ...,\bufferEKF }{
-	\setcounter{auxa}{5*(\bufferEKF-\x+2)}
-	\path (center\x) node{$\begin{matrix}\bm{P}{\scriptstyle[\theauxa ms]}\\ \bm{V}{\scriptstyle[\theauxa ms]}\end{matrix}$};
+	\setcounter{counterB}{5*(\bufferEKF-\x+2)}
+	\path (outBuf-center\x) node{$\begin{matrix}\bm{P}{\scriptstyle[\thecounterB ms]}\\ 
+		\bm{V}{\scriptstyle[\thecounterB ms]}\\ 
+		\theta{\scriptstyle[\thecounterB ms]}
+		\end{matrix}$};
 }
+
+
+% Realimentación de corrección
+\path (endArrow)  node[anchor=north,shape=circle,draw=black](sumNode){};
+\draw[-latex] (outBuf-east) -- +(1,0) |- (sumNode) ;
+\path (sumNode) ++ (0.3,0.2) node{-};
+\draw (sumNode) -- +(0,-0.5) node[draw,shape=isosceles triangle,anchor=west,rotate=-90](triangle){} ;
+
+% Flechas a cada celda
+\draw (triangle.east) -- +(0,-0.1) coordinate(aux);
+\foreach \x in {0, ...,\bufferEKF }{
+	\draw[-latex](aux) -| (outBuf-north\x);
+}
+\path (aux-|outBuf-north0) coordinate(lastArrow);
+
+% Bloque filtro de salida
+\path (lastArrow) ++ (-3,0) node[draw=black, minimum size= 1.5cm](outFilt){Filtro de salida};
+\draw[latex-] (outBuf-west) -|  (outFilt);
+\draw[-latex] (outFilt) -- +(0,-3) node[anchor=north]{\shortstack{Estados estimados en el\\ horizonte de tiempo actual}};
+
+% Conexión a la IMU
+\draw[-latex] (IMU)  -| (outFilt);
+
+% Flecha de correción al filtro de salida
+\draw[-latex] (lastArrow) -- (outFilt.east);
 
 
 \end{tikzpicture}
+
+
+
 \end{document}

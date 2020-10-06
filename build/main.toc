@@ -10,10 +10,14 @@
 \defcounter {refsection}{0}\relax
 \contentsline {chapter}{\numberline {1}Estimador PX4}{1}{chapter.1}%
 \defcounter {refsection}{0}\relax
-\contentsline {section}{\numberline {1.1}EKF}{1}{section.1.1}%
+\contentsline {section}{\numberline {1.1}Ejemplo}{1}{section.1.1}%
+\defcounter {refsection}{0}\relax
+\contentsline {subsection}{\numberline {1.1.1}Detalles de implementación}{2}{subsection.1.1.1}%
+\defcounter {refsection}{0}\relax
+\contentsline {section}{\numberline {1.2}EKF para modelo bidimensional}{2}{section.1.2}%
 \defcounter {refsection}{0}\relax
 \mbox {}\hspace *{0pt}\par
 \defcounter {refsection}{0}\relax
-\contentsline {listasb}{{\'I}ndice de Figuras}{3}{section*.11}%
+\contentsline {listasb}{{\'I}ndice de Figuras}{5}{section*.11}%
 \defcounter {refsection}{0}\relax
-\contentsline {listasb}{{\'I}ndice de Tablas}{5}{section*.13}%
+\contentsline {listasb}{{\'I}ndice de Tablas}{7}{section*.13}%

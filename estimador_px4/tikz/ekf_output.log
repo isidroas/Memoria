@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2020.9.24)  3 OCT 2020 12:22
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2020.9.24)  6 OCT 2020 20:40
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -477,6 +477,14 @@ e.tex
 zlibrarycalc.code.tex
 File: tikzlibrarycalc.code.tex 2020/01/08 v3.1.5b (3.1.5b)
 )
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tik
+zlibraryshapes.geometric.code.tex
+File: tikzlibraryshapes.geometric.code.tex 2020/01/08 v3.1.5b (3.1.5b)
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/shapes/pgflibraryshape
+s.geometric.code.tex
+File: pgflibraryshapes.geometric.code.tex 2020/01/08 v3.1.5b (3.1.5b)
+))
 (/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdfmode.def
 File: l3backend-pdfmode.def 2020-02-03 L3 backend support: PDF mode
 \l__kernel_color_stack_int=\count283
@@ -485,20 +493,20 @@ File: l3backend-pdfmode.def 2020-02-03 L3 backend support: PDF mode
 (./ekf_output.aux)
 \openout1 = `ekf_output.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
  ABD: EveryShipout initializing macros
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -555,30 +563,31 @@ e
 <clock.pdf, id=4, 12.045pt x 12.045pt>
 File: clock.pdf Graphic file (type pdf)
 <use clock.pdf>
-Package pdftex.def Info: clock.pdf  used on input line 53.
+Package pdftex.def Info: clock.pdf  used on input line 66.
 (pdftex.def)             Requested size: 12.04495pt x 12.04495pt.
-\c@aux=\count290
-\c@auxa=\count291
+\c@counterA=\count290
+\c@ekfAux=\count291
+\c@counterB=\count292
 
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./clock.pdf>]
 (./ekf_output.aux) ) 
 Here is how much of TeX's memory you used:
- 14935 strings out of 481239
- 310315 string characters out of 5920377
- 522547 words of memory out of 5000000
- 29931 multiletter control sequences out of 15000+600000
+ 16056 strings out of 481239
+ 338314 string characters out of 5920377
+ 556875 words of memory out of 5000000
+ 31045 multiletter control sequences out of 15000+600000
  535549 words of font info for 35 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 60i,11n,62p,442b,702s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 60i,11n,62p,442b,908s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
 cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmm
 i10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb
 ></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share
 /texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb>
-Output written on ekf_output.pdf (1 page, 59559 bytes).
+Output written on ekf_output.pdf (1 page, 60661 bytes).
 PDF statistics:
  38 PDF objects out of 1000 (max. 8388607)
  27 compressed objects within 1 object stream
