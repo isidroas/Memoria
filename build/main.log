@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2020.9.24)  6 OCT 2020 17:18
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2020.9.24)  16 OCT 2020 16:25
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -3243,24 +3243,24 @@ Package lettrine.sty Info: Targeted height = 16.54999pt
 (lettrine.sty)             (no accent, loversize=0),
 (lettrine.sty)             Lettrine height = 19.85995pt (E) loversize=0.2;
 (lettrine.sty)             reported on input line 4.
-<estimador_px4/tikz/ekf_output.pdf, id=207, 594.97581pt x 357.38821pt>
+<estimador_px4/tikz/ekf_output.pdf, id=207, 652.95445pt x 384.94315pt>
 File: estimador_px4/tikz/ekf_output.pdf Graphic file (type pdf)
 <use estimador_px4/tikz/ekf_output.pdf>
 Package pdftex.def Info: estimador_px4/tikz/ekf_output.pdf  used on input line 
-24.
-(pdftex.def)             Requested size: 426.79134pt x 256.36497pt.
+25.
+(pdftex.def)             Requested size: 426.79134pt x 251.61389pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-LaTeX Info: Redefining \. on input line 29.
-LaTeX Info: Redefining \% on input line 29.
-LaTeX Info: Redefining \. on input line 29.
-LaTeX Info: Redefining \% on input line 29.
+LaTeX Info: Redefining \. on input line 30.
+LaTeX Info: Redefining \% on input line 30.
+LaTeX Info: Redefining \. on input line 30.
+LaTeX Info: Redefining \% on input line 30.
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.29 D
+l.30 D
       e forma paralela se ejecuta el \textit{filtro de salida} que solamente...
 \openout10 = `main.mw'.
 
@@ -3270,15 +3270,15 @@ l.29 D
 ] (build//main.mw)
 \openout10 = `main.mw'.
 
-LaTeX Info: Redefining \. on input line 88.
-LaTeX Info: Redefining \% on input line 88.
-LaTeX Info: Redefining \. on input line 88.
-LaTeX Info: Redefining \% on input line 88.
+LaTeX Info: Redefining \. on input line 92.
+LaTeX Info: Redefining \% on input line 92.
+LaTeX Info: Redefining \. on input line 92.
+LaTeX Info: Redefining \% on input line 92.
 pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has 
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.88 \end{align}
+l.92 \end{align}
                 
 \openout10 = `main.mw'.
 
@@ -3583,9 +3583,9 @@ Package logreq Info: Writing requests to 'main.run.xml'.
  )
 (\end occurred when \iftrue on line 445 was incomplete) 
 Here is how much of TeX's memory you used:
- 75159 strings out of 481239
- 1688789 string characters out of 5920377
- 2857341 words of memory out of 5000000
+ 75160 strings out of 481239
+ 1688803 string characters out of 5920377
+ 2859340 words of memory out of 5000000
  88748 multiletter control sequences out of 15000+600000
  617468 words of font info for 120 fonts, out of 8000000 for 9000
  1162 hyphenation exceptions out of 8191
@@ -3614,10 +3614,10 @@ ic/uhvro8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/symbol/usyr.pfb><
 /usr/share/texlive/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/f
 onts/type1/urw/times/utmri8a.pfb>
-Output written on build//main.pdf (24 pages, 835860 bytes).
+Output written on build//main.pdf (24 pages, 838097 bytes).
 PDF statistics:
- 394 PDF objects out of 1000 (max. 8388607)
- 312 compressed objects within 4 object streams
- 47 named destinations out of 1000 (max. 500000)
+ 395 PDF objects out of 1000 (max. 8388607)
+ 313 compressed objects within 4 object streams
+ 48 named destinations out of 1000 (max. 500000)
  22249 words of extra memory for PDF output out of 24883 (max. 10000000)
 

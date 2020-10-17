@@ -5,6 +5,7 @@
 
 \section{Ejemplo}
 Supongamos que se tiene un sistema que se mueve en el espacio del que se quiere conocer sus estados, en concreto, su posición, su velocidad y su ángulo. Para este objetivo se disponen de sensores que son: acelerómetro, giróscopo, GNSS y posición por visión. Cada uno de ellos tiene diferentes propiedades en cuanto a retraso, ruido, etc. que se muestran en la siguiente tabla. Se puede notar que la posición por visión es una fuente muy precisa de posición, pero sin embargo tiene un gran retraso desde que se toma la imagen hasta que se procesa, como suele suceder en la práctica. 
+
 \begin{tabular}{|c|c|c|}
 Sensor			& Retraso (ms) 	& Ruido 	\\ \hline 
 acelerómetro 		& 0 		& 	      	\\ 
@@ -16,7 +17,7 @@ Posición por visión 	& 30 		& 0.03
 
 % EKF
 
-En el primera ejecución del estimador, después de inicializar los estados, se toma una medida de la IMU (acelerómetro y giróscopo). El EKF todavía no la utiliza, si no que la guarda en su buffer. Conforme llegan nuevas medidas, las que ya estaban en el buffer se van desplazando hacia la derecha, hasta que llegan a la última celda y entonces son usadas por el EKF para estimar los estados. Estos estados y las medidas utilizadas para estimarlos se refieren al \textit{horizonte de tiempo retrasado}. 
+En el primera ejecución del estimador, se toma la primera medida de la IMU (acelerómetro y giróscopo). El EKF todavía no la utiliza, si no que la guarda en su buffer. Conforme llegan nuevas medidas, las que ya estaban en el buffer se van desplazando hacia la derecha, hasta que llegan a la última celda y entonces son usadas por el EKF para estimar los estados. Estos estados y las medidas utilizadas para estimarlos se refieren al \textit{horizonte de tiempo retrasado}. 
 
 % llega medida de visión
 Pasan algunos ciclos más hasta que en el instante 40ms llega la primera medida de la visión, pero esta no se coloca junto con las medidas más recientes de la IMU, si no que se lleva directamenta a la última celda. En esta se encuentran también las medidas de la IMU tomadas en el instante 10ms, es decir hace 30 ms que coincide con el retraso que tiene la posición visual con respecto a la IMU. De esta manera se agrupan las medidas que se refieren al mismo instante físico, es decir, el instante en el que llegaron compensandose su retraso. 
@@ -28,7 +29,7 @@ Pasan algunos ciclos más hasta que en el instante 40ms llega la primera medida 
 
 De forma paralela se ejecuta el \textit{filtro de salida} que solamente utiliza las medidas de la IMU, en este caso las que se generan más recientemente.
 Los estados de este último filtro, la posición, velocidad y orientación,  se han estado guardando en el \textit{buffer de salida}.  
-De este buffer se cogen los estados más antiguos y se compara con los estados generados por EKF. Su diferencia se multiplica por una ganancia se le suma a todos los elementos del buffer de salida.  
+De este buffer se cogen los estados más antiguos y se compara con los estados generados por EKF. Su diferencia se multiplica por una ganancia y se le suma a todos los elementos del buffer de salida.  
 
 \subsection{Detalles de implementación}
 \begin{itemize}
@@ -38,7 +39,14 @@ K_p=\frac{0.5}{Retraso}
 \end{equation} 
 {\color{red} Buscar la deducción hasta esta expresión}
 \end{itemize}
+
+
 \section{EKF para modelo bidimensional}
+Se buscará un modelo discreto de espacio de estados descrito de la siguiente manera:
+\begin{align}
+X_{k+1} =  f(X_k)
+\end{align}
+
 Se va aplicar a un quadrotor en 2 dimensiones, pero el modelo al no ser dinámico, se podria aplicar a cualquier otro móvil.
 
 Estados:
@@ -90,7 +98,7 @@ V_x \\ V_y
 
 Jacobiano del modelo de predicción:
 \begin{align}
-F = 
+F = \frac{\partial f}{\partial X} =  
 \begin{bmatrix} 
 %x/X
 1 	&0	&\Delta t	&0		&0\\
@@ -107,7 +115,7 @@ F =
 
 Jacobiano del acelerómetro y el giróscopo
 \begin{align}
-G = 
+G =  \frac{\partial f}{\partial \bm{a},\omega} = 
 \begin{bmatrix} 
 %x/a,w
 0 			&0			&0\\
@@ -133,6 +141,9 @@ G
 \end{bmatrix}
 G^T
 \end{align}
+
+\section{Simulación del quadrotor y del estimador}
+En este apartado se implementará el filtro explicado en este capítulo y pondrá a prueba con un simulador de un quadrotor. Tanto el estimador como el simulador estarán programados en lenguaje python
 
 
 \endinput

@@ -1,16 +1,16 @@
 \documentclass{standalone}
-
 \usepackage{tikz}
 \usepackage{calc}
 \usepackage{bm}
 \usepackage{graphicx}
 \usepackage{amsmath}
-\usetikzlibrary {animations}
-\usetikzlibrary {calc}
-\usetikzlibrary {shapes.geometric}
+\usetikzlibrary{animations}
+\usetikzlibrary{calc}
+\usetikzlibrary{shapes.geometric}
 \def\bufferEKF{6}
 \def\height{2}
 \def\width{2}
+\makeatletter
 \begin{document}
 
 \tikzset{buffer/.pic={
@@ -53,7 +53,7 @@
 \draw[-latex] (IMU) -- (ekfBuf-west) node[pos=0.5,anchor=south]{$\bm{a}$,$\omega$};
 
 % Bloque EKF
-\draw[-latex] (ekfBuf-south6) -- ++ (0,-1) node[draw=black,minimum size=1.5cm,anchor=north](EKF){EKF};
+\draw[-latex] (ekfBuf-south6) -- ++ (0,-1) node[very thick,draw=black,minimum size=1.5cm,anchor=north](EKF){EKF};
 
 % Estados
 \draw[-latex] (EKF) -- ++(0,-3) coordinate(endArrow) node[anchor=west,pos=0.5]{$\left. \begin{matrix}
@@ -121,6 +121,15 @@
 
 % Flecha de correción al filtro de salida
 \draw[-latex] (lastArrow) -- (outFilt.east);
+
+% Leyenda
+\draw(5,-3) node[draw,dashed]{  \begin{tabular}{lll}    
+							{\bfseries Legenda}&\\
+							$\bm{a}[35ms]$&$\rightarrow$  &medida del acelerómetro tomada en el instante $t=35ms$\\
+			      				$\omega$&$\rightarrow$ &medida del giróscopo\\
+  					%		\tikz{\path   node{\includegraphics[scale=0.5]{clock}}  ++(0.2,0) node[anchor=west]{40ms };}&$\rightarrow$ &  Instante actual $t=40ms$
+  							\includegraphics[scale=0.5]{clock}\ \small{40ms} &$\rightarrow$ &  Instante actual $t=40ms$
+						     \end{tabular}  };
 
 
 \end{tikzpicture}
