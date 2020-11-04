@@ -1,44 +1,49 @@
 % !TEX root =../main.tex
-\chapter{Estimador PX4}\label{chp-01}
+\chapter{Estimador de estados}\label{chp-01}
 
-\lettrine[lraise=-0.1, lines=2, loversize=0.2]{E}{n} muchas ocasiones se tienen sensores con un retraso y una frecuencia de actualización muy diferentes entre ellos, por ejemplo una IMU es mucho más rápida que el procesamiento de la imagen de una cámara. PX4 lo soluciona añadiendo más elementos a la estructura original de un estimador de estados. Uno de los elementos es un \textit{Filtro de Kalman Extendido} (EKF). Este no usa las medidas más nuevas que le llegan, si no que las almacena y utiliza las que llegaron hace un determinado tiempo. Corriendo en paralelo pero a una frecuencia mayor, existe un estimador llamado \textit{Filtro de Salida}, el cual sí que utiliza la última medida del acelerómetro y del giróscopo. 
+\lettrine[lraise=-0.1, lines=2, loversize=0.2]{E}{n} muchas ocasiones se tienen sensores con un retraso y una frecuencia de actualización muy diferentes entre ellos, por ejemplo una IMU es mucho más rápida que el procesamiento de la imagen de una cámara. PX4 lo soluciona añadiendo más elementos a la estructura original de un estimador de estados. Uno de sus elementos es un \textit{Filtro de Kalman Extendido} (EKF). Este no usa las medidas más nuevas que le llegan, si no que las almacena y utiliza las que llegaron hace un determinado tiempo. Corriendo en paralelo pero a una frecuencia mayor, existe un estimador llamado \textit{Filtro de Salida}, el cual sí que utiliza la última medida del acelerómetro y del giróscopo. 
 
-\section{Ejemplo}
-Supongamos que se tiene un sistema que se mueve en el espacio del que se quiere conocer sus estados, en concreto, su posición, su velocidad y su ángulo. Para este objetivo se disponen de sensores que son: acelerómetro, giróscopo, GNSS y posición por visión. Cada uno de ellos tiene diferentes propiedades en cuanto a retraso, ruido, etc. que se muestran en la siguiente tabla. Se puede notar que la posición por visión es una fuente muy precisa de posición, pero sin embargo tiene un gran retraso desde que se toma la imagen hasta que se procesa, como suele suceder en la práctica. 
+\section{Manejo de medidas retrasadas}
+Supongamos que se tiene un sistema que se mueve en el espacio y del que se quiere conocer sus estados, en concreto, su posición, su velocidad y su orientación. Para este objetivo el sistema está dotado de numerosos sensores como que son un acelerómetro, un giróscopo, un barómetro, un GNSS o un sensor de flujo óptico. Cada uno de ellos tiene diferentes propiedades en cuanto a retraso, ruido, precisión, etc. Por ejemplo, la posición estimada por visión es una fuente muy precisa de posición, pero sin embargo tiene un gran retraso desde que se toma la imagen hasta que se procesa y se genera la medida. 
 
-\begin{tabular}{|c|c|c|}
-Sensor			& Retraso (ms) 	& Ruido 	\\ \hline 
-acelerómetro 		& 0 		& 	      	\\ 
-giróscopo 		& 0 		& 	      	\\ 
-GNSS      		& 		& 	      	\\ % eliminar? 
-Posición por visión 	& 30 		& 0.03 	
-% Flujo óptico?
-\end{tabular}
+Para explicar un método de cómo afrontar  este problema, se va a poner un ejemplo de la ejecución paso a paso del estimador con diferentes sensores.
+Supongamos que en el primera ejecución del estimador, se toma la primera medida de la IMU (acelerómetro y giróscopo). El EKF todavía no la utiliza, si no que la guarda en su buffer (figura \ref{fig:est1}). Conforme llegan nuevas medidas, que ocurre cada 5 ms, estas se introducen en la posición de más a la izquierda del buffer y las que ya estaban se van desplazando hacia la derecha, hasta que llegan a la última celda. La medidas de esta celda situada más a la derecha, son las que son usadas por el EKF. Los estados que este genera y las medidas utilizadas para estimarlos se refieren al \textit{horizonte de tiempo retrasado}. Como se muestra en la figura, el buffer tiene una longitud de 7 celdas, por lo tanto las medidas de la IMU que llegan al EKF siempre serán las que se recogieron hace 30 ms.  
 
-% EKF
+\begin{figure}
+\includegraphics[width=\textwidth]{estimador_px4/tikz/ekf_output_1}
+\caption{Primera medida tomada de la IMU}
+\label{fig:est1}
+\end{figure}
 
-En el primera ejecución del estimador, se toma la primera medida de la IMU (acelerómetro y giróscopo). El EKF todavía no la utiliza, si no que la guarda en su buffer. Conforme llegan nuevas medidas, las que ya estaban en el buffer se van desplazando hacia la derecha, hasta que llegan a la última celda y entonces son usadas por el EKF para estimar los estados. Estos estados y las medidas utilizadas para estimarlos se refieren al \textit{horizonte de tiempo retrasado}. 
+Pasan algunos ciclos más hasta que en el instante 50ms llega la primera medida del GPS, pero esta no se coloca en el extremo izquierdo del buffer junto con las medidas más recientes de la IMU, si no que se lleva directamente a la celda número 5 (ver figura \ref{fig:est2}). En esta también se encuentran las medidas de la IMU tomadas en el instante 25ms, es decir las que fueron tomadas hace 25 ms (50 ms -25 ms), que coincide con el retraso que tiene la posición del GPS con respecto a la IMU. De esta manera se agrupan las medidas que se refieren al mismo instante físico, es decir, el instante en el que llegaron pero {\bfseries compensándose su retraso}. 
 
-% llega medida de visión
-Pasan algunos ciclos más hasta que en el instante 40ms llega la primera medida de la visión, pero esta no se coloca junto con las medidas más recientes de la IMU, si no que se lleva directamenta a la última celda. En esta se encuentran también las medidas de la IMU tomadas en el instante 10ms, es decir hace 30 ms que coincide con el retraso que tiene la posición visual con respecto a la IMU. De esta manera se agrupan las medidas que se refieren al mismo instante físico, es decir, el instante en el que llegaron compensandose su retraso. 
-\\
-\includegraphics[width=\textwidth]{estimador_px4/tikz/ekf_output}
+\begin{figure}
+\includegraphics[width=\textwidth]{estimador_px4/tikz/ekf_output_2}
+\caption{Llegada de la medida del GPS}
+\label{fig:est2}
+\end{figure}
+
+De forma paralela se ejecuta el \textit{filtro de salida}, que es otro estimador de estados y para esta explicación se va a suponer que su funcionamiento interno es exactamente igual al del EKF, la única diferencia es que solamente utiliza las medidas de la IMU, en este caso las que se generan más recientemente. Estos estados se refieren al \textit{horizonte de tiempo actual} y son los únicos que se usan para las otras tareas que tenga vehículo, como por ejemplo para alimentar al controlador de orientación, por esta razón se le denomina filtro de salida. El problema que tiene este es que desaprovecha todos los demás sensores que tiene el vehículo, por lo que se le aplica un \textbf{mecanismo de corrección}.  
+
+Este mecanismo está compuesto otro buffer llamado \textit{buffer de salida}, que se comporta de la misma manera que el primero, pero en lugar de guardar medidas, almacena los estados del filtro de salida. Estos estados se van desplazando hacia la derecha hasta que llegan a la última posición del buffer. En esta posición están los estados que se estimaron por el filtro de salida hace 30 ms, que coincide con el retraso que tienen las medidas del la IMU que entran al EKF. Si al EKF solo se le hubiese suministrado las medidas de la IMU, al igual que al filtro de salida, los estados del EKF y los que hay almacenado en esta última celda del buffer de salida coincidirían. Sin embargo, lo que está ocurriendo es que el EKF recoge medidas de oros sensores y por lo tanto no coincidirán. Para realizar la corrección, se calcula la diferencia entre ellos. Esta diferencia se atenúa y se le suma a todos los elementos del buffer de salida, además de al propio filtro de salida. 
+
+\begin{figure}
+\includegraphics[width=\textwidth]{estimador_px4/tikz/ekf_output_3}
+\caption{Estimador completo}
+\label{fig:est3}
+\end{figure}
 
 
-% Filtro de salida
+{\color{red} [añadir detalles de implementación]}
 
-De forma paralela se ejecuta el \textit{filtro de salida} que solamente utiliza las medidas de la IMU, en este caso las que se generan más recientemente.
-Los estados de este último filtro, la posición, velocidad y orientación,  se han estado guardando en el \textit{buffer de salida}.  
-De este buffer se cogen los estados más antiguos y se compara con los estados generados por EKF. Su diferencia se multiplica por una ganancia y se le suma a todos los elementos del buffer de salida.  
-
-\subsection{Detalles de implementación}
-\begin{itemize}
-\item La ganancia que multiplica la diferencia entre el filtro de salida y el EKF y que sirve para corregir los estados, se calcula de manera el sistema controlado tenga un factor de amortiguamiento de 0.7
-\begin{equation}
-K_p=\frac{0.5}{Retraso}
-\end{equation} 
-{\color{red} Buscar la deducción hasta esta expresión}
-\end{itemize}
+%\subsection{Detalles de implementación}
+%\begin{itemize}
+%\item La ganancia que multiplica la diferencia entre el filtro de salida y el EKF y que sirve para corregir los estados, se calcula de manera el sistema controlado tenga un factor de amortiguamiento de 0.7
+%\begin{equation}
+%K_p=\frac{0.5}{Retraso}
+%\end{equation} 
+%{\color{red} Buscar la deducción hasta esta expresión}
+%\end{itemize}
 
 
 \section{EKF para modelo bidimensional}
@@ -47,7 +52,7 @@ Se buscará un modelo discreto de espacio de estados descrito de la siguiente ma
 X_{k+1} =  f(X_k)
 \end{align}
 
-Se va aplicar a un quadrotor en 2 dimensiones, pero el modelo al no ser dinámico, se podria aplicar a cualquier otro móvil.
+Se va aplicar a un quadrotor en 2 dimensiones, pero el modelo al ser cinemático, se podría aplicar a cualquier otro móvil.
 
 Estados:
 \begin{align}
@@ -57,7 +62,7 @@ x \\ y \\ V_x \\ V_y \\ \theta
 \end{bmatrix}
 \end{align}
 
-Modelo de predicción (modelo cinemático, no dinámico):
+Modelo de predicción cinemático:
 \begin{align}
 \begin{bmatrix} 
 x \\ y 
@@ -98,16 +103,16 @@ V_x \\ V_y
 
 Jacobiano del modelo de predicción:
 \begin{align}
-F = \frac{\partial f}{\partial X} =  
+F =\left. \frac{\partial f}{\partial X}\right| _{X_{k-1}} =  
 \begin{bmatrix} 
 %x/X
 1 	&0	&\Delta t	&0		&0\\
 %y/X
 0 	&1	&0		&\Delta t	&0\\
 %Vx/X
-0 	&0	&1		&0		&\Delta t\left(-a_x\sin{\theta} + a_y\cos{\theta}\right) \\
+0 	&0	&1		&0		&\Delta t\left(-a_x\sin{\theta_{k-1}} + a_y\cos{\theta_{k-1}}\right) \\
 %Vy/X
-0 	&0	&0		&1		&\Delta t\left(-a_x\cos{\theta} - a_y\sin{\theta}\right) \\
+0 	&0	&0		&1		&\Delta t\left(-a_x\cos{\theta_{k-1}} - a_y\sin{\theta_{k-1}}\right) \\
 %theta/X
 0 	&0	&0		&0		&1
 \end{bmatrix}
@@ -126,7 +131,7 @@ G =  \frac{\partial f}{\partial \bm{a},\omega} =
 %Vy/a,w
 -\Delta t \sin{\theta} 	&\Delta t \cos{\theta}	&0\\
 %theta/a,w
-0 			&0			&1		
+0 			&0			&\Delta t		
 \end{bmatrix}
 \end{align}
 
@@ -143,7 +148,55 @@ G^T
 \end{align}
 
 \section{Simulación del quadrotor y del estimador}
-En este apartado se implementará el filtro explicado en este capítulo y pondrá a prueba con un simulador de un quadrotor. Tanto el estimador como el simulador estarán programados en lenguaje python
+En este apartado se implementará el filtro explicado en este capítulo y pondrá a prueba con un simulador de un quadrotor. Tanto el estimador como el simulador estarán programados en lenguaje python. El simulador será muy sencillo, describirá el movimiento de un quadrotor en el plano al que únicamente se le aplican la fuerza de la gravedad, un empuje y un par. Estos dos últimos se serán generados por un controlador de velocidad vertical y un controlador de ángulo, los cuales toman la velocidad, y la inclinación real del vehículo en lugar de medidas ruidosas. Sus referencias se han escogido para que desde el reposo, ascienda unos metros, y luego se desplace hacia la dirección negativa del eje x. 
+
+
+\begin{figure}
+\includegraphics[width=0.5\textwidth]{estimador_px4/tikz/quadrotor_2d}
+\caption{Quadrotor en dos dimensiones}
+\label{fig:model}
+\end{figure}
+
+Para simular el quadrotor se realiza una integración discreta de la segunda ley de Newton:
+\begin{align}
+        \ddot{\theta} &= \frac{\tau}{I} \\
+        \dot{\theta} &= \dot{\theta}_{i-1} + \Delta t \ddot{\theta} \\
+        \theta &= \theta_{i-1} + \Delta t \dot{\theta} \\
+        R &= 
+\begin{bmatrix}
+\cos{\theta}& -\sin{\theta}\\
+\sin{\theta} & \cos{\theta}
+\end{bmatrix}\\
+         \bm{T_{rot}}&= R  \begin{bmatrix}0\\ T \end{bmatrix}\\
+         \bm{F_g}&= \begin{bmatrix}0\\ -m g \end{bmatrix}\\
+         \bm{a}& = \frac{\bm{T}+\bm{F_g}}{m}\\
+         \bm{v}& = v_{i-1} + \bm{a}\Delta t  \\
+        \bm{p} &= p_{i-1} + \bm{v}\Delta t  \\
+\end{align}
+
+
+Una vez se ha simulado esta trayectoria, se pasa ejecutar el estimador de estados. Este toma unas medidas a las que se le ha aplicado un ruido gaussiano y genera su estimación de los estados. Finalmente estos se comparan con los estados reales y se verifica el desempeño del estimador. 
+
+El primer experimento que se va a mostrar, al estimador de estados no le va a entrar ninguna otra medida que no sea la del giróscopo y la del acelerómetro (ver figura \ref{fig:simu1}) y en el segundo experimento (\ref{fig:simu2}) se va a fusionar la medida del GPS. Se puede ver que la fusión del GPS, aunque sea muy ruidosa, mejora en la estimación de la posición ya que no se produce la deriva del primer experimento. 
+
+\begin{figure}
+\includegraphics[width=\textwidth]{estimador_px4/im_simu/tray_no_gps}
+\caption{EKF no ejecuta la fase de actualización}
+\label{fig:simu1}
+\end{figure}
+
+\begin{figure}
+\includegraphics[width=\textwidth]{estimador_px4/im_simu/tray}
+\includegraphics[width=\textwidth]{estimador_px4/im_simu/gps}
+\caption{Fusionando la medida del GPS}
+\label{fig:simu2}
+\end{figure}
+
+
+{\color{red} [Incluir GPS con retraso y comparar]}
+
+
+{\color{red} [Incluir código explicado en anexo]}
 
 
 \endinput

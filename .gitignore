@@ -1,1 +1,9 @@
 *.swp
+*.aux
+*.log
+*.lot
+*.lof
+*.ist
+*.toc
+
+build/

@@ -1,0 +1,35 @@
+\documentclass{standalone}
+
+\usepackage{tikz}
+\begin{document}
+
+\begin{tikzpicture}
+\path (2cm, -2cm) coordinate (origin);
+\draw[-latex] (origin) -- ++(1,0) node[right]{$x$};
+\draw[-latex] (origin) -- ++(0,1)node[above]{$y$};
+%\draw[-latex] (0,0) -- (1,1.5) node[right]{$F_z$};
+%\draw[dashed] (0,1.5) -| (1,0);
+%\draw[-latex] (-1.5,-0.5) -- ++(0.3,0) node[right]{\small$x_{NED}$};
+%\draw[-latex] (-1.5,-0.5) -- ++(0,-0.3)node[below]{\small$z_{NED}$};
+\draw[color=blue,very thin] (0.5cm,0) arc (0:33.7:0.5cm) node[right]{\tiny$\theta$};
+\draw[color=blue,very thin,dashed] (0,0) -- (1,0);
+
+\begin{scope}[rotate=33.7]
+\newcommand{\largo}{1cm}
+\draw[very thick] (-\largo,0) -- (\largo,0);
+\draw (\largo-0.1cm,0) --++ (0,0.2cm) -- +(0.3cm,0) -- +(-0.3cm,0);
+\draw (-\largo+0.1cm,0) --++ (0,0.2cm) -- +(0.3cm,0) -- +(-0.3cm,0);
+
+% empuje
+\draw[-latex] (0,0) -- (0,1) node[anchor=east]{\tiny $T$};
+
+% par
+\newcommand{\aux}{0.2cm}
+\newcommand{\startAngle}{50}
+\draw[->] (-\startAngle:\aux) arc(-\startAngle:180+80:\aux) ;
+\path (180-30:\aux+0.1cm) node{\tiny $\tau$};
+
+\end{scope}
+
+\end{tikzpicture}
+\end{document}

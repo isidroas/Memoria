@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2020.9.24)  16 OCT 2020 16:25
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2020.9.24)  26 OCT 2020 18:16
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -3243,54 +3243,132 @@ Package lettrine.sty Info: Targeted height = 16.54999pt
 (lettrine.sty)             (no accent, loversize=0),
 (lettrine.sty)             Lettrine height = 19.85995pt (E) loversize=0.2;
 (lettrine.sty)             reported on input line 4.
-<estimador_px4/tikz/ekf_output.pdf, id=207, 652.95445pt x 384.94315pt>
-File: estimador_px4/tikz/ekf_output.pdf Graphic file (type pdf)
-<use estimador_px4/tikz/ekf_output.pdf>
-Package pdftex.def Info: estimador_px4/tikz/ekf_output.pdf  used on input line 
-25.
-(pdftex.def)             Requested size: 426.79134pt x 251.61389pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-LaTeX Info: Redefining \. on input line 30.
-LaTeX Info: Redefining \% on input line 30.
-LaTeX Info: Redefining \. on input line 30.
-LaTeX Info: Redefining \% on input line 30.
+<estimador_px4/tikz/ekf_output_1.pdf, id=215, 542.88925pt x 220.00394pt>
+File: estimador_px4/tikz/ekf_output_1.pdf Graphic file (type pdf)
+<use estimador_px4/tikz/ekf_output_1.pdf>
+Package pdftex.def Info: estimador_px4/tikz/ekf_output_1.pdf  used on input lin
+e 13.
+(pdftex.def)             Requested size: 426.79134pt x 172.9586pt.
+<estimador_px4/tikz/ekf_output_2.pdf, id=217, 646.36378pt x 253.08855pt>
+File: estimador_px4/tikz/ekf_output_2.pdf Graphic file (type pdf)
+<use estimador_px4/tikz/ekf_output_2.pdf>
+Package pdftex.def Info: estimador_px4/tikz/ekf_output_2.pdf  used on input lin
+e 21.
+(pdftex.def)             Requested size: 426.79134pt x 167.11618pt.
+LaTeX Info: Redefining \. on input line 29.
+LaTeX Info: Redefining \% on input line 29.
+LaTeX Info: Redefining \. on input line 29.
+LaTeX Info: Redefining \% on input line 29.
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.30 D
-      e forma paralela se ejecuta el \textit{filtro de salida} que solamente...
+l.29 
+     
 \openout10 = `main.mw'.
 
-[1
+ [1
 
 
 ] (build//main.mw)
 \openout10 = `main.mw'.
 
-LaTeX Info: Redefining \. on input line 92.
-LaTeX Info: Redefining \% on input line 92.
-LaTeX Info: Redefining \. on input line 92.
-LaTeX Info: Redefining \% on input line 92.
+<estimador_px4/tikz/ekf_output_3.pdf, id=223, 549.18774pt x 401.37352pt>
+File: estimador_px4/tikz/ekf_output_3.pdf Graphic file (type pdf)
+<use estimador_px4/tikz/ekf_output_3.pdf>
+Package pdftex.def Info: estimador_px4/tikz/ekf_output_3.pdf  used on input lin
+e 31.
+(pdftex.def)             Requested size: 426.79134pt x 311.93704pt.
+LaTeX Info: Redefining \. on input line 79.
+LaTeX Info: Redefining \% on input line 79.
+LaTeX Info: Redefining \. on input line 79.
+LaTeX Info: Redefining \% on input line 79.
 pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has 
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.92 \end{align}
+l.79 \end{align}
                 
 \openout10 = `main.mw'.
 
- [2 <./estimador_px4/tikz/ekf_output.pdf>] (build//main.mw)
+ [2 <./estimador_px4/tikz/ekf_output_1.pdf> <./estimador_px4/tikz/ekf_output_2.
+pdf
+
+pdfTeX warning: pdflatex (file ./estimador_px4/tikz/ekf_output_2.pdf): PDF incl
+usion: multiple pdfs with page group included in a single page
+>] (build//main.mw)
 \openout10 = `main.mw'.
 
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+LaTeX Info: Redefining \. on input line 148.
+LaTeX Info: Redefining \% on input line 148.
+LaTeX Info: Redefining \. on input line 148.
+LaTeX Info: Redefining \% on input line 148.
+pdfTeX warning (ext4): destination with the same identifier (name{page.3}) has 
+been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.148 \end{align}
+                 
+\openout10 = `main.mw'.
+
+ [3 <./estimador_px4/tikz/ekf_output_3.pdf>] (build//main.mw)
+\openout10 = `main.mw'.
+
+<estimador_px4/tikz/quadrotor_2d.pdf, id=356, 129.70155pt x 91.10336pt>
+File: estimador_px4/tikz/quadrotor_2d.pdf Graphic file (type pdf)
+<use estimador_px4/tikz/quadrotor_2d.pdf>
+Package pdftex.def Info: estimador_px4/tikz/quadrotor_2d.pdf  used on input lin
+e 155.
+(pdftex.def)             Requested size: 213.39566pt x 149.90532pt.
+
+
+Package mathptmx Warning: There are no bold math fonts on input line 175.
+
+<estimador_px4/im_simu/tray_no_gps.pdf, id=359, 462.52798pt x 346.89601pt>
+File: estimador_px4/im_simu/tray_no_gps.pdf Graphic file (type pdf)
+<use estimador_px4/im_simu/tray_no_gps.pdf>
+Package pdftex.def Info: estimador_px4/im_simu/tray_no_gps.pdf  used on input l
+ine 183.
+(pdftex.def)             Requested size: 426.79134pt x 320.11156pt.
+
+Underfull \vbox (badness 2302) has occurred while \output is active []
+
+LaTeX Info: Redefining \. on input line 186.
+LaTeX Info: Redefining \% on input line 186.
+LaTeX Info: Redefining \. on input line 186.
+LaTeX Info: Redefining \% on input line 186.
+pdfTeX warning (ext4): destination with the same identifier (name{page.4}) has 
+been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.186 \end{figure}
+                  
+\openout10 = `main.mw'.
+
+ [4 <./estimador_px4/tikz/quadrotor_2d.pdf>] (build//main.mw)
+\openout10 = `main.mw'.
+
+<estimador_px4/im_simu/tray.pdf, id=386, 462.52798pt x 346.89601pt>
+File: estimador_px4/im_simu/tray.pdf Graphic file (type pdf)
+<use estimador_px4/im_simu/tray.pdf>
+Package pdftex.def Info: estimador_px4/im_simu/tray.pdf  used on input line 189
+.
+(pdftex.def)             Requested size: 426.79134pt x 320.11156pt.
+<estimador_px4/im_simu/gps.pdf, id=387, 462.52798pt x 346.89601pt>
+File: estimador_px4/im_simu/gps.pdf Graphic file (type pdf)
+<use estimador_px4/im_simu/gps.pdf>
+Package pdftex.def Info: estimador_px4/im_simu/gps.pdf  used on input line 190.
+
+(pdftex.def)             Requested size: 426.79134pt x 320.11156pt.
 )
 LaTeX Info: Redefining \. on input line 71.
 LaTeX Info: Redefining \% on input line 71.
 LaTeX Info: Redefining \. on input line 71.
 LaTeX Info: Redefining \% on input line 71.
-pdfTeX warning (ext4): destination with the same identifier (name{page.3}) has 
+pdfTeX warning (ext4): destination with the same identifier (name{page.5}) has 
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
@@ -3298,28 +3376,110 @@ l.71 \include{estimador_px4/estimador_px4}
                                           
 \openout10 = `main.mw'.
 
- [3] (build//main.mw)
+ [5 <./estimador_px4/im_simu/tray_no_gps.pdf>] (build//main.mw)
+\openout10 = `main.mw'.
+
+LaTeX Info: Redefining \. on input line 71.
+LaTeX Info: Redefining \% on input line 71.
+LaTeX Info: Redefining \. on input line 71.
+LaTeX Info: Redefining \% on input line 71.
+pdfTeX warning (ext4): destination with the same identifier (name{page.6}) has 
+been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.71 \include{estimador_px4/estimador_px4}
+                                          
+\openout10 = `main.mw'.
+
+ [6 <./estimador_px4/im_simu/tray.pdf> <./estimador_px4/im_simu/gps.pdf
+
+pdfTeX warning: pdflatex (file ./estimador_px4/im_simu/gps.pdf): PDF inclusion:
+ multiple pdfs with page group included in a single page
+>] (build//main.mw)
 \openout10 = `main.mw'.
 
 \openout2 = `apendices/apendices.aux'.
 
+ (./apendices/apendices.tex
+chapter A.
+(./build/_minted-main/default-pyg-prefix.pygstyle)
+(./build/_minted-main/default.pygstyle)
+(./build/_minted-main/7C50A543BC8C560182D4F21547279656384E5F2AE53B163B4EF55D98C
+856B8F6.pygtex
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `cmtt' (encoding: T1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
 
-No file apendices/apendices.tex.
-pdfTeX warning (ext4): destination with the same identifier (name{page.4}) has 
-been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.78 \backmatter
-                
+
+LaTeX Font Warning: Font shape `T1/cmtt/bx/n' in size <8> not available
+(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 3.
+
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `cmtt' (encoding: TS1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <5> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 34.
+)
+LaTeX Info: Redefining \. on input line 6.
+LaTeX Info: Redefining \% on input line 6.
+LaTeX Info: Redefining \. on input line 6.
+LaTeX Info: Redefining \% on input line 6.
 \openout10 = `main.mw'.
 
- [4
-
-
+ [7
 
 
 
 ] (build//main.mw)
+\openout10 = `main.mw'.
+
+LaTeX Info: Redefining \. on input line 6.
+LaTeX Info: Redefining \% on input line 6.
+LaTeX Info: Redefining \. on input line 6.
+LaTeX Info: Redefining \% on input line 6.
+\openout10 = `main.mw'.
+
+ [8] (build//main.mw)
+\openout10 = `main.mw'.
+
+LaTeX Info: Redefining \. on input line 6.
+LaTeX Info: Redefining \% on input line 6.
+LaTeX Info: Redefining \. on input line 6.
+LaTeX Info: Redefining \% on input line 6.
+\openout10 = `main.mw'.
+
+ [9] (build//main.mw)
+\openout10 = `main.mw'.
+
+LaTeX Info: Redefining \. on input line 6.
+LaTeX Info: Redefining \% on input line 6.
+LaTeX Info: Redefining \. on input line 6.
+LaTeX Info: Redefining \% on input line 6.
+\openout10 = `main.mw'.
+
+ [10]
+(build//main.mw)
+\openout10 = `main.mw'.
+
+LaTeX Info: Redefining \. on input line 6.
+LaTeX Info: Redefining \% on input line 6.
+LaTeX Info: Redefining \. on input line 6.
+LaTeX Info: Redefining \% on input line 6.
+\openout10 = `main.mw'.
+
+ [11] (build//main.mw)
+\openout10 = `main.mw'.
+
+)
+LaTeX Info: Redefining \. on input line 74.
+LaTeX Info: Redefining \% on input line 74.
+LaTeX Info: Redefining \. on input line 74.
+LaTeX Info: Redefining \% on input line 74.
+\openout10 = `main.mw'.
+
+ [12] (build//main.mw)
 \openout10 = `main.mw'.
 
 Package tocbasic Info: character protrusion at lof deactivated on input line 88
@@ -3337,29 +3497,20 @@ LaTeX Info: Redefining \. on input line 91.
 LaTeX Info: Redefining \% on input line 91.
 LaTeX Info: Redefining \. on input line 91.
 LaTeX Info: Redefining \% on input line 91.
-pdfTeX warning (ext4): destination with the same identifier (name{page.5}) has 
-been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.91 \cleardoublepage
-                     
 \openout10 = `main.mw'.
 
- [5
+[13
+
+
+
 
 
 ] (build//main.mw)
 \openout10 = `main.mw'.
 
-pdfTeX warning (ext4): destination with the same identifier (name{page.6}) has 
-been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.91 \cleardoublepage
-                     
 \openout10 = `main.mw'.
 
- [6
+ [14
 
 ] (build//main.mw)
 \openout10 = `main.mw'.
@@ -3381,7 +3532,7 @@ LaTeX Info: Redefining \. on input line 105.
 LaTeX Info: Redefining \% on input line 105.
 \openout10 = `main.mw'.
 
- [7
+ [15
 
 ]
 (build//main.mw)
@@ -3389,7 +3540,7 @@ LaTeX Info: Redefining \% on input line 105.
 
 \openout10 = `main.mw'.
 
- [8
+ [16
 
 ] (build//main.mw)
 \openout10 = `main.mw'.
@@ -3541,7 +3692,80 @@ LaTeX Info: Redefining \% on input line 36.
 
 \openout10 = `main.mw'.
 
-) (build//apendices/apendices.aux)
+\openout10 = `main.mw'.
+
+\openout10 = `main.mw'.
+
+\openout10 = `main.mw'.
+
+\openout10 = `main.mw'.
+
+\openout10 = `main.mw'.
+
+\openout10 = `main.mw'.
+
+\openout10 = `main.mw'.
+
+\openout10 = `main.mw'.
+
+\openout10 = `main.mw'.
+
+\openout10 = `main.mw'.
+
+\openout10 = `main.mw'.
+
+\openout10 = `main.mw'.
+
+\openout10 = `main.mw'.
+
+\openout10 = `main.mw'.
+
+\openout10 = `main.mw'.
+
+\openout10 = `main.mw'.
+
+\openout10 = `main.mw'.
+
+\openout10 = `main.mw'.
+
+\openout10 = `main.mw'.
+
+\openout10 = `main.mw'.
+
+\openout10 = `main.mw'.
+
+\openout10 = `main.mw'.
+
+\openout10 = `main.mw'.
+
+\openout10 = `main.mw'.
+
+) (build//apendices/apendices.aux
+\openout10 = `main.mw'.
+
+\openout10 = `main.mw'.
+
+\openout10 = `main.mw'.
+
+\openout10 = `main.mw'.
+
+\openout10 = `main.mw'.
+
+\openout10 = `main.mw'.
+
+\openout10 = `main.mw'.
+
+\openout10 = `main.mw'.
+
+\openout10 = `main.mw'.
+
+\openout10 = `main.mw'.
+
+\openout10 = `main.mw'.
+
+\openout10 = `main.mw'.
+
+)
 \openout10 = `main.mw'.
 
 \openout10 = `main.mw'.
@@ -3583,41 +3807,49 @@ Package logreq Info: Writing requests to 'main.run.xml'.
  )
 (\end occurred when \iftrue on line 445 was incomplete) 
 Here is how much of TeX's memory you used:
- 75160 strings out of 481239
- 1688803 string characters out of 5920377
- 2859340 words of memory out of 5000000
- 88748 multiletter control sequences out of 15000+600000
- 617468 words of font info for 120 fonts, out of 8000000 for 9000
+ 75624 strings out of 481239
+ 1697048 string characters out of 5920377
+ 2912852 words of memory out of 5000000
+ 89104 multiletter control sequences out of 15000+600000
+ 643309 words of font info for 168 fonts, out of 8000000 for 9000
  1162 hyphenation exceptions out of 8191
- 90i,15n,148p,10125b,2123s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 90i,16n,148p,10125b,2585s stack positions out of 5000i,500n,10000p,200000b,80000s
 pdfTeX warning (dest): n
-ame{section*.16} has been referenced but does not exist, replaced by a fixed on
+ame{section*.22} has been referenced but does not exist, replaced by a fixed on
 e
 
-pdfTeX warning (dest): name{section*.15} has been referenced but does not exist
+pdfTeX warning (dest): name{section*.21} has been referenced but does not exist
 , replaced by a fixed one
 
-{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/share/texmf/fo
-nts/enc/dvips/tex-gyre/q-ts1.enc}{/usr/share/texmf/fonts/enc/dvips/tex-gyre/q-e
-c.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb>
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/
-share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/t
-exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/share/texliv
-e/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf
--dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fo
-nts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf/fonts/type1/public/te
-x-gyre/qtmb.pfb></usr/share/texmf/fonts/type1/public/tex-gyre/qtmr.pfb></usr/sh
-are/texmf/fonts/type1/public/tex-gyre/qtmri.pfb></usr/share/texlive/texmf-dist/
-fonts/type1/urw/helvetic/uhvb8ac.pfb></usr/share/texlive/texmf-dist/fonts/type1
-/urw/helvetic/uhvr8ac.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvet
-ic/uhvro8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/symbol/usyr.pfb><
-/usr/share/texlive/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/share/texli
-ve/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/f
-onts/type1/urw/times/utmri8a.pfb>
-Output written on build//main.pdf (24 pages, 838097 bytes).
+{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-ts1.enc}{/usr/share/texmf/f
+onts/enc/dvips/cm-super/cm-super-t1.enc}{/usr/share/texmf/fonts/enc/dvips/tex-g
+yre/q-ec.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/s
+hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/t
+exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmmib10.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.
+pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></
+usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/sh
+are/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/te
+xmf/fonts/type1/public/tex-gyre/qtmb.pfb></usr/share/texmf/fonts/type1/public/t
+ex-gyre/qtmbi.pfb></usr/share/texmf/fonts/type1/public/tex-gyre/qtmr.pfb></usr/
+share/texmf/fonts/type1/public/tex-gyre/qtmri.pfb></usr/share/texmf/fonts/type1
+/public/cm-super/sfit0800.pfb></usr/share/texmf/fonts/type1/public/cm-super/sft
+t0800.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8ac.pfb><
+/usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvr8ac.pfb></usr/share/
+texlive/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/share/texlive/texmf-dist/fonts/ty
+pe1/urw/symbol/usyr.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/ut
+mr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on build//main.pdf (32 pages, 1222870 bytes).
 PDF statistics:
- 395 PDF objects out of 1000 (max. 8388607)
- 313 compressed objects within 4 object streams
- 48 named destinations out of 1000 (max. 500000)
- 22249 words of extra memory for PDF output out of 24883 (max. 10000000)
+ 651 PDF objects out of 1000 (max. 8388607)
+ 535 compressed objects within 6 object streams
+ 73 named destinations out of 1000 (max. 500000)
+ 30479 words of extra memory for PDF output out of 35830 (max. 10000000)
 

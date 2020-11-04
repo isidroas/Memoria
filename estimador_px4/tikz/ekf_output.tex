@@ -1,4 +1,3 @@
-\documentclass{standalone}
 \usepackage{tikz}
 \usepackage{calc}
 \usepackage{bm}
@@ -38,59 +37,137 @@
 
 \begin{tikzpicture}
 % TODO: añadir degradado para indicar medidas y estados más antiguos
-% TODO: Añadir leyenda
-% TODO: Que la medida del no caiga justo en la última celda
+% TODO: dibujar las flechas del mecanismo de corrección en discotinuo y ponerlo en la leyenda 
 
 % Buffer EKF
 \path (0,0) pic(ekfBuf){buffer};
 
 % Flecha que indica las medidas más antiguas
+\ifbool{hideArrow}{}{
 \path (ekfBuf-north-west) + (0,1) coordinate (aux);
-\draw[-latex] (aux)  -- (ekfBuf-north-east |- aux) node[anchor=south]{Más antiguas};
+\draw[-latex] (aux)  -- (ekfBuf-north-east |- aux) node[pos=0.5,anchor=south]{Movimiento de las medidas} node[anchor=south]{Más antiguas} node[anchor=south,pos=0]{Más recientes};
+}
 
 % Bloque de la IMU
 \path (ekfBuf-west) ++ (-3,0) node[draw=black, minimum size=1.5cm](IMU){IMU};
 \draw[-latex] (IMU) -- (ekfBuf-west) node[pos=0.5,anchor=south]{$\bm{a}$,$\omega$};
 
 % Bloque EKF
-\draw[-latex] (ekfBuf-south6) -- ++ (0,-1) node[very thick,draw=black,minimum size=1.5cm,anchor=north](EKF){EKF};
+\draw[-latex] (ekfBuf-south6) -- ++ (0,-1) node[very thick,draw=blue,minimum size=1.5cm,anchor=north](EKF){EKF};
 
 % Estados
+\ifbool{hideEstados}{}{
 \draw[-latex] (EKF) -- ++(0,-3) coordinate(endArrow) node[anchor=west,pos=0.5]{$\left. \begin{matrix}
 		\bm{P}\\
 		\bm{V}\\
-		\theta\\
-	\end{matrix} \right\}$ \shortstack{Estados estimados en el \\horizonte de tiempo retrasado}};
+		\theta \\\end{matrix} 
+          \ifbool{hideHorizonte}{
+	  \right.$
+          }{
+	    \right\}$ \shortstack{Estados estimados en el \\horizonte de tiempo retrasado}
+          }
+      };
+}
 
 % Cronómetro
-\path (IMU) ++(-0.5,-2) node{\includegraphics{clock}}  ++(0.2,0) node[anchor=west]{40ms};
+\path (IMU) ++(-0.5,-2) node{\includegraphics{clock}}  ++(0.2,0) node[anchor=west]{\theinstante ms };
 \newcounter{counterA}
 \newcounter{ekfAux}
 \setcounter{ekfAux}{\bufferEKF-2}
 
-% Medidas del buffer
-\foreach \x in {0, ...,\theekfAux, \bufferEKF }{
-	\setcounter{counterA}{5*(\bufferEKF-\x+2)}
-	\path (ekfBuf-center\x) node{$\begin{matrix}\bm{a}{\scriptstyle[\thecounterA ms]}\\
-				 \omega{\scriptstyle[\thecounterA ms]}\end{matrix}$};
-}
+%%% Medidas del buffer ekf %%%
+\newcommand{\alturaIcono}{1.5}
+\ifnumequal{\value{ekfStep}}{0}{
+    \path (ekfBuf-center0) node{$\begin{matrix}\bm{a}{\scriptstyle[0 ms]}\\
+    				 \omega{\scriptstyle[0 ms]}\end{matrix}$};
+}{}
 
-\setcounter{ekfAux}{\bufferEKF-1}
-% Medida más antigua
-\path (ekfBuf-center\theekfAux) node{$\begin{matrix}
-	\bm{a}{\scriptstyle[10ms]}\\ 
-	\omega{\scriptstyle[10ms]}\\
-	P_{GPS}{\scriptstyle[40ms]}
-\end{matrix}$};
+\ifnumequal{\value{ekfStep}}{1}{
+    \foreach \x in {0, ..., \bufferEKF }{
+    	\setcounter{counterA}{\value{instante}-5*\x}
+	\ifnumequal{\x}{5}{
+    		\path (ekfBuf-center\x) node{$\begin{matrix}
+    			P_{GPS}{\scriptstyle[50ms]}\\
+    			\bm{a}{\scriptstyle[\thecounterA ms]}\\ 
+    			\omega{\scriptstyle[\thecounterA ms]}
+    		\end{matrix}$};
+
+		% sensor gps
+		\draw[latex-] (ekfBuf-north\x) -- ++(0,\alturaIcono);
+		\path (ekfBuf-north\x) ++(0,0.5) node[anchor=west]{$P_{GPS}$};
+  		\path (ekfBuf-north\x) ++(0,\alturaIcono) node{\includegraphics[width=1cm]{satelite} };
+	}{
+    		\path (ekfBuf-center\x) node{$\begin{matrix}\bm{a}{\scriptstyle[\thecounterA ms]}\\
+    				 \omega{\scriptstyle[\thecounterA ms]}\end{matrix}$};
+	}
+    }
+}{}
+
+\ifnumequal{\value{ekfStep}}{2}{
+    \foreach \x in {0, ..., \bufferEKF }{
+    	\setcounter{counterA}{\value{instante}-5*\x}
+	\ifnumequal{\x}{6}{
+		% Medida de gps
+    		\path (ekfBuf-center\x) node{$\begin{matrix}
+    			P_{GPS}{\scriptstyle[75ms]}\\
+    			\bm{a}{\scriptstyle[\thecounterA ms]}\\ 
+    			\omega{\scriptstyle[\thecounterA ms]}
+    		\end{matrix}$};
+	}{
+	\ifnumequal{\x}{5}{
+    		\path (ekfBuf-center\x) node{$\begin{matrix}\bm{a}{\scriptstyle[\thecounterA ms]}\\
+    				 \omega{\scriptstyle[\thecounterA ms]}\end{matrix}$};
+
+		% sensor gps
+		\draw[latex-] (ekfBuf-north\x) -- ++(0,\alturaIcono);
+		\path (ekfBuf-north\x) ++(0,0.5) node[anchor=west]{$P_{GPS}$};
+  		\path (ekfBuf-north\x) ++(0,\alturaIcono) node{\includegraphics[width=1cm]{satelite} };
+	}{
+	\ifnumequal{\x}{3}{
+		% Medida de flujo optico
+    		\path (ekfBuf-center\x) node{$\begin{matrix}
+    			V_{op}{\scriptstyle[80ms]}\\
+    			\bm{a}{\scriptstyle[\thecounterA ms]}\\ 
+    			\omega{\scriptstyle[\thecounterA ms]}
+    		\end{matrix}$};
+		
+		% sensor optical flow
+		\draw[latex-] (ekfBuf-north\x)  -- ++(0,\alturaIcono-0.3);
+		\path (ekfBuf-north\x) ++(0,0.5) node[anchor=west]{$V_{op}$};
+  		\path (ekfBuf-north\x) ++(0,\alturaIcono) node{\includegraphics[width=1cm]{vision} };
+	}{
+	\ifnumequal{\x}{0}{
+		% Medida del barómetro
+    		\path (ekfBuf-center\x) node{$\begin{matrix}
+    			h_{baro}{\scriptstyle[80ms]}\\
+    			\bm{a}{\scriptstyle[\thecounterA ms]}\\ 
+    			\omega{\scriptstyle[\thecounterA ms]}
+    		\end{matrix}$};
+		
+		% Sensor barómetro
+		\draw[latex-] (ekfBuf-north\x) -- ++(0,\alturaIcono-0.5);
+		\path (ekfBuf-north\x)  ++(0,0.5) node[anchor=west]{$h_{baro}$};
+  		\path (ekfBuf-north\x) ++(0,\alturaIcono) node{\includegraphics[width=1cm]{barometer} };
+
+	}{
+    		\path (ekfBuf-center\x) node{$\begin{matrix}\bm{a}{\scriptstyle[\thecounterA ms]}\\
+    				 \omega{\scriptstyle[\thecounterA ms]}\end{matrix}$};
+	}}}}
+	
+    }
+}{}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-% Output Buffer
+
+%%% Output Buffer %%%
+\ifbool{hideOutput}{}{
 \path (0,-9) pic(outBuf){buffer};
 
 % Medidas del buffer de salida
 \newcounter{counterB}
 \foreach \x in {0, ...,\bufferEKF }{
-	\setcounter{counterB}{5*(\bufferEKF-\x+2)}
+    	\setcounter{counterB}{\value{instante}-5*\x}
 	\path (outBuf-center\x) node{$\begin{matrix}\bm{P}{\scriptstyle[\thecounterB ms]}\\ 
 		\bm{V}{\scriptstyle[\thecounterB ms]}\\ 
 		\theta{\scriptstyle[\thecounterB ms]}
@@ -104,32 +181,38 @@
 \path (sumNode) ++ (0.3,0.2) node{-};
 \draw (sumNode) -- +(0,-0.5) node[draw,shape=isosceles triangle,anchor=west,rotate=-90](triangle){} ;
 
+\newcommand{\colorCorr}{yellow!70!black}
 % Flechas a cada celda
 \draw (triangle.east) -- +(0,-0.1) coordinate(aux);
 \foreach \x in {0, ...,\bufferEKF }{
-	\draw[-latex](aux) -| (outBuf-north\x);
+	\draw[-latex,color=\colorCorr](aux) -| (outBuf-north\x);
+	\draw (outBuf-north\x) ++ (0.15,0.2) node{\tiny $+$};
 }
 \path (aux-|outBuf-north0) coordinate(lastArrow);
 
 % Bloque filtro de salida
-\path (lastArrow) ++ (-3,0) node[draw=black, minimum size= 1.5cm](outFilt){Filtro de salida};
+\path (lastArrow) ++ (-3,0) node[draw=red, minimum size= 2cm,very thick](outFilt){Filtro de salida};
 \draw[latex-] (outBuf-west) -|  (outFilt);
 \draw[-latex] (outFilt) -- +(0,-3) node[anchor=north]{\shortstack{Estados estimados en el\\ horizonte de tiempo actual}};
 
 % Conexión a la IMU
 \draw[-latex] (IMU)  -| (outFilt);
-
 % Flecha de correción al filtro de salida
-\draw[-latex] (lastArrow) -- (outFilt.east);
+\draw[-latex,color=\colorCorr] (lastArrow) -- (outFilt.east);
+\draw (outFilt.east) ++ (0.2,0.15) node{\tiny $+$};
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Leyenda
-\draw(5,-3) node[draw,dashed]{  \begin{tabular}{lll}    
-							{\bfseries Legenda}&\\
-							$\bm{a}[35ms]$&$\rightarrow$  &medida del acelerómetro tomada en el instante $t=35ms$\\
-			      				$\omega$&$\rightarrow$ &medida del giróscopo\\
-  					%		\tikz{\path   node{\includegraphics[scale=0.5]{clock}}  ++(0.2,0) node[anchor=west]{40ms };}&$\rightarrow$ &  Instante actual $t=40ms$
-  							\includegraphics[scale=0.5]{clock}\ \small{40ms} &$\rightarrow$ &  Instante actual $t=40ms$
-						     \end{tabular}  };
+\ifbool{hideLegend}{}{
+\draw(5,-3) node[draw,dashed]{  
+	\begin{tabular}{lll}    
+		{\bfseries Legenda}&\\ & \\
+		$\bm{a}[35ms]$&$\rightarrow$  &medida del acelerómetro tomada en el instante $t=35ms$\\
+		$\omega$&$\rightarrow$ &medida del giróscopo\\
+  		\includegraphics[scale=0.5]{clock}\ \small{40ms} &$\rightarrow$ &  Instante actual $t=40ms$
+	\end{tabular}  };
+}
 
 
 \end{tikzpicture}
