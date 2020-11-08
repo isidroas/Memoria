@@ -2,24 +2,38 @@
 \boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax
 \babel@toc {spanish}{}
 \defcounter {refsection}{0}\relax
-\contentsline {listasf}{Resumen}{III}{section*.4}%
+\contentsline {listasf}{Resumen}{I}{section*.2}%
 \defcounter {refsection}{0}\relax
-\contentsline {listasf}{Abstract}{V}{section*.6}%
+\contentsline {listasf}{Abstract}{III}{section*.4}%
 \defcounter {refsection}{0}\relax
-\contentsline {listasf}{Índice Abreviado}{VII}{section*.7}%
+\contentsline {listasf}{Índice Abreviado}{V}{section*.5}%
 \defcounter {refsection}{0}\relax
-\contentsline {chapter}{\numberline {1}Estimador de estados}{1}{chapter.1}%
+\contentsline {chapter}{\numberline {1}Introducción}{1}{chapter.1}%
 \defcounter {refsection}{0}\relax
-\contentsline {section}{\numberline {1.1}Manejo de medidas retrasadas}{1}{section.1.1}%
+\contentsline {chapter}{\numberline {2}Estimador de estados}{3}{chapter.2}%
 \defcounter {refsection}{0}\relax
-\contentsline {section}{\numberline {1.2}EKF para modelo bidimensional}{2}{section.1.2}%
+\contentsline {section}{\numberline {2.1}Manejo de medidas retrasadas}{3}{section.2.1}%
 \defcounter {refsection}{0}\relax
-\contentsline {section}{\numberline {1.3}Simulación del quadrotor y del estimador}{4}{section.1.3}%
+\contentsline {subsection}{\numberline {2.1.1}Detalles de implementación}{4}{subsection.2.1.1}%
 \defcounter {refsection}{0}\relax
-\contentsline {chapter}{Ap\'{e}ndice \numberline {A}Simulador del estimador de estados}{7}{Appendix.alph1.Alph1}%
+\contentsline {section}{\numberline {2.2}EKF para modelo bidimensional}{6}{section.2.2}%
+\defcounter {refsection}{0}\relax
+\contentsline {section}{\numberline {2.3}Simulación del quadrotor y del estimador}{7}{section.2.3}%
+\defcounter {refsection}{0}\relax
+\contentsline {chapter}{\numberline {3}Posicionamiento mediante marcadores visuales}{11}{chapter.3}%
+\defcounter {refsection}{0}\relax
+\contentsline {section}{\numberline {3.1}Mi programa}{11}{section.3.1}%
+\defcounter {refsection}{0}\relax
+\contentsline {section}{\numberline {3.2}Hardware}{14}{section.3.2}%
+\defcounter {refsection}{0}\relax
+\contentsline {section}{\numberline {3.3}Registro de resultados (log)}{15}{section.3.3}%
+\defcounter {refsection}{0}\relax
+\contentsline {chapter}{Ap\'{e}ndice \numberline {A}Simulador del estimador de estados}{17}{Appendix.alph1.Alph1}%
 \defcounter {refsection}{0}\relax
 \mbox {}\hspace *{0pt}\par
 \defcounter {refsection}{0}\relax
-\contentsline {listasb}{{\'I}ndice de Figuras}{13}{section*.17}%
+\contentsline {listasb}{{\'I}ndice de Figuras}{23}{section*.17}%
 \defcounter {refsection}{0}\relax
-\contentsline {listasb}{{\'I}ndice de Tablas}{15}{section*.19}%
+\contentsline {listasb}{{\'I}ndice de Tablas}{25}{section*.19}%
+\defcounter {refsection}{0}\relax
+\contentsline {listasb}{Bibliograf\'{\i }a}{27}{section*.21}%

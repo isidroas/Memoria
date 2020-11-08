@@ -3,7 +3,7 @@
 \input{cabeceras/cabecera}
 \begin{document}
 %:Para incluir toda la referencia bibliográfica aunque no se cite, descomente la siguiente línea
-%\nocite{*}
+\nocite{*}
 
 
 %PORTADA
@@ -39,7 +39,7 @@
 \pagenumbering{Roman} %Pone la numeración en mayúscula (En español parece que es obligatorio)
 
 %\include{dedicatoria/dedicatoria}
-\include{agradecimientos/agradecimientos}
+%\include{agradecimientos/agradecimientos}
 
 \include{resumen/resumen} 
 
@@ -67,8 +67,9 @@
 \pagestyle{esitscCD}
 \hypersetup { linkcolor=blue, } 
 
-%\include{introduccion/introduccion}
+\include{introduccion/introduccion}
 \include{estimador_px4/estimador_px4}
+\include{posicionamiento_marcadores/posicionamiento_marcadores}
 
 \begin{appendices}
 \include{apendices/apendices} 
