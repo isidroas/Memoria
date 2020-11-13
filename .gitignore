@@ -5,5 +5,12 @@
 *.lof
 *.ist
 *.toc
+*.mw
+*.thm
+*.idx
+*.acn
+*.bcf
+*.glo
+*.ist
 
 build/
