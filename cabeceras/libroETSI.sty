@@ -1020,10 +1020,11 @@ di-fe-ren-tes re-a-li-za-do ma-ne-ra}
 \captionsetup{labelformat=esisf, textfont=normalfont, textformat=period, labelsep=cuadratin, format=hang, indention=0 cm,skip=10pt, labelformat=esisf}
 
 %:Para incluir subfiguras
-\usepackage{subfig}
-\DeclareCaptionLabelFormat{subfig}{\aheadteoremas{#1} \aheadteoremas{(#2)} }
-\captionsetup[subfigure]{labelformat=subfig }
-\def\sfx#1{\reffont{-\subref{#1}}}
+%\usepackage{subfig}
+\usepackage{subcaption}
+%\DeclareCaptionLabelFormat{subfig}{\aheadteoremas{#1} \aheadteoremas{(#2)} }
+%\captionsetup[subfigure]{labelformat=subfig }
+%\def\sfx#1{\reffont{-\subref{#1}}}
 
 %:Para que los objetos flotantes (tablas y figuras) puedan manejarse mejor
 \usepackage{floatrow} 

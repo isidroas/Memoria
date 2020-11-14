@@ -10,6 +10,7 @@ En la robótica uno de los mayores problemas es la percepción del entorno y su 
 %- Balizas acústicas
 %- GNSS RTK
 
+% Marcadores visuales. Solución robusta (no hay muchos falsos positivos) ya que es complicado encontrarse en el entorno algo parecido (no como los que usan una pelota), y además barata ya que tiene poco costo computacional, al contrario que los SLAM por ejemplo. 
 
 Posibles aplicaciones del posicionamiento con precisión centimétrica:
 - Despegue y aterrizaje
@@ -27,6 +28,11 @@ En este trabajo se propone conseguir ese posicionamiento mediante marcadores vis
 % Trabajos anteriores
 La empresa \textit{Everdrone} es una de las que más a avanzado en este campo. 
 % Flytbase también está relacionado
+
+% TODO: Los puntos que se veran
+En este trabajo en primer lugar, en el capítulo \ref{ch-1} se hace un estudio de una parte clave para el posicionamiento con marcadores, que es el estimador de estados.  
+% además de simulaciones
+En el capítulo \ref{ch-2} se explica cómo se ha implementado este posicionamiento, mostrando los componentes utilizados y explicando el código escrito.
 
 
 \endinput
