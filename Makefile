@@ -12,3 +12,6 @@ clean:
 bibliografia:
 	biber  build/main	
 
+update-code:
+	cd apendices; ./copy_quadrotor.py;
+	cd apendices; ./copy_rpi_vision_uav.py

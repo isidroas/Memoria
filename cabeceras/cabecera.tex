@@ -98,11 +98,11 @@ twoside}
 
 \usepackage{morewrites}
 \usepackage[outputdir=build]{minted}
-\setminted{fontsize=\footnotesize,linenos,breaklines}
+\setminted{fontsize=\footnotesize,linenos,breaklines,mathescape}
 \usepackage[minted]{tcolorbox}
 \tcbuselibrary{breakable,skins}
 
-\newtcolorbox[auto counter,number within=section]{codigo}[2][]{enhanced,breakable, left=1cm,colback=black!5!white,colframe=blue!0!black,fonttitle=\bfseries, title=Código ~\thetcbcounter: #2,#1}
+\newtcolorbox[auto counter,number within=chapter,list inside={qst}]{codigo}[2][]{,enhanced,breakable, left=1cm,colback=black!5!white,colframe=blue!0!black,fonttitle=\bfseries, title=Código ~\thetcbcounter: #2,#1}
 \usepackage{adjustbox}
 \usepackage{tikz-3dplot}
 %\usepackage{subcaption}

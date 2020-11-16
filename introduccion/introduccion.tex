@@ -2,9 +2,10 @@
 %El anterior comando permite compilar este documento llamando al documento raíz
 \chapter{Introducción}\label{chp-02}
 
-\lettrine[lraise=-0.1, lines=2, loversize=0.2]{E}{l} interés 
-
-En la robótica uno de los mayores problemas es la percepción del entorno y su ubicación en él. En concreto, cuando se habla de vehículos aéreos no tripulados (UAV), suelen poder posicionarse en el exterior con una precisión de metros. Sin embargo, cuando se trata de navegar en interiores o con precisión más alta el coste de los componentes puede ser muy elevados. Por ejemplo, en exteriores, se puede utilizar la \textit{navegación cinética satelital en tiempo real} (RTK) o en interiores se pueden utilizar balizas acústicas.
+\ifthenelse{\entregar = 1}{
+{\color{red} [Pendiente] }
+}{
+\lettrine[lraise=-0.1, lines=2, loversize=0.2]{E}{n} la robótica, uno de los mayores problemas es la percepción del entorno y su ubicación en él. En concreto, cuando se habla de vehículos aéreos no tripulados (UAV), suelen poder posicionarse en el exterior con una precisión de metros. Sin embargo, cuando se trata de navegar en interiores o con precisión más alta el coste de los componentes puede ser muy elevados. Por ejemplo, en exteriores, se puede utilizar la \textit{navegación cinética satelital en tiempo real} (RTK) o en interiores se pueden utilizar balizas acústicas.
 
 %Existen formas pero son más caras:
 %- Balizas acústicas
@@ -33,6 +34,7 @@ La empresa \textit{Everdrone} es una de las que más a avanzado en este campo.
 En este trabajo en primer lugar, en el capítulo \ref{ch-1} se hace un estudio de una parte clave para el posicionamiento con marcadores, que es el estimador de estados.  
 % además de simulaciones
 En el capítulo \ref{ch-2} se explica cómo se ha implementado este posicionamiento, mostrando los componentes utilizados y explicando el código escrito.
+}
 
 
 \endinput

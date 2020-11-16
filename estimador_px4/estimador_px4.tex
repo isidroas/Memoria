@@ -1,7 +1,7 @@
 % !TEX root =../main.tex
 \chapter{Estimador de estados}\label{chp:1}
 
-\lettrine[lraise=-0.1, lines=2, loversize=0.2]{E}{n} este capítulo se analizará uno de los elementos que se utilizarán en el siguiente, que es el estimador de estados. En concreto se analiza el que incorpora el autopiloto de código abierto PX4, ya que será este se utilizará para la implementación. Previamente, en \cite{arias2019control} se hizo una explicación parcial de este, pero se dejaron atrás algunos detalles como el manejo de las medidas retrasadas. Aquí se explicará esto y además se realizará una simulación que demuestre la eficacia del algoritmo.
+\lettrine[lraise=-0.1, lines=2, loversize=0.2]{E}{n} este capítulo se analizará uno de los elementos que se utilizarán en el siguiente, que es el estimador de estados. En concreto se analiza el que incorpora el autopiloto de código abierto PX4, ya que será este el que se utilizará para la implementación. Previamente, en \cite{arias2019control} se hizo una explicación parcial de este, pero se dejaron atrás algunos detalles como el manejo de las medidas retrasadas. Aquí se explicará esto y además se realizará una simulación que demuestre la eficacia del algoritmo.
 
 \section{Manejo de medidas retrasadas}
 En muchas ocasiones se tienen sensores con un retraso muy diferentes entre ellos, por ejemplo una IMU es mucho más rápida que el procesamiento de la imagen de una cámara o el GNSS. PX4 lo soluciona añadiendo más elementos a la estructura original de un estimador de estados. Uno de sus elementos es un \textit{Filtro de Kalman Extendido} (EKF). Este no usa las medidas más nuevas que le llegan, si no que las almacena y utiliza las que llegaron hace un determinado tiempo. Corriendo en paralelo, existe un estimador llamado \textit{Filtro de Salida}, el cual sí que utiliza la última medida del acelerómetro y del giróscopo. 
@@ -46,7 +46,7 @@ De forma paralela se ejecuta el \textit{filtro de salida}, que es otro estimador
 
 Este mecanismo está compuesto otro buffer llamado \textit{buffer de salida}, que se comporta de la misma manera que el primero, pero en lugar de guardar medidas, almacena los estados del filtro de salida. Estos estados se van desplazando hacia la derecha hasta que llegan a la última posición del buffer. En esta posición están los estados que se estimaron por el filtro de salida hace 30 ms, que coincide con el retraso que tienen las medidas del la IMU que entran al EKF. Si al EKF solo se le hubiese suministrado las medidas de la IMU, al igual que al filtro de salida, los estados del EKF y los que hay almacenado en esta última celda del buffer de salida coincidirían. Sin embargo, lo que está ocurriendo es que el EKF recoge medidas de otros sensores y por lo tanto no coincidirán. Para realizar la corrección, se calcula la diferencia entre ellos. Esta diferencia se atenúa y se le suma a todos los elementos del buffer de salida, además de al propio filtro de salida. 
 
-En la figura \ref{fig:est3} se ha ilustrado este mecanismo de correción además de incluir más medidas: la velocidad proporcionada por flujo óptico ($V_{op}$), la cual tiene un retraso de 15ms, y la altura que proporciona el barómetro, que se ha supuesto que no tiene ningún retraso. 
+En la figura \ref{fig:est3} se ha ilustrado este mecanismo de corrección además de incluir más medidas: la velocidad proporcionada por flujo óptico ($V_{op}$), la cual tiene un retraso de 15ms, y la altura que proporciona el barómetro, que se ha supuesto que no tiene ningún retraso. 
 
 % TODO: comentar otras medidas que han llegado
 
@@ -57,7 +57,7 @@ En la figura \ref{fig:est3} se ha ilustrado este mecanismo de correción además
 % tamaño de los buffer
 En este apartado se presentan algunos trozos de código de PX4 que implementan lo anteriormente descrito más algunos detalles que he se han omitido en el apartado anterior para que fuese más fácil su comprensión.
 
-En el apartado anterior se explicó que la error entre los estados estimados en el horizonte de tiempo retrasado y los estados del buffer de salida, se atenuaban (multiplicar por una ganancia menor que 1, mostrado en la figura \ref{fig:est3} como un triángulo) y se le suma a todo el buffer de salida. En el siguiente código se puede ver cómo se ha implentado esto. Se puede ver que la correción de la velocidad y la posición no solo se calcula a partir del error, sino también a partir de la integral del error, por lo tanto aqui se tiene un control proporcional-integral que tiene como señal de control la correción al buffer de salida. De esta manera, los estados en el horizonte de tiempo actual, se igualarán a los del horizonte de tiempo retrasado en régimen permanente. 
+En el apartado anterior se explicó que la error entre los estados estimados en el horizonte de tiempo retrasado y los estados del buffer de salida, se atenuaban (multiplicar por una ganancia menor que 1, mostrado en la figura \ref{fig:est3} como un triángulo) y se le suma a todo el buffer de salida. En el siguiente código se puede ver cómo se ha implementado esto. Se puede ver que la corrección de la velocidad y la posición no solo se calcula a partir del error, sino también a partir de la integral del error, por lo tanto aqui se tiene un control proporcional-integral que tiene como señal de control la corrección al buffer de salida. De esta manera, los estados en el horizonte de tiempo actual, se igualarán a los del horizonte de tiempo retrasado en régimen permanente. 
 
 \begin{codigo}{Correción del buffer de salida. Ubicado en  la línea \href{https://github.com/PX4/PX4-ECL/blob/ec934908900b23ee273d1a9f82364b7b38423200/EKF/ekf.cpp\#L488}{488} del archivo \textit{Firmware/src/lib/ecl/EKF/ekf.cpp}}
 \begin{minted}[firstnumber=488]{c++}
@@ -92,9 +92,9 @@ void Ekf::applyCorrectionToOutputBuffer(float vel_gain, float pos_gain){
 \end{minted}
 \end{codigo} 
 
-En el código anterior no ha aparecido la correción de la orientación, y esto es porque requieren que sea tratada a parte. En este estimador, la orientación se expresa en cuaternios y la operación de la correción no es simplemente una suma como ocurría en el caso de la velocidad, es más complicada y se tardaría demasiado en aplicarla a todos los elementos del buffer. En su lugar, únicamente se aplica una correción a la orientación estimada en el horizonte de tiempo actual.
+En el código anterior no ha aparecido la corrección de la orientación, y esto es porque requieren que sea tratada a parte. En este estimador, la orientación se expresa en cuaternios y la operación de la corrección no es simplemente una suma como ocurría en el caso de la velocidad, es más complicada y se tardaría demasiado en aplicarla a todos los elementos del buffer. En su lugar, únicamente se aplica una corrección a la orientación estimada en el horizonte de tiempo actual.
 
-\begin{codigo}{Correción de la orientación. Ubicado en el archivo \textit{Firmware/src/lib/ecl/EKF/ekf.cpp}}
+\begin{codigo}{Corrección de la orientación. Ubicado en el archivo \textit{Firmware/src/lib/ecl/EKF/ekf.cpp}}
 En la línea \href{https://github.com/PX4/PX4-ECL/blob/ec934908900b23ee273d1a9f82364b7b38423200/EKF/ekf.cpp\#L323}{323} se corrige la orientación:
 \begin{minted}[firstnumber=323]{c++}
   // Apply corrections to the delta angle required to track the quaternion states at the EKF fusion time horizon
@@ -120,9 +120,9 @@ En la línea \href{https://github.com/PX4/PX4-ECL/blob/ec934908900b23ee273d1a9f8
 %Puede que este valor se haya sacado de aproximar un retraso e^{sT} por un padé, como viene en https://www.researchgate.net/publication/237396133_RATIONAL_APPROXIMATION_OF_TIME_DELAY
 % sin embargo no se como sacar el factor de amortiguamiento de funciones de tranferencia con ceros de fase no mínima.
 
-% TODO: Tamaño del buffer. 
 % TODO: buffer de salida se ejecuta más frecuentemente. 
-En el siguiente código se puede ver cómo se calcula la logitud del buffer de las medidas de la IMU. Se puede ver que se hace para que haya espacio para medidas que tengan un retraso igual al sensor que más retraso tiene.
+
+Tampoco se ha hablado de la longitud de los buffers, la cual hay que determinar antes de empezar a estimar. En el siguiente código se puede ver cómo se calcula la longitud del buffer de medidas de la IMU. Esta se determina de manera que el EKF se ejecutará con un retraso igual al sensor que más retraso tiene.
 \begin{codigo}{Cálculo del tamaño del buffer. Ubicado en el archivo \textit{Firmware/src/lib/ecl/EKF/estimator\_interface.cpp}}
 \begin{minted}[firstnumber=512]{c++}
   // find the maximum time delay the buffers are required to handle
@@ -197,7 +197,7 @@ V_x \\ V_y
 \end{align}
 
 
-Jacobiano del modelo de predicción:
+Jacobiano del modelo de predicción con respecto a los estados:
 \begin{align}
 F =\left. \frac{\partial f}{\partial X}\right| _{X_{k-1}} =  
 \begin{bmatrix} 
@@ -214,7 +214,7 @@ F =\left. \frac{\partial f}{\partial X}\right| _{X_{k-1}} =
 \end{bmatrix}
 \end{align}
 
-Jacobiano del modelo de predicción con respecto a la aceleración a la velocidad angular. 
+Jacobiano del modelo de predicción con respecto a la aceleración y a la velocidad angular. 
 \begin{align}
 G =  \frac{\partial f}{\partial \bm{a},\omega} = 
 \begin{bmatrix} 
@@ -245,7 +245,7 @@ G^T
 Donde $\sigma^2_a$ y $\sigma^2_\omega$ son las varianzas del acelerómetro y del giróscopo, que se pueden hayar experimentalmente o viendo la hoja de datos de los sensores. 
 
 \section{Simulación del quadrotor y del estimador}
-En este apartado se implementará el filtro explicado en este capítulo y pondrá a prueba con un simulador de un quadrotor. Tanto el estimador como el simulador estarán programados en lenguaje python. El simulador será muy sencillo, describirá el movimiento de un quadrotor en el plano al que únicamente se le aplican la fuerza de la gravedad, un empuje y un par. Estos dos últimos se serán generados por un controlador de velocidad vertical y un controlador de ángulo, los cuales toman la velocidad, y la inclinación real del vehículo en lugar de medidas ruidosas. Sus referencias se han escogido para que desde el reposo, ascienda unos metros, y luego se desplace hacia la dirección negativa del eje x. 
+En este apartado se implementará el filtro explicado en este capítulo y pondrá a prueba con un simulador de un quadrotor. Tanto el estimador como el simulador estarán programados en lenguaje Python. El simulador será muy sencillo, describirá el movimiento de un quadrotor en el plano al que únicamente se le aplican la fuerza de la gravedad, un empuje y un par. Estos dos últimos se serán generados por un controlador de velocidad vertical y un controlador de ángulo, los cuales toman la velocidad, y la inclinación real del vehículo en lugar de medidas ruidosas. Sus referencias se han escogido para que desde el reposo, ascienda unos metros, y luego se desplace hacia la dirección negativa del eje x. 
 
 
 \begin{figure}
@@ -276,29 +276,38 @@ Una vez se ha simulado esta trayectoria, se pasa ejecutar el estimador de estado
 
 El primer experimento que se va a mostrar, al estimador de estados no le va a entrar ninguna otra medida que no sea la del giróscopo y la del acelerómetro. En la figura \ref{fig:simu1} se puede apreciar que la estimación de la posición tiene una deriva, ya que no hay ningún sensor que aporte posición absoluta. 
 
-\begin{figure}[b]
-\includegraphics[width=0.5\textwidth]{estimador_px4/im_simu/n_update/tray}
-\caption{EKF no ejecuta la fase de actualización}
-\label{fig:simu1}
+%\begin{figure}[b]
+%\includegraphics[width=0.5\textwidth]{estimador_px4/im_simu/n_update/tray}
+
+\begin{figure}[b]	
+	\centering
+	%\hspace*{-0.5cm}
+	%\begin{subfigure}[t]{0.49\textwidth}
+		\centering
+		\includegraphics[width=0.5\textwidth]{estimador_px4/im_simu/n_update/y_t}
+		%\caption{}
+	%\end{subfigure}
+	\quad
+	\caption{EKF no ejecuta la fase de actualización}
+	\label{fig:simu1}
 \end{figure}
 
 
-En el siguiente experimento se va a fusionar un GPS con un retraso de 1 segundo. Este valor es poco relista pero de esta manera se aprecia más la degradación de la estimación. Se puede ver en la figura \ref{fig:no-handle} que el GPS emperora la estimación, ya que en el instante $t=1s$, la estimación se aleja de su valor real porque llega la primera medida del GPS. 
-\begin{figure}	
+En el siguiente experimento se va a fusionar un GPS con un retraso de 1 segundo y un periodo de 300ms. Estos valores son poco realistas pero de esta manera se aprecia más la degradación de la estimación. Se puede ver en la figura \ref{fig:no-handle} que el GPS empeora la estimación, ya que en el instante $t=1s$, la estimación se aleja de su valor real porque llega su primera medida. Aquí se puede aprovechar para ver cómo se comporta el filtro de Kalman cuando la medida tiene mucho más error del que se ha especificado. En este caso se impuso que tuviese una desviación típica de 1 centímetro, mientras que en realidad está cometiendo errores de más de un metro a causa del retraso. También se puede ver la dependencia mutua entre todos los estados: la medida del GPS no afecta solo a los estados de la posición, sino que también a la velocidad y a la orientación.  
+
+\begin{figure}[b]	
 	\centering
 	\hspace*{-0.5cm}
 	\begin{subfigure}[t]{0.49\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{estimador_px4/im_simu/no_handle_delay/x_t}
 		\caption{}
-		\label{fig:no-handle-xt}		
 	\end{subfigure}
 	\quad
 	\begin{subfigure}[t]{0.49\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{estimador_px4/im_simu/no_handle_delay/y_t}
 		\caption{}
-		\label{fig:no-handle-yt}		
 	\end{subfigure}
 	\quad
 	\hspace*{-0.5cm}
@@ -306,20 +315,19 @@ En el siguiente experimento se va a fusionar un GPS con un retraso de 1 segundo.
 		\centering
 		\includegraphics[width=\textwidth]{estimador_px4/im_simu/no_handle_delay/theta}
 		\caption{}
-		\label{fig:no-handle-theta}		
 	\end{subfigure}
 	\quad
 	\begin{subfigure}[t]{0.49\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{estimador_px4/im_simu/no_handle_delay/vx}
 		\caption{}
-		\label{fig:no-handle-vx}		
 	\end{subfigure}
 	\quad
-	\caption{Fusión del GPS con retraso}\label{fig:no-handle}
+	\caption{Fusión del GPS con retraso}
+	\label{fig:no-handle}
 \end{figure}
 
-En el tercer experimento se realizar el manejo de los retrasos explicado en este capítulo. En la figura \ref{fig:handle} se tiene que, aunque la estimación esté retrasada un segundo, esta no se ve degradada por el GPS ya que se le está compensando su retraso antes de fusionarlo con las medidas de la IMU. 
+En el tercer experimento se ha realizado el manejo de los retrasos explicado en este capítulo. En la figura \ref{fig:handle} se tiene que, aunque la medida esté retrasada un segundo, esta no se ve degradada por el GPS ya que se le está compensando su retraso antes de fusionarlo con las medidas de la IMU. Es más,la estimación es mejor que en los dos casos anteriores. En la imagen \ref{fig:py-error} se puede ver la desviación típica que estima el filtro, que tiene forma de diente de sierra debido a la llegada periódica de las medidas del GPS, comparado con los errores reales: el del filtro de salida y el del EKF, que se calcula como la diferencia con el groundtruth retrasado la misma cantidad de tiempo que el filtro de Kalman extendido. En este último caso, el error estimado no se aleja mucho del real, pero en el caso del filtro de salida este error es mayor. 
 
 \begin{figure}	
 	\centering
@@ -328,14 +336,12 @@ En el tercer experimento se realizar el manejo de los retrasos explicado en este
 		\centering
 		\includegraphics[width=\textwidth]{estimador_px4/im_simu/handle_delay/x_t}
 		\caption{}
-		\label{fig:handle-xt}		
 	\end{subfigure}
 	\quad
 	\begin{subfigure}[t]{0.49\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{estimador_px4/im_simu/handle_delay/y_t}
 		\caption{}
-		\label{fig:handle-yt}		
 	\end{subfigure}
 	\quad
 	\hspace*{-0.5cm}
@@ -343,17 +349,30 @@ En el tercer experimento se realizar el manejo de los retrasos explicado en este
 		\centering
 		\includegraphics[width=\textwidth]{estimador_px4/im_simu/handle_delay/theta}
 		\caption{}
-		\label{fig:handle-theta}		
 	\end{subfigure}
 	\quad
 	\begin{subfigure}[t]{0.49\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{estimador_px4/im_simu/handle_delay/vx}
 		\caption{}
-		\label{fig:handle-vx}		
 	\end{subfigure}
 	\quad
-	\caption{Experimento con manejo de medidas retrasadas}\label{fig:handle}
+	\hspace*{-0.5cm}
+	\begin{subfigure}[t]{0.49\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{estimador_px4/im_simu/handle_delay/Py_error}
+		\caption{}
+		\label{fig:py-error}
+	\end{subfigure}
+	\quad
+	\begin{subfigure}[t]{0.49\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{estimador_px4/im_simu/handle_delay/tray}
+		\caption{}
+	\end{subfigure}
+	\quad
+	\caption{Experimento con manejo de medidas retrasadas}
+	\label{fig:handle}
 \end{figure}
 
 

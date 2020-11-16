@@ -1,6 +1,39 @@
 \chapter{Simulador del estimador de estados}
 
+El siguiente archivo también puede verse y descargarse en el repositorio \url{https://github.com/isidroas/quadrotor\_simulator}
 
-\begin{codigo}{Simulador del estimador de estados  (\textit{main.py})}
-\inputminted{python}{apendices/main.py}
-\end{codigo} 
+%\begin{codigo}{Simulador del estimador de estados  (\textit{main.py})}
+\inputminted[bgcolor=black!5!white]{python}{apendices/quadrotor_simulator/main.py}
+%\end{codigo} 
+
+\chapter{Detector de marcadores visuales}
+
+Los siguientes archivos se encuentran también en \url{https://github.com/isidroas/rpi\_vision\_uav}
+
+\section{main.cpp}
+\inputminted[bgcolor=black!5!white]{c++}{apendices/rpi_vision_uav/main.cpp}
+
+\section{vision\_params.yml}
+\inputminted[bgcolor=black!5!white]{c++}{apendices/rpi_vision_uav/vision_params.yml}
+
+\section{marker\_vision.h}
+
+\newcounter{lineInvertPoseA}
+\newcounter{lineInvertPoseB}
+\setcounter{lineInvertPoseB}{291}
+\setcounter{lineInvertPoseA}{\thelineInvertPoseB -7}
+
+\inputminted[bgcolor=black!5!white,lastline=\thelineInvertPoseA]{c++}{apendices/rpi_vision_uav/marker_vision.h}
+
+La siguiente función invierte la posición y la rotación. También corrige la posición de la cámara con respecto al UAV. Sus argumentos son:
+\begin{itemize}
+\item rvec.  Vector de entrada. Vector de rotación del marcador con respecto a los ejes de la cámara
+\item tvec.  Vector de entrada. Translación del marcador con respecto a los ejes de la cámara
+\item pos.   Vector de salida. Posición del uav/cámara con respecto al marcador
+\item eul.   Vector de salida. Orientación del uav con respecto al marcador. El orden de los elementos son 0: roll, 1: pitch, 2: yaw
+\end{itemize}
+
+\inputminted[bgcolor=black!5!white,firstline=\thelineInvertPoseB]{c++}{apendices/rpi_vision_uav/marker_vision.h}
+
+\section{mavlink\_helper.h}
+\inputminted[bgcolor=black!5!white]{c++}{apendices/rpi_vision_uav/mavlink_helper.h}

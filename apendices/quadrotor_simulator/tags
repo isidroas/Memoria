@@ -1,0 +1,43 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_FILESEP	slash	/slash or backslash/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PATTERN_LENGTH_LIMIT	96	/0 for no limit/
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	0.0.0	/e852ee0e/
+ACCEL_NOISE	main.py	/^ACCEL_NOISE = 1 # m\/s^2$/;"	v
+DATA_L	main.py	/^DATA_L=1000$/;"	v
+DRAW_ESTIMATED	main.py	/^DRAW_ESTIMATED = True$/;"	v
+DT	main.py	/^DT=0.01 # s # Reducir el paso mejora la precisión de la predicción, aunque haya ruido $/;"	v
+FUSE_GPS	main.py	/^FUSE_GPS = True$/;"	v
+G	symbolic.py	/^G = np.array([$/;"	v
+GPS_DELAY	main.py	/^GPS_DELAY= 0.1 # s$/;"	v
+GPS_NOISE	main.py	/^GPS_NOISE= 0.5 # m $/;"	v
+GYRO_NOISE	main.py	/^GYRO_NOISE = 0.03 # rad\/s$/;"	v
+G_CONSTANT	main.py	/^G_CONSTANT=9.8 # m\/s^2$/;"	v
+IMAGE_EXTENSION	main.py	/^IMAGE_EXTENSION = 'pdf'$/;"	v
+IMAGE_FOLDER	main.py	/^IMAGE_FOLDER = 'images\/'$/;"	v
+INERTIA	main.py	/^INERTIA=MASS*0.45**2\/12 # Kg.m^2 $/;"	v
+MASS	main.py	/^MASS=1 # Kg$/;"	v
+Q	symbolic.py	/^Q = G @ distMatrix @ np.transpose(G)$/;"	v
+VISION_NOISE	main.py	/^VISION_NOISE = 0.05 # m $/;"	v
+c	symbolic.py	/^c = sym.cos(theta)$/;"	v
+control_actuators	main.py	/^def control_actuators(theta: float, thetad: float ,theta_ref:float, yd_e: float) -> [float,float/;"	f	typeref:typename:[float,float]
+distMatrix	symbolic.py	/^distMatrix = np.diag([sigma_a**2, sigma_a**2, sigma_w**2])$/;"	v
+draw_animation	main.py	/^def draw_animation(x,y,theta):$/;"	f
+dt	symbolic.py	/^dt =    sym.Symbol('dt')$/;"	v
+init	main.py	/^    def init():$/;"	f	function:draw_animation	file:
+main	main.py	/^def main():$/;"	f
+np	main.py	/^    import numpy as np$/;"	I	function:draw_animation	file:	nameref:module:numpy
+np	main.py	/^import numpy as np$/;"	I	nameref:module:numpy
+np	symbolic.py	/^import numpy as np$/;"	I	nameref:module:numpy
+plt	main.py	/^    import matplotlib.pyplot as plt$/;"	I	function:draw_animation	file:	nameref:module:matplotlib.pyplot
+plt	main.py	/^import matplotlib.pyplot as plt$/;"	I	nameref:module:matplotlib.pyplot
+s	symbolic.py	/^s = sym.sin(theta)$/;"	v
+sigma_a	symbolic.py	/^sigma_a =    sym.Symbol('sigma_a')$/;"	v
+sigma_w	symbolic.py	/^sigma_w =    sym.Symbol('sigma_w')$/;"	v
+sym	symbolic.py	/^import sympy as sym$/;"	I	nameref:module:sympy
+theta	symbolic.py	/^theta = sym.Symbol('theta')$/;"	v
+update	main.py	/^    def update(frame):$/;"	f	function:draw_animation	file:

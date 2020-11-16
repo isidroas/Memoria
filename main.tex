@@ -41,6 +41,8 @@
 %\include{dedicatoria/dedicatoria}
 %\include{agradecimientos/agradecimientos}
 
+\def\entregar{1}
+
 \include{resumen/resumen} 
 
 % Índice abreviado 
@@ -89,18 +91,19 @@
 \listoffigures
 
 %:Indice de tablas, coméntese las siguientes líneas si no se desea
-\cleardoublepage
-\phantomsection
-\addcontentsline{toc}{listasb}{\listtablename}
-\pagestyle{especial}
-\listoftables
-
-%:Indice de Programas
 %\cleardoublepage
 %\phantomsection
-%\addcontentsline{toc}{listasb}{\lstlistlistingname}
+%\addcontentsline{toc}{listasb}{\listtablename}
 %\pagestyle{especial}
+%\listoftables
+
+%:Indice de Programas
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{listasb}{\lstlistlistingname}
+\pagestyle{especial}
 %\lstlistoflistings
+\tcblistof[\addchap*]{qst}{Lista de códigos}
 
 %:Bibliografía con biblatex y biber
 \cleardoublepage

@@ -1,9 +1,9 @@
 void VisionClass::InvertPose(Eigen::Vector3d &pos, Eigen::Vector3d &eul, Vec3d &rvec, Vec3d &tvec){
     /* @brief Invierte la posición y la rotación. También corrige la posición de la cámara con respecto al UAV
-     * @param pos   posición del uav/cámara con respecto al marcador
-     * @param eul   orientación del uav con respecto al marcador. El orden de los elementos son 0: roll, 1: pitch, 2: yaw
-     * @param rvec  Vector de rotación del marcador con respecto a los ejes de la cámara
-     * @param tvec  Vector de translación del marcador con respecto a los ejes de la cámara
+     * @param rvec  Vector de entrada. Vector de rotación del marcador con respecto a los ejes de la cámara
+     * @param tvec  Vector de entrada. Translación del marcador con respecto a los ejes de la cámara
+     * @param pos   Vector de salida. Posición del uav/cámara con respecto al marcador
+     * @param eul   Vector de salida. Orientación del uav con respecto al marcador. El orden de los elementos son 0: roll, 1: pitch, 2: yaw
      */
 
     Eigen::Vector3d     pos_marker_in_camera(tvec[0],tvec[1],tvec[2]);
@@ -23,13 +23,13 @@ void VisionClass::InvertPose(Eigen::Vector3d &pos, Eigen::Vector3d &eul, Vec3d &
     // Si queremos que la posición esté centrada en el marcador y no en la cámara, es necesario negarla
     pos = -pos_marker_in_marker_axis;
     
-    // Aquí debemos de tener en cuenta la rotación de la cámara con respecto al uav. Esta es de 180º alrededor del eje z
-    // (de la cámara o del uav, da igual, por tanto da igual postmultiplicar que premultiplicar)
+    // Aquí debemos de tener en cuenta la rotación de la cámara con respecto al uav. Esta es de 180º alrededor del eje z. 
+    // Queremos rotar en ejes absolutos y no en los ejes de rot_mat_marker_from_camera, por lo tanto premultiplicamos. 
     Eigen::Matrix3d             rot_mat_camera_from_uav;
     rot_mat_camera_from_uav     << -1,   0,   0,
                                     0,  -1,   0,
                                     0,   0,   1;
-    Eigen::Matrix3d             rot_mat_marker_from_uav = rot_mat_marker_from_camera * rot_mat_camera_from_uav; 
+    Eigen::Matrix3d             rot_mat_marker_from_uav = rot_mat_camera_from_uav * rot_mat_marker_from_camera; 
 
     // Se obtiene la orientación del uav visto desde el marcador
     Eigen::Matrix3d             rot_mat_uav_from_marker = rot_mat_marker_from_uav.transpose() ; 

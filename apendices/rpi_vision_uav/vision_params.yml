@@ -1,0 +1,51 @@
+%YAML:1.0
+#dict_type: 10   # 6x6 256
+dict_type: 0   # 6x6 256
+
+## Single marker
+#marker_length: 0.179
+marker_length: 0.2335
+
+## Diamond
+diamond: false
+# autoscale not implemented yet
+autoScale: false
+
+## Charuco
+charuco: true
+refindStrategy: true
+# Charuco Boards
+squaresX: 5
+squaresY: 7
+squareLength: 0.0475
+markerLength: 0.0285
+#squareLength: 0.0471
+#markerLength: 0.0282
+ 
+ 
+## Camera
+exposure_time: 20 
+# if fps>40, fov decreases
+fps: 40
+video_file: "../videos/vuelo_foco.h264"
+frame_width: 640
+frame_height: 480
+#frame_width: 1280
+#frame_height: 720 
+camera_parameters: "../calibration/rpi_v2_camera/cal.yml"
+#camera_parameters: "../calibration/hp_camera/cal.yml"
+
+
+## General parameters
+mav_connect: false
+loop_period_ms: 0 
+open_window: true
+wait_key_mill: 1
+#TODO: this is mandatory when open_window=true
+wait_key: true
+show_rejected: false
+
+## Logging
+write_images: true
+log_file: true
+generate_video_from_images: false
