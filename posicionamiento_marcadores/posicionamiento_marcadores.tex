@@ -38,9 +38,50 @@
 \caption{Componentes del quadrotor}
 \label{fig:comp}
 \end{figure}
-
-
 }
+
+\def\figAR{
+\begin{figure}
+\includegraphics[width=0.5\textwidth]{posicionamiento_marcadores/image1775_white_bal.png}
+\caption{Superposición de los ejes de referencia del marcador y del cuadrilátero que lo rodea (trazado en verde)}
+\label{fig:AR}
+\end{figure}
+}
+
+\def\figExpA{
+\begin{figure}
+	\centering
+	\begin{subfigure}[t]{\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{posicionamiento_marcadores/alttitude_px}
+		\caption{$P_x$}		
+	\end{subfigure}
+	\quad
+	\begin{subfigure}[t]{\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{posicionamiento_marcadores/alttitude_py}
+		\caption{$P_y$}		
+	\quad
+	\end{subfigure}
+\caption{Modo altitude}
+\label{fig:expA}
+\end{figure}
+}
+
+\def\figExpB{
+\begin{figure}
+	\centering
+	\begin{subfigure}[t]{\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{posicionamiento_marcadores/position_px_py}
+		\caption{$P_x$ y $P_y$}
+	\end{subfigure}
+	\quad
+\caption{Modo position}
+\label{fig:expB}
+\end{figure}
+}
+
 
 
 % Más concretamente la precisión que se busca es centimétrica, pensando en coger un objeto metálico de manera autónoma con un imán colgando del UAV
@@ -58,7 +99,7 @@ Para elegir los componentes se ha tenido en cuenta que no estén discontinuados,
 \item \textit{DJI 2312E 800KV}. Motor sin escobillas.
 \item Hélices de fibra de carbono con un diámetro 9.4 pulgadas y un paso de 5 pulgadas. Según el \href{https://www.dji.com/e305/spec}{fabricante} del motor, con esta hélice se consigue un empuje de 850 gramos alimentado a 14.8 V.
 \item \textit{DJI F450}. Chasis de quadrotor de 45 cm de diagonal. 
-\item Cama amortiguadora para el autopiloto.
+\item Cama amortiguadora para el autopiloto\footnote{Este componente, al igual que muchos otros, fue comprado en la tienda online \textit{rc-innovations.es}}.
 \item Módulo de telemetría \textit{Holybro V3}. Permite una comunicación con la estación de control terrestre.
 \item Receptor \textit{X8R}. Recibe hasta 16 canales de la emisora, que este caso es una \textit{Taranis Q X7}. 
 \item \textit{SILABS CP2102}. Puente USB-UART. Se conecta entre el puerto USB del ordenador embebido y el puerto UART del autopiloto.
@@ -77,7 +118,7 @@ Para elegir los componentes se ha tenido en cuenta que no estén discontinuados,
 
 
 \section{Programa ejecutado en el ordenador embebido}
-De forma resumida, la cámara, que se ha colocado una cámara en la parte inferior del quadrotor y conectada al ordenador embebido, captura imágenes de un marcador que se ha impreso y se ha colocado en el suelo. Este ordenador las procesa y genera una posición estimada del UAV con respecto al marcador, que es enviada al autopiloto a través del puerto serie. El autopiloto la fusiona en su estimador de estados y genera una posición estimada que alimenta al controlador de posición.  El controlador de posición toma esta medida y sigue la referencia. Esta última puede venir o bien del mando o del ordenador embebido el cual le indique una trayectoria.
+De forma resumida, la cámara, que se ha colocado en la parte inferior del quadrotor y conectada al ordenador embebido, captura imágenes de un marcador que se ha impreso y se ha colocado en el suelo. Este ordenador las procesa y genera una posición estimada del UAV con respecto al marcador, que es enviada al autopiloto a través del puerto serie. El autopiloto la fusiona en su estimador de estados y genera una posición estimada que alimenta al controlador de posición.  El controlador de posición toma esta medida y sigue la referencia. Esta última puede venir o bien del mando o del ordenador embebido el cual le indique una trayectoria.
 
 % generando consignas de aceleración en ejes cuerpo en función de los errores de posición en ejes cuerpo
 Nótese que el controlador de posición también se podría haber ubicado en el ordenador embebido, generando consignas de inclinación al autopiloto. 
@@ -131,7 +172,7 @@ Nótese que esta posición sigue teniendo origen en la cámara, solo que ahora e
 	p^{Marcador \rightarrow C\acute{a}mara' } = - p^{C\acute{a}mara' \rightarrow Marcador}
 	\end{equation}
 
- En cuanto a la orientación, como se ve en la figura, los ejes de la cámara y los del UAV están rotados 180\textdegree con respecto al eje z. Conociendo esto se obtiene la orientación del marcador visto desde el sistema de referencia del UAV:
+ En cuanto a la orientación, como se ve en la figura \ref{fig:ejes}, los ejes de la cámara y los del UAV están rotados 180\textdegree con respecto al eje z. Conociendo esto se obtiene la orientación del marcador visto desde el sistema de referencia del UAV:
 
 	\begin{align}
 	R^{UAV\rightarrow C\acute{a}mara}& = \begin{bmatrix} -1 & 0 & 0\\ 0 & -1 & 0 \\ 0 & 0 & 1 \end{bmatrix}\\
@@ -162,7 +203,7 @@ Esta matriz se utiliza para transformar la posición que le llega de la visión,
 p^{NED' \rightarrow UAV}& = R^{NED \rightarrow Marcador} \cdot p^{Marcador \rightarrow UAV}
 \end{align}
 Siendo $NED$ el sistema de referencia centrado en la posición que partió el UAV y $NED'$ uno que es paralelo a este último pero centrado en el marcador.
-Que tengan está orientación es importante, ya que el EKF en su fase de predicción, utilizando el acelerómetro y la orientación estimada, expresa su posición en ejes NED.
+Que tengan esta orientación es importante, ya que el EKF en su fase de predicción, utilizando el acelerómetro y la orientación estimada, expresa su posición en ejes NED.
 Estos cálculos se pueden ver el código \ref{cod:invPX4} donde se han extraído algunos fragmentos de PX4. 
 
 \begin{codigo}[label=cod:invPX4]{Rotación en PX4 de la posición suministrada por la visión}
@@ -183,70 +224,72 @@ Con estas transformaciones ya se podría fusionar la medida de la visión. Así,
 
 
 
-\section{Registro de resultados (logging) y análisis} 
+\section{Metodología de la experimentación} 
+Cuando se tratan problemas que tienen una implementación en el mundo real o se realizan simulaciones complejas para llegar a la solución normalmente existen 2 etapas bien diferenciadas. La primera consiste en el \textbf{estudio teórico} del problema y en la planificación antes de realizar ningún experimento. En esta diseñamos un sistema o elegimos unos parámetros de acuerdo a expresiones analíticas o simulaciones. Después de realizar el primer experimento se llega a la etapa de \textbf{pruebas de validación}. En esta se realizan experimentos, se analizan los resultados y si no cumplen las especificaciones se vuelve a realizar el experimento con otro diseño.    
+Se podría imaginar un escenario en el que solo se pasara por una de las etapas, por ejemplo por la primera. Esto sería lo ideal, ya que cada parámetro o configuración está definida a priori y le respaldan los modelos matemáticos. Sin embargo, a veces el entorno real no es completamente predecible, los modelos no funcionan o simplemente te has equivocado con los cálculos. 
+Lléndose al otro extremo, en el que no se realiza ningún estudio, pero se generan muchos experimentos, el primer problema que aparece es el valor inicial de los parámetros. También  puede darse que los experimentos sean caros o que existe un riesgo de rotura del equipo. Además surge la duda de cuales serán los siguientes parámetros a probar si no funciona el primer experimento ya que si no se conoce el sistema no se tiene una idea de qué efecto pueden provocar la modificación de los mismos. 
+Por ejemplo, si se quisiera buscar los valores de los controladores PID de un quadrotor, aunque no se realicen cálculos para obtener un valor analitico, si se conoce su teoría de funcionamiento, la iteración de los parámetros se haría de una forma más acertada.  
 
-\ifthenelse{\entregar = 1}{}{
-
-En este problema hay muchos parámetros que se pueden tocar:
-- Número de marcadores
-- Tiempo de exposición de la cámara
-- Iteraciones máximas de los algoritmos visuales
-- Mínima calidad permitida en el reconocimiento de un marcador 
-
-Hay dos maneras de solucionar problemas en ingenieria:
-- Planificando y haciendo análisis. Esto es lo ideal ya que cada parámetro o configuración está definida a priori tiene su razón y le pueden respaldar las matemáticas
-- Probando y viendo resultados. A veces el entorno real no es completamente predecible, los modelos no funcionan. O simplemente te has equivocado en los cálculos.
-
-Lo ideal es una fusión de ambos. El estudio teórico, sirve para ver que efecto pueden tener los parámetros, también para darles un valor inicial para hacer las pruebas.  
-
-Para verificar el desempeño de la estimación de la posición y orientación, lo ideal sería tener un groundtruth, por ejemplo con GNSS RTK o con un sistema de visión como \textit{OptiTrack}. En este caso no se tiene y lo que nos queda es inspeccionar los resultados de manera visual, que es suficiente para hayar muchos errores de la estimación. Hay que tener en cuenta que se tiene un sistema dinámico y ni la posición ni la velocidad pueden cambiar brúscamente, por lo tanto si al inspeccionar las gráficas temporales de la posición y orientación esto sucede, probablemente se trate de una estimación erronea. Otra forma de verificación es la de ver los ejes del marcador superpuestos en la imagen. Resulta muy fácil de inspeccionar si estos se están moviendo cuando la cámara no cambia de posición.    
-
-% TODO: redactarlo mejor que en lista
-Funcionalidades implementadas:
-- Archivo de parámetros
-- Desactivar la espera de la comunicación del autopiloto
-- Tomar las imágenes de un vídeo en lugar de la cámara
-- Guardar la posición y orientación estimadas en un archivo. Representación de estas en una gráfica temporal
-- Guardar las imágenes de la cámara con los ejes del marcador superpuestos  
-
-% La manera rápida es verificar los parámetros directamente volando y con inspección visual. Así es como se rompe y te gastas dinero
-% Problema: el logging puede ser lento, como la escritura de una imagen
-
-A pesar de ser un de ejecución rápida, C++ suele ser más dificil para el desarrollador. En cambio Python es un lenguaje que necesita menos líneas de código para hacer lo mismo, tiene una sintaxis más simple y una cantidad enorme de librerias. Por esta razón, en el programa principal escrito en C++ se han hecho llamadas a sripts de python en el arranque y en la finalización del programa, ya que estos son los momentos en los que es menos crítico el tiempo de ejecución. En concreto, en el arranque se genera una carpeta temporal o se elimina su contenido si ya existía antes. Después, durante la ejecución del bucle principal en el que se estiman las medidas, se pueden guardar diversos resultados dicha carpeta, como la estimación de la posición y la orientación en un archivo CSV o las imágenes capturadas con el sistema de coordenadas del marcador superpuesto.  
-
-}
-
-%\begin{codigo}{Logging en el archivo \textit{main.cpp}}
-%\label{cod:invPX4}
-%Script de inicio
-%\begin{minted}[firstnumber=57]{c++}
-%    /* Startup python script for logging */
-%    int res=system("python3 ../python_scripts/startup.py");
-%    if (res!=0){
-%        cout << "El script de inicio ha fallado con código " << res << endl;
-%        exit(1);
-%    }
-%\end{minted}
-%Script de finalización
-%\begin{minted}[firstnumber=57]{c++}
-%    res=system("python3 ../python_scripts/shutdown.py");
-%    if (res!=0){
-%        cout << "El script de finalización ha fallado con código " << res << endl;
-%        exit(1);
-%    }
-%\end{minted}
-%Guardado de la posición y orientación estimada
-%\begin{minted}[firstnumber=57]{c++}
-%        if (log_file){
-%            double seconds = getTickCount()/ getTickFrequency() - seconds_init;
-%            myfile << pos[0] << "," << pos[1] << "," << pos[2] << "," << euler_angles[0] << "," << euler_angles[1] << "," << euler_angles[2] << "," << seconds << "\n";
-%        }
-%\end{minted}
-%\end{codigo} 
+Dicho esto se puede concluir que no se pueden descuidar ninguna de las dos etapas, que hay que dedicarle tiempo tanto a la comprensión de un problema como a la realización de experimentos y a la capacidad de iterar rápidamente. En esta sección se va a explicar cómo se ha afrontado la etapa más experimental, en concreto sus pasos de iteración de parámetros y análisis de resultados.
 
 
+\subsection{Iteración de los parámetros}
+%- Número de marcadores
+%- Tiempo de exposición de la cámara
+%- Iteraciones máximas de los algoritmos visuales
+%- Mínima calidad permitida en el reconocimiento de un marcador 
 
+En este problema hay muchos parámetros que frecuentemente se necesitan modificar:
+\begin{itemize}
+\item Propiedades de la cámara. A menudo se tiene que modificar el tiempo de exposición de la cámara dependiendo de la iluminación del entorno. Conviene escoger el mínimo con el que se obtenga una imagen iluminada para que movimientos rápidos de la cámara no produzcan un emborronado de los contornos. También se puede escoger la resolución de la captura haciendo balance entre la rapidez de cálculo y la discretización espacial de la imagen 
+\item Propiedades del marcador. Antes de estimar la posición de la cámara con respecto al marcador se debe de conocer el tamaño de este.
+\item Activación de funcionalidades. El programa se debe hacer lo más flexible posible, permitiendo por ejemplo que se pueda correr en un ordenador personal con un video previamente grabado en lugar de una cámara como fuente de visión. En este caso se debe de desactivar la comunicación con el autopiloto. Otra aspecto que cambia es la activación del guardado de resultados, ya que cuando el programa se esté ejecutando en el ordenador embebido esta tarea no conviene realizarse debido a lo lento que es escribir en el almacenamiento persistente (memoria SD).  
+\end{itemize}
+
+En programación estos se pueden establecer de muchas maneras diferentes. La más básica de todas es estableciendo su valor en una constante en el código del programa. Esto tiene la desventaja, que cuando no se utiliza un lenguaje interpretado, hay que compilar el programa cada vez que se cambie un parámetro. Otra manera es mediante argumentos al llamar al programa por la línea de comandos. De esta manera no es necesario compilar un programa cada vez que se toque un parámetro, su inconveniente es que hay que escribir todos los parámetros cada vez que se llame al programa, incluso aquellos que no han cambiado de una ejecución a otra. La forma que se ha utilizado para el programa detector de marcadores es mediante un archivo de parámetros. Este es leído en tiempo de ejecución  y su sintaxis es YAML. Se podría haber escogido otros formatos como el JSON, pero este no es tan leíble para los humanos como el primero. Este archivo se puede ver en el anexo bajo el nombre de \hyperref[sec:vision-params]{\textit{vision\_params.yml}} 
+
+Otra posible solución más sofisticada, es la que se usa en el autopiloto PX4. Este ofrece una interfaz gráfica que se corre en la GCS y se comunica con el autopiloto. Entre sus funcionalidades destacan la indicación de que alguno se haya movido de su valor por defecto, sus valores máximos y mínimos, y su posible modificación en tiempo de vuelo. Esta última característica, que puede acelerar la elección de parámetros, lleva a poner en duda a llamar los parámetros como tales si se toma su definición de como valores que no cambian a lo largo de un periodo largo de tiempo.  
+
+\subsection{Registro de resultados}
+Para analizar los resultados primero hay que registrarlos.
+Funcionalidades implementadas del registro de resultados:
+\begin{itemize}
+\item Guardar la posición y orientación estimadas en un archivo. 
+
+	Representación de estas en una gráfica temporal
+	Para verificar el desempeño de la estimación de la posición y orientación, lo ideal sería tener un groundtruth, por ejemplo con un sistema de visión como \textit{OptiTrack}. En este caso no se tiene y lo que nos queda es inspeccionar los resultados de manera visual, que es suficiente para hallar muchos errores de la estimación. Hay que tener en cuenta que se tiene un sistema dinámico y ni la posición ni la velocidad pueden cambiar brúscamente, por lo tanto si al inspeccionar las gráficas temporales de la posición y orientación esto sucede, probablemente se trate de una estimación erronea. 
+
+\item Guardar las imágenes de la cámara con los ejes del marcador superpuestos (realidad aumentada):
+
+	Otra forma de verificación es la de ver los ejes del marcador superpuestos en la imagen (figura \ref{fig:AR}). Resulta fácil de inspeccionar si estos se encuentran en el centro del marcador, que es donde se situa su sistema de referencia. Además sus ejes x e y deben de ser paralelos a los bordes del papel y su eje z perpendicular a él. En la imagen también aparace superpuesto un rectángulo que rodea al marcador y resulta útil para comprobar que la detección de sus esquinas se realiza de manera correcta.  
+	% TODO: poner imagen de referencia
+	\figAR
+
+\item Scripts en python de inicio y apagado.
+
+	A pesar de ser un de ejecución rápida, C++ suele ser más dificil para el desarrollador. En cambio Python es un lenguaje que necesita menos líneas de código para hacer lo mismo, tiene una sintaxis más simple y una cantidad enorme de librerias. 
+	Por esta razón, en el programa principal escrito en C++ se han hecho llamadas a sripts de python en su arranque y finalización, ya que estos son los momentos en los que es menos crítico el tiempo de ejecución. 
+	En concreto, una de las tareas de estos es la de crear una carpeta cuyo nombre es la fecha y hora, y donde se guardarán los archivos que se han visto en los puntos anteriores. Además, en la finalización del programa se guardan los parámetros elegidos en dicha carpeta y se genera un archivo de video a partir de todas las imágenes tomadas por cámara que se han estado guardando.
+	El guardado de sucesivos experimentos en carpetas distintas es bastante útil para hacer comparaciones
+\end{itemize}
+
+% TODO: Registro de resultados de PX4. Una vez más es superior. 
+% TODO: Otra manera es ver la cantidad de innovación.
+
+
+\section{Resultados experimentales}
 % Colocar imágenes como ejemplo de problemas detectados. 
+En esta sección se mostrarán gráficas de los datos generados en un vuelo en el que se estaba fusionando la posición de la visión. Están desactivados tanto el GNSS como el flujo óptico
+% Altitude.
+% 	Py. Se puede ver que mientras no hay posición el ekf sigue prediciendo
+% 	Px. El filtro de salida está adelantado 1/4 seg
+% Position.
+% 	sin la visión no sería posible de mantener el UAV en un punto de forma automática. 
 
+
+% TODO: poner foto del quadrotor haciendo el experimento de cerca.
+
+\figExpA
+\figExpB
 
 \endinput

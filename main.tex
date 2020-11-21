@@ -10,7 +10,7 @@
 %ver edicionPFC.sty para modificaciones
 %\mbox{pendiente}
 %:Para crear la portada y la portada interior (pagina titular)
-\titulo{Posicionamiento de un UAV usando \mbox{marcadores} visuales} %\mbox evita que se divida una palabra al cambiar de línea
+\titulo{Posicionamiento de un UAV Mediante los \mbox{Marcadores} Visuales Aruco y el \mbox{Estimador} de Estados de PX4} %\mbox evita que se divida una palabra al cambiar de línea
 \autor{Isidro Jesús Arias Sánchez}
 \director{Manuel Vargas Villanueva}
 \titulodirector{Profesor Titular}
@@ -41,7 +41,7 @@
 %\include{dedicatoria/dedicatoria}
 %\include{agradecimientos/agradecimientos}
 
-\def\entregar{1}
+\def\entregar{0}
 
 \include{resumen/resumen} 
 
@@ -60,7 +60,7 @@
 \tableofcontents
 
 
-\include{notacion/notacion} %No incluir si no se quiere, comentándolo
+\include{notacion} %No incluir si no se quiere, comentándolo
 
 %%:Empieza el contenido del libro
 \mainmatter
@@ -72,6 +72,7 @@
 \include{introduccion/introduccion}
 \include{estimador_px4/estimador_px4}
 \include{posicionamiento_marcadores/posicionamiento_marcadores}
+\include{conclusiones}
 
 \begin{appendices}
 \include{apendices/apendices} 
