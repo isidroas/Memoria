@@ -82,6 +82,13 @@
 \end{figure}
 }
 
+\def\figAruco{
+\begin{figure}
+\includegraphics[width=\textwidth]{posicionamiento_marcadores/aruco_paper.png}
+\caption{Pasos intermedios en el proceso de detección de marcadores Aruco. Fuente \cite{aruco2014}}
+\label{fig:Aruco}
+\end{figure}
+}
 
 
 % Más concretamente la precisión que se busca es centimétrica, pensando en coger un objeto metálico de manera autónoma con un imán colgando del UAV
@@ -142,10 +149,7 @@ En la figura \ref{fig:flow} se puede ver el diagrama de flujo del programa que s
 
 \item Detectar marcadores: 
 
-	El objetivo es ubicar los marcadores en la imagen (en concreto sus 4 esquinas) y extraer su identificador.  Este proceso está explicado en \cite{aruco2014}. 
-%	- 1. El primer paso es la extración de bordes a partir de la imagen convertida a blanco y negro. 
-%	- 2. A partir de la imagen binaria del paso anterior, se extraen los contornos usando en \textit{\_findMarkerContours()} la función de OpenCV  \textit{}
-%	- 3. Se realiza una aproximación poligonal y se quedan aquellos que solo estén compuestos por 4 puntos. 
+	El objetivo es ubicar los marcadores en la imagen (en concreto sus 4 esquinas) y extraer su identificador.  Este proceso está explicado en la sección \ref{sec:detectAruco}. 
 
 \item Estimación de la posición:
 
@@ -222,7 +226,30 @@ En el archivo \href{https://github.com/PX4/PX4-ECL/blob/ec934908900b23ee273d1a9f
 Con estas transformaciones ya se podría fusionar la medida de la visión. Así, se generarán unos estados estimados que serán tomados por los controladores de PX4. Como se explicó en \cite{arias2019control} estos forman una estructura en cascada cuyo controlador de mayor nivel es el de posición. 
 
 
+\section{Detección de marcadores Aruco} \label{sec:detectAruco}
+	Los marcadores Aruco fueron creados por el departamento Aplicaciones de la Visión Artificial de la universidad de Córdoba. Estos pertenecen a la categoria de marcadores visuales planos y cuadrados y su misión es ofrecer su posición relativa a la cámara además de identificarlo. 
+	Como se aprecia en la figura \ref{fig:Aruco}, estós son cuadrados que tienen en su interior unas figuras que codifican un número en binario. Estas últimas solo se utilizan en la identificación, mientras que le borde exterior es el que se usa para la estimación de la posición. Este proceso está explicado en \cite{aruco2014} pero aquí se hará un resumen del mismo. Los pasos principales son los siguientes:
+\figAruco
+\begin{itemize}
+\item Detección de bordes. 
 
+	Se denomina borde a la línea que separa 2 regiones, en el caso de los marcadores estas regiones son las zonas blancas y las negras. Aunque no es usado  en este caso por su coste computacional, el algoritmo de Canny puede servir para explicar un método de detección de bordes. 
+	Quienes no estén familiarizados con el campo de la visión artificial, se puden imaginar la imagen en escala de grises como un campo escalar de 2 dimensiones, y como tal, se le puede calcular el gradiente a cada punto del plano, que es un vector de dos dimensiones que indica la dirección en la que el campo varía más rapidamente y su módulo representa el ritmo de variación. Para distinguir un borde de cualquier otro punto este es útil, ya que en un punto del borde se cumple que su magnitud de gradiente es máximo local en la dirección del gradiente.
+	% poner imagen de https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_imgproc/py_canny/py_canny.html ?
+
+\item Detección de contornos.
+
+	En el paso anterior es posible que se hayan escogido bordes que no formen un contorno cerrado, por lo que se busca todos los contornos cerrados formados por los bordes y el resto se desechan. 
+	El contorno que se quiere obtener es el borde externo del marcador cuya forma un cuadrado y su proyección en la imagen será aproximadamente un cuadrilátero, por tanto se descartan todos los que no se aproximen a un polígono de cuatro lados. Todavía puede haber contornos que no se correspondan a lo que se busca, por ejemplo los cuadrados que se encuentren dentro del marcador que se destinan a la identificación, así que se realiza otro cribado más que es eliminar los contornos interiores que estén contenidos en otros exteriores cercanos. 
+	
+\item Identificacion 
+	% El paso de rectificar el marcador es parecido al de estimar la posición, pero aquí no se tiene en cuenta ni el tamaño del marcador ni la distorsión de la lente ni longitud focal. 
+	Cada uno de los contornos se rectifica para convertirlos en cuadrados. Entoces la imagen se convierte en una cuadrícula, es este ejemplo de tamaño 7X7, donde cada celda se le asigna un 0 o un 1. De esta cuadrícula, en la que todos sus celdas de afuera tienen que ser negras, se extrae un código binario que en este caso es de 25 bits (quitando los bordes negros la cuadrícula se convierte en 5X5). Finalmente se compara este código con todos los que componen el diccionario y si se da alguna coincidencia se da por válida la estimación.   
+\end{itemize}
+
+Existen más librerias de marcadores planos como \textit{AprilTag} cuyo método de detección es muy parecido a \textit{Aruco} (de hecho la librería de Aruco puede detectar marcadores AprilTag). Una de las partes en las que sí que difieren es la generación de los diccionarios de marcadores. Un diccionario se le denomina a todos los códigos binarios que pueden tener marcadores de un mismo tamaño. Este número de marcadores distintos no es igual a $2^{n\acute{u}mero\ de\ bits}$ por varias razones. Primero, que el marcador tiene que dar información de la rotación con respecto a la cámara y por lo tanto no puede ser simétrico para que no se de el caso que existan dos rotaciones posibles en una sola imagen. Segundo, se debe de contemplar el caso de que exista ruido, y tal vez el código extraido no es el que realmente tiene el marcador. Entonces se reduce el número de posibles códigos de manera que no exista dos marcadores cuya diferencia solo esté en uno o pocos bits. De esta manera se evitan falsos positivos y se pueden llegar a corregir los errores. 
+
+Una posible duda que puede surgir es si es necesario el paso de identificación cuando en una aplicación solo se usa un marcador, por ejemplo para el aterrizaje de precisión. Existen fomas mucho más simples que pueden ser detectadas por la cámara como los tableros de ajedrez. Sin embargo nada nos garantiza que estas formas la podamos encontrar también en el entorno, sobretodo en construcciones humanas, y que se produzca un falso positivo.
 
 \section{Metodología de la experimentación} 
 Cuando se tratan problemas que tienen una implementación en el mundo real o se realizan simulaciones complejas para llegar a la solución normalmente existen 2 etapas bien diferenciadas. La primera consiste en el \textbf{estudio teórico} del problema y en la planificación antes de realizar ningún experimento. En esta diseñamos un sistema o elegimos unos parámetros de acuerdo a expresiones analíticas o simulaciones. Después de realizar el primer experimento se llega a la etapa de \textbf{pruebas de validación}. En esta se realizan experimentos, se analizan los resultados y si no cumplen las especificaciones se vuelve a realizar el experimento con otro diseño.    
@@ -285,9 +312,11 @@ En esta sección se mostrarán gráficas de los datos generados en un vuelo en e
 % 	Px. El filtro de salida está adelantado 1/4 seg
 % Position.
 % 	sin la visión no sería posible de mantener el UAV en un punto de forma automática. 
+%	TODO: poner offset de ángulo
 
 
 % TODO: poner foto del quadrotor haciendo el experimento de cerca.
+
 
 \figExpA
 \figExpB
