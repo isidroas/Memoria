@@ -52,12 +52,18 @@
     % Autopiloto
 
     \path (box1.east) ++ (8,0) node(EKF)[block]{Estimador de estados};
-    \path node(control)[block, below of=EKF]{Control de posición};
+    \path node(control)[block, below of=EKF]{Control de posición y velocidad};
+    \path node(orientacion)[block, below of=control]{Control de orientación};
+
+    \path [line] (EKF) -- (control);
+    \path [line] (control) -- (orientacion);
+    \path [line] (EKF.east) -- ++ (0.5,0) |- (orientacion);
+
     \path (EKF) ++ (0,2.5) node[ inner sep=-1cm](cuav){\includegraphics[width=2.5cm]{cuav.png}};
     
 
     \begin{pgfonlayer}{background}
-        \path node(box2)[fit=(EKF) (cuav) (control),draw, inner sep=1cm, rounded corners, fill=red!10]{};
+        \path node(box2)[fit=(EKF) (cuav) (control) (orientacion),draw, inner sep=1cm, rounded corners, fill=red!10]{};
     \end{pgfonlayer}
 
     \draw (box1.east) edge[bend left=30,-latex] node[anchor=south, align=center]{\Large  $\bm{p}$, $\Psi^{Marcador\rightarrow UAV}$} (EKF.west) ;
