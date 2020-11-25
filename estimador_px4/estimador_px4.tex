@@ -55,7 +55,7 @@ En la figura \ref{fig:est3} se ha ilustrado este mecanismo de corrección ademá
 
 \subsection{Detalles de implementación}
 % tamaño de los buffer
-En este apartado se presentan algunos trozos de código de PX4 que implementan lo anteriormente descrito más algunos detalles que he se han omitido en el apartado anterior para que fuese más fácil su comprensión.
+En este apartado se presentan algunos trozos de código de PX4 que implementan lo anteriormente descrito, además de algunos detalles que se han omitido en el apartado anterior para que fuese más fácil su comprensión.
 
 En el apartado anterior se explicó que la error entre los estados estimados en el horizonte de tiempo retrasado y los estados del buffer de salida, se atenuaban (multiplicar por una ganancia menor que 1, mostrado en la figura \ref{fig:est3} como un triángulo) y se le suma a todo el buffer de salida. En el siguiente código se puede ver cómo se ha implementado esto. Se puede ver que la corrección de la velocidad y la posición no solo se calcula a partir del error, sino también a partir de la integral del error, por lo tanto aqui se tiene un control proporcional-integral que tiene como señal de control la corrección al buffer de salida. De esta manera, los estados en el horizonte de tiempo actual, se igualarán a los del horizonte de tiempo retrasado en régimen permanente. 
 
