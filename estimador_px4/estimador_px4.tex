@@ -123,7 +123,7 @@ En la línea \href{https://github.com/PX4/PX4-ECL/blob/ec934908900b23ee273d1a9f8
 % TODO: buffer de salida se ejecuta más frecuentemente. 
 
 Tampoco se ha hablado de la longitud de los buffers, la cual hay que determinar antes de empezar a estimar. En el siguiente código se puede ver cómo se calcula la longitud del buffer de medidas de la IMU. Esta se determina de manera que el EKF se ejecutará con un retraso igual al sensor que más retraso tiene.
-\begin{codigo}{Cálculo del tamaño del buffer. Ubicado en el archivo \textit{Firmware/src/lib/ecl/EKF/estimator\_interface.cpp}}
+\begin{codigo}{Cálculo del tamaño del buffer. Ubicado en el archivo \href{https://github.com/PX4/PX4-ECL/blob/ec934908900b23ee273d1a9f82364b7b38423200/EKF/estimator_interface.cpp\#L513}{\textit{Firmware/src/lib/ecl/EKF/estimator\_interface.cpp}}}
 \begin{minted}[firstnumber=512]{c++}
   // find the maximum time delay the buffers are required to handle
   const uint16_t max_time_delay_ms = math::max(_params.mag_delay_ms,

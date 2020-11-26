@@ -1,25 +1,56 @@
 \chapter{Conclusiones} \label{chp-conclusiones}
 %\lettrine[lraise=-0.1, lines=2, loversize=0.2]{S}{e} ha podido ver que el \textbf{autopiloto} \textit{PX4} ofrece una gran cantidad de funcionalidades, que vienen validadas por la multitud de vuelos que se realizan con este autopiloto. 
-{\color{red} [Pendiente]}
+
+
+%- Manejo de medidadas retrasada es una idea intutitiva que no requiere de complejas demostraciones para saber que funcionarán.
+%- Aun así se ha demostrado su eficacia en una simulación y se ha visto la mejora que conlleva.
+%- Python como alternativa a matlab.	
+
+
+Los resultados mostrados en este trabajo sirven sacar numerosas conclusiones. Par empezar, el \textbf{manejo de medidas retrasadas} aquí explicado es un método que no requiere de complejas demostraciones para entender que va a funcionar, ya que es intuitivo. Aun así, se ha probado en una simulación, la ventaja que supone tenerlo. Una simulación que se a programado en un lenguaje de programación abierto, que no tiene ningún coste económico, al contrario que el ampliamente usado \textit{Matlab}, y que además es de propósito más general. 
+
+
+
+%- El uso de Arucos tiene una ventaja doble: barato y preciso 
+%- Puede competir con métodos mucho más caros.
+%- Si se quiere un vehículo completamente autónomo en todos los entornos, el mundo no a va estar lleno de balizas y marcadores. Por ahora lo más flexible es el SLAM, que podría ser asistido por estos marcadores.
+
+%- La precisión de las medidas (verificadas de manera visual)
+%- La utilidad del EKF
+- La verificación del manejo de medidas retrasadas en un vuelo real
+- La importacia de iterar rápidamente
+- Es bueno para competir con las grander marcas
+
+En cuanto al uso de \textbf{marcadores visuales para estimar la posición} claramente es una de las opciones más baratas para el posicionamiento, además de ser muy precisa. Por otro lado tiene una limitación importante de que allí donde navegue necesite que haya marcadores. Por muy baratos que sean imprimirlos, si se quiere un vehículo completamente autónomo en todos los entornos, no es factible llenar el mundo de marcadores o balizas.  
+Sin embargo, estos podrían servir de apoyo a otras tecnologias que no necesitan ningún tipo de instalación fuera del vehículo.
+
+Una de las ideas de este trabajo que no se ha visto en otros, es la de utilizar el estimador de estados del autopiloto para fusionar medidas de la visión. La ventaja que tiene esta es que reduce el efecto del retraso en las comunicaciones. Lo perjudicial es que si las medidas de la posición no son correctas pueden llegar a afectar en la estimación de la orientación del vehículo, ya que en un filtro de Kalman todos los estados pueden estar interelacionados. 
+
+
+
+ 
+
+
+
+
 
 \chapter{Trabajos futuros}
 %\lettrine[lraise=-0.1, lines=2, loversize=0.2]{L}{os} trabajos futuros vendrán marcados por la importante experiencia que me ha supuesto el desarrollo de este proyecto, tanto en la investigación y estudio de trabajos ya realizados, como en mi experimentación de prueba y error que me han ayudado en mi objetivo de llevar a buen puerto este Trabajo de Fin de Grado.
 %A continuación, relaciono una serie de elementos y acciones  en los que me gustaría profundizar en futuros proyectos:
 
-\ifthenelse{\entregar = 1}{
 
-	{\color{red} [Pendiente]}
-
-}{
-
+ 
 	\begin{itemize}
 	\item Disminuir la necesidad de colocar marcadores cada poca distancia. Se podría usar lentes ojo de pez, varias cámaras (abajo y delante) o un gimbal.  
 	\item Es verdad que colocar muchos marcadores puede ser no ser viable, pero por mucho que avanze la robótica siempre será mejor los marcadores artificiales a los naturales, para aquellas aplicaciones que se requieran una precisión extra.
 	\item los marcadores visuales podrían tener diseños más bonitos
-	\item Si se quiere un vehículo completamente autonomo en todos los entornos, el mundo no va estar lleno de balizas y marcadores. Por ahora lo más flexible es el SLAM, que podría ser asistido por estos marcadores.
 	\end{itemize}
 
-}
-
+	- Cuantificar la incertidumbre. Las medidas aportadas por este método es un caso en el que varía mucho su precisión, por ejemplo al alejarse
+	- cámara en escala de grises? en realidad el grab no tarda mucho, pero la conversión desde el color no se cuanto tardará
+	- Trasiciones con tramos con GPS o flujo óptico.
+	- Aplicarle una derivada discreta la estimación de la visión e incluirla al filtro como una medida de velocidad
+	- Tomar imagenes en un vuelo para crear un mapa en 2D . Especificación de waipoints clickando sobre el mapa.
+	- Aprovechar la precisión de la posición para manipular objetos. Si no se generan muchas interferencias al magnetómetro se podría utilizar un imán.
 
 \endinput
