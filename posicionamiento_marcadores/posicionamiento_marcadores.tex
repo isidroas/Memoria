@@ -142,7 +142,7 @@ Para elegir los componentes se ha tenido en cuenta que no estén discontinuados,
 %TODO: Tomar foto y enumerar componentes
 
 
-\section{Programa ejecutado en el ordenador embebido}
+\section{Programa ejecutado en el ordenador embebido}\label{sec:programa}
 De forma resumida, la cámara, que se ha colocado en la parte inferior del quadrotor y conectada al ordenador embebido, captura imágenes de un marcador que se ha impreso y se ha colocado en el suelo. Este ordenador las procesa y genera una posición estimada del UAV con respecto al marcador, que es enviada al autopiloto a través del puerto serie. El autopiloto la fusiona en su estimador de estados y genera una posición estimada que alimenta al controlador de posición.  El controlador de posición toma esta medida y sigue la referencia. Esta última puede venir o bien del mando o del ordenador embebido el cual le indique una trayectoria.
 
 % generando consignas de aceleración en ejes cuerpo en función de los errores de posición en ejes cuerpo
