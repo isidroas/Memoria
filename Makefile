@@ -1,4 +1,9 @@
 all:
+	mkdir -p build
+	mkdir -p build/posicionamiento_marcadores
+	mkdir -p build/estimador_px4
+	mkdir -p build/apendices
+	mkdir -p build/introduccion
 	pdflatex -shell-escape -output-directory build/ main.tex
 	cp build/main.pdf .
 

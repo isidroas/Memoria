@@ -128,7 +128,7 @@ Para elegir los componentes se ha tenido en cuenta que no estén discontinuados,
 \item Módulo de telemetría \textit{Holybro V3}. Permite una comunicación con la estación de control terrestre.
 \item Receptor \textit{X8R}. Recibe hasta 16 canales de la emisora, que este caso es una \textit{Taranis Q X7}. 
 \item \textit{SILABS CP2102}. Puente USB-UART. Se conecta entre el puerto USB del ordenador embebido y el puerto UART del autopiloto.
-\item CUAV NEO V2. Este incluye GNSS, magnetómetro, botón de armado, luces indicadoras y alarma sonora.
+\item CUAV NEO V2. Este incluye GNSS, magnetómetro, botón de armado, luces indicadoras y alarma sonora. Se monta más arriba que el resto de componentes para alejarlo de los circuitos de potencia y así reciba menos interferencias el magnetómetro.
 
 \item Raspberry Pi 4 Model B. 4 GB de RAM. Se encuentra protegida por una carcasa que incorpora un ventilador. 
 \item Raspberry Pi Camera Module v2. Campo de visión horizontal de 62 grados, capaz de grabar vídeo con resolución de 1640x1232 a 40fps.
@@ -207,7 +207,7 @@ Obviamente, la multiplicación se tiene realizar en ese orden. De esta manera, l
 	\begin{align}
 	R^{Marcador \rightarrow UAV}& = \left(R^{UAV \rightarrow Marcador}\right)^T
 	\end{align}
-	Tras expresar esta rotación en ángulos de euler, ya se podría enviar al autopiloto.
+	Tras expresar esta rotación en ángulos de Euler, ya se podría enviar al autopiloto.
 	Estos cálculos están implementados a partir de la línea \ref{line:invertPose} del archivo \textit{marker\_vision.h} que se ha incluido en el anexo.
 
 
