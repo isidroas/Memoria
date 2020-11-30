@@ -4,7 +4,6 @@
 
 %%% Figuras %%%%
 \def\figFlow{
-%TODO: añadir conexión con autopiloto y pequeña descripción interna
 \begin{figure}
 \includegraphics[width=\textwidth]{posicionamiento_marcadores/tikz/diagrama_flujo}
 \caption{A la izquierda: diagrama de flujo del programa que se corre en el ordenador embebido, a la derecha: algunas de las tareas del autopiloto}
@@ -109,20 +108,17 @@
 }
 
 
-% Más concretamente la precisión que se busca es centimétrica, pensando en coger un objeto metálico de manera autónoma con un imán colgando del UAV
-
-%\lettrine[lraise=-0.1, lines=2, loversize=0.2]{C}{onseguir} con precisión la posición de un vehículo aéreo no tripulado es bastante deseable. En la introducción se comentó aplicaciones como la manipulación de objetos o la navegación cerca de obstáculos. En este cápitulo se explica que para conseguirlo se ha construido un quadrotor con los componentes necesarios para detectar un marcador visual y cómo se ha programado un ordenador embebido en el quadrotor para que procese dicho marcador. 
 \lettrine[lraise=0.1, lines=2, loversize=0.1]{C}{onseguir} con precisión la posición de un vehículo aéreo no tripulado es bastante deseable. En la introducción se comentó aplicaciones como la manipulación de objetos o la navegación cerca de obstáculos. En este capítulo se explica que para conseguirlo, se ha construido un quadrotor con los componentes necesarios para detectar un marcador visual. Además, se comenta cómo se ha programado un ordenador embebido para que procese dicho marcador. 
 
 \section{Componentes}
-Para elegir los componentes se ha tenido en cuenta que no estén discontinuados, para comprar posibles recambios, la rapidez de llegada ya que todos llegan por paquetería, que estén ampliamente probados, y que en la medida de lo posible estuvieran liberados tanto su software como su hardware. 
+Para elegir los componentes se ha tenido en cuenta que no estén discontinuados, para comprar posibles recambios, la rapidez de llegada ya que todos llegan por paquetería, que estén ampliamente probados, y que en la medida de lo posible, estuvieran liberados tanto su software como su hardware. 
 \figComp
 
 \begin{enumerate}
 \item Cuav V5+. Autopiloto corriendo PX4. Esquemáticos publicados en \href{https://github.com/ArduPilot/Schematics/tree/master/CUAV/V5_Autopilot/V5\%2B}{Github}.
 \item \textit{Tattu Funfly 1500mAh}. Batería LiPo de 4 celdas.
 \item \textit{DJI 2312E 800KV}. Motor sin escobillas.
-\item Hélices de fibra de carbono con un diámetro 9.4 pulgadas y un paso de 5 pulgadas. Según el \href{https://www.dji.com/e305/spec}{fabricante} del motor, con esta hélice se consigue un empuje de 850 gramos alimentado a 14.8 V.
+\item Hélices de fibra de carbono con un diámetro de 9.4 pulgadas y un paso de 5 pulgadas. Según el \href{https://www.dji.com/e305/spec}{fabricante} del motor, con esta hélice se consigue un empuje de 850 gramos alimentado a 14.8 V.
 \item \textit{DJI F450}. Chasis de quadrotor de 45 cm de diagonal. 
 \item Cama amortiguadora para el autopiloto\footnote{Este componente, al igual que muchos otros, fue comprado en la tienda online \textit{rc-innovations.es}}.
 \item Módulo de telemetría \textit{Holybro V3}. Permite una comunicación con la estación de control terrestre.
@@ -134,16 +130,15 @@ Para elegir los componentes se ha tenido en cuenta que no estén discontinuados,
 \item Raspberry Pi Camera Module v2. Campo de visión horizontal de 62 grados, capaz de grabar vídeo con resolución de 1640x1232 a 40fps.
 \item \textit{CUAV HV PM (High-Voltage Power Module)}. Regulador de voltaje para alimentar el autopiloto. Además, lee el voltaje y la corriente que suministra la batería. 
 \item \textit{Hobbywing XRotor 40A}. Variador de velocidad o ESC. Estos están sobredimensionados ya que fabricante recomienda unos que soporten cómo mínimo una corriente de 20A.
-\item \textit{RS PRO K7805-2000R3L}. Reductor de voltaje de 5V y 2A. Este se utilizará para alimentar al ordenador embebido a partir de la batería. Su voltaje permitido de entrada está entre los 8V y los 32V, lo cual es adecuado para una batería LiPo de 4 celdas. 
+\item \textit{RS PRO K7805-2000R3L}. Reductor de voltaje de 5V y 2A. Este se utilizará para alimentar el ordenador embebido a partir de la batería. Su voltaje permitido de entrada está entre los 8V y los 32V, lo cual es adecuado para una batería LiPo de 4 celdas. 
 \item \textit{CUAV PX4FLOW 2.1}. Sensor de flujo óptico. También tiene su \href{https://github.com/PX4/PX4-Flow}{sofware} liberado y el \href{https://github.com/pixhawk/Hardware/tree/master/FLOWv1}{esquemático} de una versión anterior.
 \item Extensor de piernas. Estás fueron impresas mediante la empresa \href{https://impresion3dlowcost.es/}{Impresion 3D LowCost} con un modelo tomado de la página \href{https://www.thingiverse.com/thing:915639}{Thingiverse}. Son necesarias ya que el chasis tiene unas patas demasiado cortas y no dejaban espacio para la Raspberry Pi y su cámara. 
 \end{enumerate}
 
-%TODO: Tomar foto y enumerar componentes
 
 
 \section{Programa ejecutado en el ordenador embebido}\label{sec:programa}
-De forma resumida, la cámara, que se ha colocado en la parte inferior del quadrotor y conectada al ordenador embebido, captura imágenes de un marcador que se ha impreso y se ha colocado en el suelo. Este ordenador las procesa y genera una posición estimada del UAV con respecto al marcador, que es enviada al autopiloto a través del puerto serie. El autopiloto la fusiona en su estimador de estados y genera una posición estimada que alimenta al controlador de posición.  El controlador de posición toma esta medida y sigue la referencia. Esta última puede venir o bien del mando o del ordenador embebido el cual le indique una trayectoria.
+De forma resumida, la cámara, que se ha colocado en la parte inferior del quadrotor y conectada al ordenador embebido, captura imágenes de un marcador que se ha impreso y se ha colocado en el suelo. Este ordenador las procesa y genera una posición estimada del UAV con respecto al marcador, que es enviada al autopiloto a través del puerto serie. El autopiloto la fusiona en su estimador de estados y genera una posición estimada que alimenta al controlador de posición.  El controlador de posición toma esta medida y sigue la referencia. Esta última puede venir o bien del mando, o bien del ordenador embebido el cual le indique una trayectoria.
 
 % generando consignas de aceleración en ejes cuerpo en función de los errores de posición en ejes cuerpo
 Nótese que el controlador de posición también se podría haber ubicado en el ordenador embebido, generando consignas de inclinación al autopiloto. 
@@ -152,7 +147,6 @@ De la manera que aquí se ha implementado, si en un instante falta la medida de 
 
 En la figura \ref{fig:flow} se puede ver el diagrama de flujo del programa que se corre en la Raspberry Pi, cuyos pasos se detallarán a continuación.
 
-% TODO: Poner un trocito de código de cada programa
 
 \figFlow
 
@@ -163,22 +157,22 @@ En la figura \ref{fig:flow} se puede ver el diagrama de flujo del programa que s
 
 \item Recoger imagen de la cámara: 
 
-	Este paso podría llegar a ser muy lento si no se escoge una interfaz con la cámara adecuada, por ejemplo USB. En este caso se ha escogido CSI, que lleva la imagen directamente a la GPU y esta la transfiere a la RAM mediante DMA \footnote{Para más información del proceso de captura visitar la excelente documentación de la interfaz Python de la cámara: \url{https://picamera.readthedocs.io/en/release-1.13/fov.html\#division-of-labor}}. Esta tiene la desventaja que el cable es plano y más difícil de torsionar. La ventaja es que la imagen llega a la RAM sin sin consumir tiempo de CPU permitiendo que esta haga en paralelo otras operaciones como el procesamiento de imagen.
+	Este paso podría llegar a ser muy lento si no se escoge una interfaz con la cámara adecuada, por ejemplo USB. En este caso se ha escogido CSI, que lleva la imagen directamente a la GPU y esta la transfiere a la RAM mediante DMA \footnote{Para más información del proceso de captura visitar la excelente documentación de la interfaz Python de la cámara: \url{https://picamera.readthedocs.io/en/release-1.13/fov.html\#division-of-labor}}. Esta tiene la desventaja que el cable es plano y más difícil de torsionar. La ventaja es que la imagen llega a la RAM sin sin consumir tiempo de CPU, permitiendo que esta haga en paralelo otras operaciones como el procesamiento de imagen.
 
 \item Detectar marcadores: 
 
-	El objetivo es ubicar los marcadores en la imagen (en concreto sus 4 esquinas) y extraer su identificador.  Este proceso está explicado en la sección \ref{sec:detectAruco}. 
+	El objetivo es ubicar los marcadores en la imagen (en concreto sus 4 esquinas) y extraer su identificador.  Este proceso será explicado en la sección \ref{sec:detectAruco}. 
 
 \item Estimación de la posición:
 
-	La estimación de la posición y la orientación se realiza tomando las esquinas de un marcador obtenido en el paso anterior. Este problema se denomina PnP (Perspectiva desde n puntos) y su solución es iterativa. Parte de que, dados unos puntos 3D en el espacio, expresados en un sistema de referencia exterior a la cámara y dada la posición de la cámara con respecto a dicho sistema de referencia, se puede predecir que posición en el plano de la imagen tendrían esos puntos al ser proyectados. Lo que se busca es exactamente lo contrario: la posición de la cámara con respecto a dicho sistema de referencia a partir de la proyección de unos puntos tridimensionales en la imagen. Lamentablemente no se puede invertir las ecuaciones y por tanto no se puede obtener una solución analítica. Para hallar la solución se recurren a algoritmos de optimización que van probando posiciones de la cámara, hacen proyecciones suponiendo esa posición y se compara con las proyecciones reales. A la diferencia de estas dos proyecciones se le denomina \textit{error de reproyección} y es el valor que se trata de minimizar. Para este proyecto este problema no se ha tenido que implementar, solo se ha tenido que llamar a la función \textit{estimatePoseSingleMarkers} de la librería Aruco, que a su vez llama a la función \href{https://docs.opencv.org/4.5.0/d9/d0c/group\_\_calib3d.html\#ga549c2075fac14829ff4a58bc931c033d}{\textit{solvePnP}} de OpenCV.
+	La estimación de la posición y la orientación se realiza tomando las 4 esquinas de los marcadores obtenidos en el paso anterior. Este problema se denomina PnP (Perspectiva desde n puntos) y su solución es iterativa. Parte de que, dados unos puntos 3D en el espacio, expresados en un sistema de referencia exterior a la cámara y dada la posición de la cámara con respecto a dicho sistema de referencia, se puede predecir qué posición en el plano de la imagen tendrían esos puntos al ser proyectados. Lo que se busca es exactamente lo contrario: la posición de la cámara con respecto a dicho sistema de referencia, a partir de la proyección en la imagen de los puntos tridimensionales. Lamentablemente no se puede invertir las ecuaciones y por tanto no se puede obtener una solución analítica. Para hallar la solución se recurren a algoritmos de optimización que van probando posiciones de la cámara, hacen proyecciones suponiendo esa posición y se compara con las proyecciones reales. A la diferencia de estas dos proyecciones se le denomina \textit{error de reproyección} y es el valor que se trata de minimizar. Para este proyecto este problema no se ha tenido que implementar, solo se ha tenido que llamar a la función \textit{estimatePoseSingleMarkers} de la librería Aruco, que a su vez llama a la función \href{https://docs.opencv.org/4.5.0/d9/d0c/group\_\_calib3d.html\#ga549c2075fac14829ff4a58bc931c033d}{\textit{solvePnP}} de OpenCV.
 
 % No se han utilizado matrices de transformación homogénes porque su inversión no es igual a su traspuesta. Existe un método computacionalmente eficiente pero no es tan intuitivo https://mathematica.stackexchange.com/a/106260
 
-\item Inversión de posición y orientación:
+\item Inversión de la posición y orientación:
 	\figEjes
 
-	Como se ve en la figura \ref{fig:ejes} hay varios sistemas de referencia que entran en juego y hay que tenerlos presentes para transformar desde lo que aporta la estimación de la posición hasta lo que necesita el autopiloto. En primer lugar está el sistema de referencia \textbf{NED}, que es aquel cuyos ejes $x$, $y$ y $z$ están apuntando hacia el norte, este y abajo respectivamente, y cuyo origen se  sitúa en la posición desde la que partió el \textbf{UAV}. Este último tiene un sistema de referencia con su eje $x$ apuntando hacia la dirección de avance y su eje $z$ apuntando hacia el suelo cuando no está inclinado. Un poco más para abajo, pero para los cálculos, considerado en la misma posición que el anterior, se encuentra el sistema de referencia de la \textbf{cámara}, el cual tiene el sistema convencional para las cámaras. Si se viese una fotografía tomada por esta, su eje $x$ apuntaría hacia la derecha, su eje $y$ hacia abajo y su eje $z$ hacia fuera de la cámara. Por último, se puede ver el sistema de referencia del marcador, cuyo eje $z$ apunta hacia arriba y los otros dos son paralelos a los bordes del marcador. A parte de los que vienen dibujados, se definirán más adelante unos sistemas auxiliares $C\acute{a}mara'$ y $NED'$ derivados de los anteriores. 
+	Como se ve en la figura \ref{fig:ejes}, hay varios sistemas de referencia que entran en juego, y hay que tenerlos presentes para transformar desde lo que aporta la estimación de la posición del paso anterior, hasta lo que necesita el autopiloto. En primer lugar está el sistema de referencia \textbf{NED}, que es aquel cuyos ejes $x$, $y$ y $z$ están apuntando hacia el norte, este y abajo respectivamente, y cuyo origen se  sitúa en la posición desde la que partió el \textbf{UAV}. Este último tiene un sistema de referencia con su eje $x$ apuntando hacia la dirección de avance y su eje $z$ apuntando hacia el suelo cuando no está inclinado. Un poco más para abajo, pero para los cálculos, considerado en la misma posición que el anterior, se encuentra el sistema de referencia de la \textbf{cámara}, el cual tiene el sistema convencional ellas: si se viese una fotografía tomada por esta, su eje $x$ apuntaría hacia la derecha, su eje $y$ hacia abajo y su eje $z$ hacia fuera de la cámara. Por último, se puede ver el sistema de referencia del marcador, cuyo eje $z$ apunta hacia arriba y los otros dos son paralelos a los bordes del marcador. A parte de los que vienen dibujados, se definirán más adelante, unos sistemas auxiliares $C\acute{a}mara'$ y $NED'$ que son derivados de los anteriores. 
 
 	En el paso anterior, la orientación y posición que se obtiene es la del \textbf{marcador con respecto a la cámara}, es decir se obtiene $R^{C\acute{a}mara \rightarrow Marcador}$ y $p^{C\acute{a}mara \rightarrow Marcador}$. Lo primero que se realiza es buscar la orientación de la cámara con respecto al marcador. Para ello tenemos que invertir la orientación dada, la cual al estar expresada en forma de una matriz de rotación, se puede obtener mediante su traspuesta:
 
@@ -196,7 +190,7 @@ Nótese que esta posición sigue teniendo origen en la cámara, solo que ahora e
 	p^{Marcador \rightarrow C\acute{a}mara' } = - p^{C\acute{a}mara' \rightarrow Marcador}
 	\end{equation}
 
- En cuanto a la orientación, como se ve en la figura \ref{fig:ejes}, los ejes de la cámara y los del UAV están rotados 180\textdegree con respecto al eje z. Conociendo esto, se obtiene la orientación del marcador vista desde el sistema de referencia del UAV:
+ En cuanto a la orientación, como se ve en la figura \ref{fig:ejes}, los ejes de la cámara y los del UAV están rotados 180\textdegree con respecto al eje $z$. Conociendo esto, se obtiene la orientación del marcador vista desde el sistema de referencia del UAV:
 
 	\begin{align}
 	R^{UAV\rightarrow C\acute{a}mara}& = \begin{bmatrix} -1 & 0 & 0\\ 0 & -1 & 0 \\ 0 & 0 & 1 \end{bmatrix}\\
@@ -218,7 +212,7 @@ Obviamente, la multiplicación se tiene realizar en ese orden. De esta manera, l
 
 \end{enumerate}
 
-Mientras tanto, en el autopiloto, una vez que las recibe, este calcula la rotación entre su orientación expresada en ejes NED y su orientación expresada en el sistema de referencia de la visión, que en este caso es el del marcador. 
+Mientras tanto, \textbf{en el autopiloto}, una vez que las recibe, este calcula la rotación entre su orientación expresada en ejes NED y su orientación expresada en el sistema de referencia de la visión, que en este caso es el del marcador. 
 \begin{align}
 R^{NED \rightarrow Marcador}& =  R^{NED \rightarrow UAV} \cdot  \left(R^{Marcador \rightarrow UAV}\right)^T
 \end{align}
@@ -226,7 +220,7 @@ Esta matriz se utiliza para transformar la posición que le llega de la visión,
 \begin{align}
 p^{NED' \rightarrow UAV}& = R^{NED \rightarrow Marcador} \cdot p^{Marcador \rightarrow UAV}
 \end{align}
-Siendo $NED$ el sistema de referencia centrado en la posición que partió el UAV y $NED'$ uno que es paralelo a este último pero centrado en el marcador.
+Siendo $NED'$ un sistema de referencia paralelo a $NED$ pero centrado en el marcador.
 Que tengan esta orientación es importante, ya que el EKF en su fase de predicción, utilizando el acelerómetro y la orientación estimada, expresa su posición en ejes NED.
 Estos cálculos se pueden ver el código \ref{cod:invPX4} donde se han extraído algunos fragmentos de PX4. 
 
@@ -243,12 +237,12 @@ En el archivo \href{https://github.com/PX4/PX4-ECL/blob/ec934908900b23ee273d1a9f
 \end{minted}
 \end{codigo} 
 
-Con estas transformaciones ya se podría fusionar la medida de la visión. Así, se generarán unos estados estimados que serán tomados por los controladores de PX4. Como se explicó en \cite{arias2019control} estos forman una estructura en cascada cuyo controlador de mayor nivel es el de posición. 
+Con estas transformaciones ya se podría fusionar la medida de la visión. Así, se generarán unos estados estimados que serán tomados por los controladores de PX4. Como se explicó en \cite{arias2019control}, estos forman una estructura en cascada cuyo controlador de mayor nivel es el de posición. 
 
 
 \section{Detección de marcadores Aruco} \label{sec:detectAruco}
 	Los marcadores Aruco fueron creados por el departamento Aplicaciones de la Visión Artificial de la universidad de Córdoba. Estos pertenecen a la categoría de marcadores visuales planos y cuadrados, y su misión es ofrecer su posición relativa a la cámara además de identificarlo. 
-	Como se aprecia en la figura \ref{fig:Aruco}, estos son cuadrados que tienen en su interior unas figuras que codifican un número en binario. Esa zona interna solo se utiliza en la identificación, mientras que le borde exterior es el que se usa para la estimación de la posición. Este proceso está explicado en \cite{aruco2014} pero aquí se hará un resumen del mismo. Los pasos principales son los siguientes:
+	Como se aprecia en la figura \ref{fig:Aruco}, estos son cuadrados que tienen en su interior unas figuras que codifican un número en binario. Esa zona interna solo se utiliza en la identificación, mientras que le borde exterior es el que se usa para la estimación de la posición. El proceso de detección está explicado en \cite{aruco2014} pero aquí se hará un resumen del mismo. Los pasos principales son los siguientes:
 \figAruco
 \begin{itemize}
 \item Detección de bordes: 
@@ -260,7 +254,7 @@ Con estas transformaciones ya se podría fusionar la medida de la visión. Así,
 \item Detección de contornos:
 
 	En el paso anterior es posible que se hayan escogido bordes que no formen un contorno cerrado, por lo que se busca todos los contornos cerrados formados por los bordes y el resto se desechan (figura \mbox{\ref{fig:Aruco}c}). 
-	El contorno que se quiere obtener es el borde externo del marcador, cuya forma es un cuadrado y su proyección en la imagen será aproximadamente un cuadrilátero, por tanto se descartan todos los que no se aproximen a un polígono de cuatro lados. Todavía puede haber contornos que no se correspondan a lo que se busca, por ejemplo los cuadrados que se encuentren dentro del marcador que se destinan a la identificación, así que se realiza otro cribado más que es eliminar los contornos interiores que estén contenidos en otros exteriores cercanos quedando los contornos de la figura \mbox{\ref{fig:Aruco}d}. 
+	El contorno que se quiere obtener es el borde externo del marcador, cuya forma es un cuadrado y su proyección en la imagen será aproximadamente un cuadrilátero, por tanto se descartan todos los que no se aproximen a un polígono de cuatro lados. Todavía puede haber contornos que no se correspondan a lo que se busca, por ejemplo los cuadrados que se encuentren dentro del marcador que se destinan a la identificación, así que se realiza otro cribado más que es el de eliminar los contornos interiores que estén contenidos en otros exteriores y que sean cercanos, quedando los contornos de la figura \mbox{\ref{fig:Aruco}d}. 
 	
 \item Identificación: 
 
@@ -268,9 +262,9 @@ Con estas transformaciones ya se podría fusionar la medida de la visión. Así,
 	% El paso de rectificar el marcador es parecido al de estimar la posición, pero aquí no se tiene en cuenta ni el tamaño del marcador ni la distorsión de la lente ni longitud focal. 
 \end{itemize}
 
-Existen más librerías de marcadores planos como \textit{AprilTag} cuyo método de detección es muy parecido a \textit{Aruco} (de hecho la librería de Aruco puede detectar marcadores AprilTag). Una de las partes en las que sí que difieren es la generación de los diccionarios de marcadores. Un diccionario se le denomina a todos los códigos binarios que pueden tener marcadores de un mismo tamaño. Este número de marcadores distintos no es igual a $2^{n\acute{u}mero\ de\ bits}$ por varias razones. Primero, el marcador tiene que dar información de la rotación con respecto a la cámara y por lo tanto, no puede ser simétrico para que no se de el caso de que existan dos rotaciones posibles en una sola imagen. Segundo, se debe de contemplar el caso de que exista ruido, y tal vez el código extraído no es el que realmente tiene el marcador. Entonces se reduce el número de posibles códigos de manera que no exista dos marcadores cuya diferencia solo esté en uno o pocos bits (maximizar distancia de Hamming). De esta manera se evitan falsos positivos y se puede llegar a corregir los errores. 
+Existen más librerías de marcadores planos como \textit{AprilTag}, cuyo método de detección es muy parecido a \textit{Aruco} (de hecho la librería de Aruco puede detectar marcadores AprilTag). Una de las partes en las que sí que difieren es la generación de los diccionarios de marcadores. Un diccionario se le denomina a todos los códigos binarios diferentes que pueden tener los marcadores con un determinado número de bits. Este número de marcadores distintos no es igual a $2^{n\acute{u}mero\ de\ bits}$ por varias razones. Primero, el marcador tiene que dar información de la rotación con respecto a la cámara y por lo tanto, no puede ser simétrico para que no se de el caso de que existan dos rotaciones posibles en una sola imagen. Segundo, se debe de contemplar el caso de que exista ruido, y tal vez el código extraído no es el que realmente tiene el marcador. Entonces se reduce el número de posibles códigos de manera que no exista dos marcadores cuya diferencia solo esté en uno o pocos bits (maximizar distancia de Hamming). De esta manera, se evitan falsos positivos y se puede llegar a corregir los errores. 
 
-Una posible duda que puede surgir es si es necesario el paso de identificación cuando en una aplicación solo se usa un marcador, por ejemplo para el aterrizaje de precisión. Existen fomas mucho más simples que pueden ser detectadas por la cámara como los tableros de ajedrez. Sin embargo, nada nos garantiza que estas formas la podamos encontrar también en el entorno, sobretodo en construcciones humanas, y que se produzca una detección desintencionada.
+Una posible duda que puede surgir es si es necesario el paso de identificación cuando en una aplicación solo se usa un marcador, por ejemplo para el aterrizaje de precisión. Existen fomas mucho más simples que pueden ser detectadas por la cámara como los tableros de ajedrez. Sin embargo, nada nos garantiza que estas formas la podamos encontrar también en el entorno, sobretodo en construcciones humanas, y que se produzca una detección no intencionada.
 
 \section{Metodología de la experimentación} 
 Cuando se tratan problemas que tienen una implementación en el mundo real o se realizan simulaciones complejas, para llegar a la solución normalmente existen 2 etapas bien diferenciadas. La primera consiste en el \textbf{estudio teórico} del problema y en la planificación antes de realizar ningún experimento. En esta diseñamos un sistema y elegimos unos parámetros de acuerdo a expresiones analíticas o simulaciones. Después de realizar el primer experimento se llega a la etapa de \textbf{pruebas de validación}. En esta se realizan experimentos, se analizan los resultados y si no cumplen las especificaciones se vuelve a realizar el experimento con otro diseño o parámetros.    
@@ -290,7 +284,7 @@ Dicho esto se puede concluir que no se pueden descuidar ninguna de las dos etapa
 En este problema hay muchos parámetros que frecuentemente se necesitan modificar:
 \begin{itemize}
 \item Propiedades de la cámara. A menudo se tiene que modificar el tiempo de exposición de la cámara dependiendo de la iluminación del entorno. Conviene escoger el mínimo valor con el que se obtenga una imagen iluminada, para que movimientos rápidos de la cámara no produzcan un emborronado de los contornos. También se puede escoger la resolución de la captura haciendo balance entre la rapidez de cálculo y la discretización espacial de la imagen 
-\item Propiedades del marcador. Antes de estimar la posición de la cámara con respecto al marcador se debe de conocer el tamaño de este.
+\item Propiedades del marcador. Uno de los aspectos que hay que decidir del marcador es su tamaño, que determinará la altura óptima a la que el UAV volará sobre el marcador. En este trabajo no se detallará, pero existe la posibilidad de utilizar un tablero de marcadores \footnote{Mas información sobre los tableros de marcadores en  \url{https://docs.opencv.org/4.5.0/df/d4a/tutorial_charuco_detection.html}} en lugar de uno solo para tener una estimación más precisa y permitir la oclusión. De estos hay que establecer el número de marcadores: a la vez que se capturen más marcadores en una imagen, mayor será la precisión, pero también se verán reducidos para un tamaño de lienzo dado.    
 % TODO: poner más ejemplos
 \item Activación de funcionalidades. El programa se debe hacer lo más flexible posible, permitiendo por ejemplo que se pueda correr en un ordenador personal con un vídeo previamente grabado, en lugar de una cámara como fuente de visión. En este caso se debe de desactivar la comunicación con el autopiloto. Otra aspecto que cambia es la activación del guardado de resultados, ya que cuando el programa se esté ejecutando en el ordenador embebido esta tarea no conviene realizarse debido a lo lento que es escribir en el almacenamiento persistente (memoria SD).  
 \end{itemize}
@@ -317,19 +311,19 @@ A continuación, se comenta algunas de las funcionalidades implementadas relacio
 	A pesar de ser un de ejecución rápida, C++ suele ser más difícil para el desarrollador. En cambio Python es un lenguaje que necesita menos líneas de código para hacer lo mismo, tiene una sintaxis más simple y una cantidad enorme de librerías. 
 	Por esta razón, en el programa principal escrito en C++ se han hecho llamadas a scripts de Python en su arranque y finalización, ya que estos son los momentos en los que es menos crítico el tiempo de ejecución. 
 	En concreto, una de las tareas de estos, es la de crear una carpeta cuyo nombre es la fecha y hora, donde se guardarán los archivos que se han visto en los puntos anteriores. Además, en la finalización del programa se guardan los parámetros elegidos en dicha carpeta y se genera un archivo de vídeo a partir de todas las imágenes tomadas por cámara que se han estado guardando.
-	El guardado de sucesivos experimentos en carpetas distintas es bastante útil para hacer comparaciones
+	El guardado de sucesivos experimentos en carpetas distintas es bastante \textbf{útil para hacer comparaciones}.
 \end{itemize}
 
-% TODO: Otra manera es ver la cantidad de innovación.
-Todos las pruebas anteriores son para evaluar el programa de detección de marcadores de manera aislada. Si se quiere comprobar la fusión de la medida y la posición estimada que se genera finalmente en el autopiloto, hay que utilizar las herramientas de PX4. Este aprovecha el método de comunicación entre sus módulos, que es mediante mensajes de publicador y subscriptor, para guardar estos en una memoria persistente. Si se tiene una tarjeta SD suficientemente rápida, se puede guardar los mensajes a la misma frecuencia de actualización del autopiloto (400Hz) sin perder ninguno. 
-Toda la información, tanto parámetros como mensajes intercambiados entre los módulos o alertas, se almacena en un archivo binario en un formato llamado \textit{ulog}. Existen varias herramientas para representar su contenido, por ejemplo, la que se ha usado aquí ha sido \textit{FlightPlot}. Estos archivos tienen otra utilidad para los desarrolladores que se denomina \textit{System-wide replay}, que es utilizada para correr el autopiloto en el ordenador personal, pero en lugar de simular un vuelo, se le aplican los estímulos guardados por el archivo \textit{ulog}. La gran ventaja de esto es activar la ejecución paso a paso y acceder a todas aquellas variables intermedias que serían más difícil de guardar cuando el vehículo está volando.
+% Otra manera es ver la cantidad de innovación.
+Todos las pruebas anteriores son para evaluar el programa de detección de marcadores de manera aislada. Si se quiere comprobar la fusión de la medida y la posición estimada que se genera finalmente en el autopiloto, hay que utilizar las herramientas de PX4. Este aprovecha el método de comunicación entre sus módulos, que es mediante mensajes de publicador y suscriptor, para guardar estos en una memoria persistente. Si se tiene una tarjeta SD suficientemente rápida, se puede guardar los mensajes a la misma frecuencia de actualización del autopiloto (400Hz) sin perder ninguno. 
+Toda la información, tanto parámetros como mensajes intercambiados entre los módulos o alertas, se almacena en un archivo binario en un formato llamado \textit{ulog}. Existen varias herramientas para representar su contenido, por ejemplo, la que se ha usado aquí ha sido \textit{FlightPlot}. Estos archivos tienen otra utilidad para los desarrolladores que se denomina \textit{System-wide replay}, que es utilizada para correr el autopiloto en el ordenador personal, pero en lugar de simular un vuelo, se le aplican los estímulos guardados por el archivo \textit{ulog}. La gran ventaja de esto es activar la ejecución paso a paso y acceder a todas aquellas variables intermedias que serían más difícil de obtener cuando el vehículo estuviera volando.
 
 
 \section{Resultados experimentales}
 % Colocar imágenes como ejemplo de problemas detectados. 
-En esta sección se mostrarán algunas gráficas\footnote{Todas las gráficas de este vuelo se pueden ver en \url{https://review.px4.io/plot\_app?log=0dec276d-c5d0-4f6a-8c57-be72523f9605}} de los datos generados en un vuelo en el que el quadrotor volaba sobre un marcador y el autopiloto recibía las medidas de la visión y donde estaban desactivados tanto el GNSS como el flujo óptico. 
+En esta sección se mostrarán algunas gráficas\footnote{Todas las gráficas de este vuelo se pueden ver en \url{https://review.px4.io/plot\_app?log=0dec276d-c5d0-4f6a-8c57-be72523f9605}} de los datos generados en un vuelo donde el quadrotor volaba sobre un marcador y el autopiloto recibía las medidas de la visión, y en el que estaban desactivados tanto el GNSS como el flujo óptico. 
 
-En primer lugar, se tuvo activado el modo \textit{Altitude}, que es aquel en el que el mando genera una orientación y una altura de referencia, por lo tanto la posición de la visión no se estaba usando todavía por los controladores. En la figura \ref{fig:expAa}, se observa el retraso que hay entre el filtro de salida y el EKF. Se puede medir que este retraso es de aproximadamente un cuarto de segundo, que es justo el retraso que se ha indicado para la visión a la hora de realizar el manejo de medidas retrasadas, explicado en el capítulo anterior. En la figura \ref{fig:expAb} ocurre que en varias ocasiones falta la medida de la visión, probablemente porque el marcador haya salido fuera del campo de visión de la cámara. Se puede observar que mientras esta no se recibe, el EKF sigue estimando gracias a su fase de predicción y también se ve que está predicción no se aleja mucho de la visión cuando esta se recupera.
+En primer lugar, se tuvo activado el modo \textit{Altitude}, que es aquel en el que el mando genera una orientación y una altura de referencia, por lo tanto la posición de la visión no se estaba usando todavía por los controladores. En la figura \ref{fig:expAa}, se observa el retraso que hay entre el filtro de salida y el EKF. Se puede medir que este retraso es de aproximadamente un cuarto de segundo, que es justo el retraso que se ha indicado para la visión a la hora de realizar el manejo de medidas retrasadas, explicado en el capítulo anterior. En la figura \ref{fig:expAb} ocurre que en varias ocasiones falta la medida de la visión, probablemente porque el marcador haya salido fuera del campo de visión de la cámara. Se puede observar que mientras esta no se recibe, el EKF sigue estimando gracias a su fase de predicción y también se puede comprobar, que \textbf{la predicción no se aleja} mucho de la medida de la visión cuando esta se recupera.
 
 Unos segundos más adelante, se activó durante 10 segundos el modo \textit{Position}, que es aquel en el que se genera una posición de referencia constante si las palancas de los mandos están en su posición de reposo. En la figura \ref{fig:expBa} se observa que la diferencia entre las posiciones más extremas ronda los 5 centímetros. Hay que destacar que al quadrotor le resulta imposible quedarse en un punto fijo sin estas medidas de la visión, ya que no tiene otra fuente de velocidad ni posición absoluta. Esta idea se puede verificar en la figura \ref{fig:expBb} donde se ve que, para quedarse inmóvil, necesita mantener una inclinación que no es distinta de cero, o bien por el efecto del viento, o bien porque el autopiloto no se encuentre en el plano de los ejes de las hélices. 
 

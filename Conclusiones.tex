@@ -11,7 +11,7 @@ En cuanto al uso de \textbf{marcadores visuales para estimar la posición} clara
 Por otro lado, tiene una limitación importante: allí donde se navegue se necesita que haya marcadores. Por muy baratos que sea imprimirlos, si se quiere un vehículo completamente autónomo en todos los entornos, no es factible llenar el mundo de marcadores o balizas.  
 Sin embargo, estos podrían servir de apoyo a otras tecnologías que no necesitan ningún tipo de instalación fuera del vehículo. 
 
-Una de las ideas de este trabajo que no se ha visto en otros, es la de utilizar el estimador de estados del autopiloto para fusionar medidas de la visión, además del controlador de posición también del propio autopiloto. La ventaja que tiene esta frente a aquellos que ubican estos elementos en un ordenador separado, es que se reduce el efecto del retraso en las comunicaciones. 
+Una de las ideas de este trabajo que no se ha visto en otros, es la de utilizar el estimador de estados del autopiloto para fusionar medidas de la visión, además del controlador de posición también del propio autopiloto. La ventaja que tiene esta forma frente a aquellos que ubican estos elementos en un ordenador separado, es que se reduce el efecto del retraso en las comunicaciones. 
 La parte perjudicial, es que si las medidas de la posición no son correctas, pueden llegar a afectar a la estimación de la orientación del vehículo, ya que en un filtro de Kalman todos los estados pueden estar interrelacionados. Por otra parte, se ha visto que el filtro de Kalman puede ayudar en aquellos momentos en los que se pierde la visión del marcador, llegando a predecirla de manera acertada si no transcurre mucho tiempo sin llegar una nueva medida de la posición. 
 
 
@@ -24,19 +24,19 @@ La parte perjudicial, es que si las medidas de la posición no son correctas, pu
 
 \chapter{Trabajos futuros}
 
-\lettrine[lraise=-0.1, lines=2, loversize=0.2]{E}{xiste} una gran oportunidad en seguir construyendo sobre la base que presenta de este trabajo, ya que la posibilidad de conseguir un posicionamiento preciso, libera muchas de las tareas que hasta ahora necesitaban de un piloto para llevarse a cabo. A continuación, enumero algunos de los próximos pasos que serían interesantes de tomar en próximos proyectos: 
+\lettrine[lraise=-0.1, lines=2, loversize=0.2]{E}{xiste} una gran oportunidad en seguir construyendo sobre la base que presenta este trabajo, ya que la posibilidad de conseguir un posicionamiento preciso, libera muchas de las tareas que hasta ahora necesitaban de un piloto para llevarse a cabo. A continuación, enumero algunos de los próximos pasos que serían interesantes de tomar en próximos proyectos: 
 
 	\begin{itemize}
 	\item Conseguir la navegación en distancias más grandes únicamente usando marcadores. El número de marcadores que se sería necesario colocar por el camino vendría limitado por el campo de visión de la cámara. Para evitar llenar el espacio de ellos, se podrían intentar algunas soluciones alternativas como utilizar lentes ojo de pez, colocar más de una cámara, o montar la cámara sobre una plataforma articulada (gímbal).    
 
 
-	\item Cuantificar en tiempo real la incertidumbre de la estimación de la posición mediante marcadores. Este tipo de medida, es un caso de aquella que varía mucho en función de condiciones externas, al igual que la precisión del GNSS depende del número de satélites que detecte. En este trabajo se ha supuesto que la precisión de la visión tiene un valor constate de un centímetro, cuando en realidad depende fuertemente de factores como la distancia entre el marcador y la cámara. Esta incertidumbre se podría cuantificar, por ejemplo, mediante el error de reproyección mencionado en la sección \ref{sec:programa}.
+	\item Cuantificar en tiempo real la incertidumbre de la estimación de la posición mediante marcadores. Este tipo de medida, es un caso de aquellas que varían mucho su precisión en poco tiempo, al igual que la exactitud del GNSS depende del número de satélites que detecte. En este trabajo se ha supuesto que la precisión de la visión tiene un valor constate de un centímetro, cuando en realidad depende fuertemente de factores como la distancia entre el marcador y la cámara. Esta incertidumbre se podría cuantificar, por ejemplo, mediante el error de reproyección mencionado en la sección \ref{sec:programa}.
 
 	\item Generar marcadores más discretos o incluso, que puedan ser confundidos con elementos decorativos.
 
-	\item Utilizar otros sensores que aporten posición o velocidad para que se siga conociendo la posición aún cuando no haya marcadores, como el GNSS o el flujo óptico. Uno de los retos que plantea son las transiciones entre las diferentes fuentes de visión o la presencia de varias de ellas al mismo tiempo. 
+	\item Utilizar otros sensores que aporten posición o velocidad para que se siga conociendo la posición aún cuando no haya marcadores, como el GNSS o el flujo óptico. Uno de los retos que plantea son las transiciones entre las diferentes fuentes de posición o la presencia de varias de ellas al mismo tiempo. 
 
-	\item Aprovechar la precisión de la posición para \textbf{manipular objetos}. Si no genera muchas interferencias al magnetómetro, se podría utilizar un electroimán para tomar y depositar objetos. Este podría colgarse del UAV mediante varios hilos, ya que con uno solo la carga se balancearía. 
+	\item Aprovechar la precisión de la posición para \textbf{manipular objetos}. Si no se generasen muchas interferencias al magnetómetro, se podría utilizar un electroimán para tomar y depositar objetos. Este podría colgarse del UAV mediante varios hilos, ya que con uno solo la carga se balancearía. 
 
 	\item Tomar imágenes en el vuelo, para luego unirlas y crear un mapa donde se puedan especificar los waypoints. 
 
