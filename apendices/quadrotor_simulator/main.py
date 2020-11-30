@@ -16,7 +16,7 @@ DATA_L = 1000
 MASS = 1  # Kg
 G_CONSTANT = 9.8  # m/s^2
 INERTIA = MASS * 0.45 ** 2 / 12  # Kg.m^2
-DT = 0.01  # s # Reducir el paso mejora la precisión de la predicción, aunque haya ruido
+DT = 0.01  # s 
 
 ACCEL_NOISE = 0.25  # m/s^2
 GYRO_NOISE = 0.03  # rad/s
@@ -32,9 +32,9 @@ SHOW_OUTPUT_CORRECTION = False
 SHOW_OUTPUT_DELAYED= False
 SHOW_OUTPUT_ERROR= True
 IMAGE_FOLDER = "images/"
-IMAGE_FOLDER = "n_update/"
+#IMAGE_FOLDER = "n_update/"
 #IMAGE_FOLDER = "no_handle_delay/"
-#IMAGE_FOLDER = "handle_delay/"
+IMAGE_FOLDER = "handle_delay/"
 IMAGE_EXTENSION = "pdf"
 SHOW_GPS = False
 
@@ -42,9 +42,9 @@ SHOW_GPS = False
 TAU_P = 0.5 
 TAU_V = 0.01 
 TAU_THETA = 0.0
-FUSE_GPS = False
-HANDLE_DELAYS = False
-OUTPUT_CORRECTION = False
+FUSE_GPS = True
+HANDLE_DELAYS = True
+OUTPUT_CORRECTION = True
 
 
 # Control se realiza sobre los estados reales para acotar más el efecto del estimador
@@ -78,9 +78,6 @@ def output_filter(
         theta_prev = 0
 
     theta_pred = theta_prev + DT * gyro
-    #c = np.cos(theta_pred)
-    #s = np.sin(theta_pred)
-    # TODO: utilizar aquí el predicho ahora o el estimado anterior?
     c = np.cos(theta_prev)
     s = np.sin(theta_prev)
     rot_mat = np.array([[c, -s], [s, c]])
@@ -106,9 +103,6 @@ def ekf_estimator(
         
     # Predicción de los estados
     theta_pred = theta_prev + DT * gyro
-    #c = np.cos(theta_pred)
-    #s = np.sin(theta_pred)
-    # TODO: utilizar aquí el predicho ahora o el estimado anterior?
     c = np.cos(theta_prev)
     s = np.sin(theta_prev)
     rot_mat = np.array([[c, -s], [s, c]])
@@ -141,7 +135,7 @@ def ekf_estimator(
     G = np.array(
         [
             [0, 0, 0],
-            [0, 0, 0],  # que pasaría si desarrollo v(a) aquí?
+            [0, 0, 0],
             [DT * c, DT * s, 0],
             [-DT * s, DT * c, 0],
             [0, 0, DT],
@@ -168,7 +162,7 @@ def ekf_estimator(
         S_gps = H_gps @ cov_mat @ np.transpose(H_gps) + R_gps
         K_f = cov_mat @ np.transpose(H_gps) @ np.linalg.inv(S_gps)
         x_est = x_est + K_f @ innov
-        p_est = x_est[0:2]  # Remind slices x:y doesn't include y
+        p_est = x_est[0:2]
         v_est = x_est[2:4]
         theta_est = x_est[4]
         cov_mat = cov_mat - K_f @ H_gps @ cov_mat
@@ -256,7 +250,6 @@ def main():
     t = np.array(list(range(DATA_L))) * DT
 
     # Simulate 2 newton law
-    # Simular despegue y avance dibujando el suelo
     for i in range(1, DATA_L):  # Pass states are needed, so we start at second
         # Control actuators
         thrust[i], torque[i] = control_actuators(
@@ -286,7 +279,7 @@ def main():
         accel_gt[:, i] = np.linalg.inv(rot_mat) @ a[:, i]
         accel[:, i] = (
             accel_gt[:, i] + randn(2) * ACCEL_NOISE
-        )  # TODO: Habría que multiplicarlo por la inversa de rot_mat?
+        )
         gyro[i] = thetad[i] + randn(1) * GYRO_NOISE
 
         if i > GPS_DELAY / DT:
@@ -325,10 +318,8 @@ def main():
 
     # Buffer de medidas
     max_delay = max(GPS_DELAY, 0)
-    #buffer_size = int(max_delay / DT)  # TODO: redondear hacia arriba?
     buffer_size = int(max_delay / DT) + 1
     buffer_ekf = [{}] * buffer_size
-#    gps_insert_pos = int(GPS_DELAY / DT) - 1
     gps_insert_pos = int(GPS_DELAY / DT)
 
     # Buffer de estados
@@ -398,7 +389,7 @@ def main():
             theta_error =   theta_est[ i] - theta_delayed
     
             for index, elem  in enumerate(buffer_output):
-                # TODO: improve control
+                # TODO: Test integral control
                 buffer_output[index]["p"] = buffer_output[index]["p"] + p_error* TAU_P
                 buffer_output[index]["v"] = buffer_output[index]["v"] + v_error* TAU_V
                 buffer_output[index]["theta"] = buffer_output[index]["theta"] + theta_error* TAU_THETA
@@ -530,16 +521,16 @@ def main():
     fig, ax = plt.subplots()
     ax.set_title("Inclinación")
     if DRAW_ESTIMATED:
-        ax.plot(t, theta_est, label=r"$\theta$ EKF", color="tab:orange")
+        ax.plot(t, theta_est*180/np.pi, label=r"$\theta$ EKF", color="tab:orange")
         if OUTPUT_CORRECTION:
-            ax.plot(t, theta_output, label=r"$\theta$ Salida", color="tab:green")
+            ax.plot(t, theta_output*180/np.pi, label=r"$\theta$ Salida", color="tab:green")
             if SHOW_OUTPUT_CORRECTION:
-                ax.plot(t, theta_correction, label=r"$\theta$ correction", color="tab:purple", linestyle="--")
+                ax.plot(t, theta_correction*180/np.pi, label=r"$\theta$ correction", color="tab:purple", linestyle="--")
             if SHOW_OUTPUT_DELAYED:
-                ax.plot(t, theta_output_del, label=r"$\theta$ output delyed", color="tab:purple", linestyle="--")
-    ax.plot(t, theta, label=r"$\theta$ Groundtruth", color="tab:blue", linestyle="--")
+                ax.plot(t, theta_output_del*180/np.pi, label=r"$\theta$ output delyed", color="tab:purple", linestyle="--")
+    ax.plot(t, theta*180/np.pi, label=r"$\theta$ Groundtruth", color="tab:blue", linestyle="--")
     plt.xlabel("t (s)")
-    plt.ylabel(r"$\theta$ (rad)")
+    plt.ylabel(r"$\theta$ (\textdegree)")
     ax.legend()
     plt.savefig(results_path + "theta." + IMAGE_EXTENSION)
 

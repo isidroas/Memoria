@@ -7,6 +7,10 @@
 using namespace cv;
 using namespace std;
 
+// Estas funciones se han escrito con la ayuda de los ejemplos
+//     - https://github.com/opencv/opencv_contrib/blob/master/modules/aruco/samples/detect_markers.cpp
+//     - https://github.com/opencv/opencv_contrib/blob/master/modules/aruco/samples/detect_board_charuco.cpp
+
 //#define WAIT_KEY_MILL      1 // tiempo de espera entre fotogramas cuando se abre la ventana, si vale 0, solo avanza cuando se presiona alguna tecla
 #define AUTO_SCALE_FACTOR 1
 

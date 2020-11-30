@@ -1,6 +1,6 @@
 %YAML:1.0
 #dict_type: 10   # 6x6 256
-dict_type: 0   # 4x4 50
+dict_type: 0   # 6x6 256
 
 ## Single marker
 #marker_length: 0.179
@@ -46,6 +46,6 @@ wait_key: true
 show_rejected: false
 
 ## Logging
-write_images: false
-log_file: false
+write_images: true
+log_file: true
 generate_video_from_images: false
